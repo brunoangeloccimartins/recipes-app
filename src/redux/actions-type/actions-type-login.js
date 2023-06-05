@@ -1,0 +1,5 @@
+const ACTIONS_TYPE_LOGIN = {
+  SAVE_EMAIL: 'SAVE_EMAIL',
+};
+
+export default ACTIONS_TYPE_LOGIN;
