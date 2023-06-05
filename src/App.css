@@ -23,3 +23,10 @@
     transform: rotate(1turn);
   }
 }
+
+form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
