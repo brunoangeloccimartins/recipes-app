@@ -1,10 +1,14 @@
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useState } from 'react';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
 
 function Header() {
+  const [isHidden, setHidden] = useState(true);
   const location = useLocation();
+  const history = useHistory();
 
   let headerText;
   let PROFILE_ICON;
@@ -49,18 +53,31 @@ function Header() {
           alt="Ícone de perfil"
           data-testid="profile-top-btn"
         /> }
+        onClick={ () => history.push('/profile') }
       />
       { SEARCH_ICON
         && (
-          <Button
-            value={ <img
-              src={ SEARCH_ICON }
-              alt="Ícone de pesquisa"
-              data-testid="search-top-btn"
-            /> }
-          />
+          <div>
+            { !isHidden
+              && (
+                <Input
+                  test="search-input"
+                  type="text"
+                />
+              )}
+            <Button
+              value={ <img
+                src={ SEARCH_ICON }
+                alt="Ícone de pesquisa"
+                data-testid="search-top-btn"
+              /> }
+              onClick={ () => setHidden(!isHidden) }
+            />
+          </div>
         ) }
+
       <h1 data-testid="page-title">{ headerText }</h1>
+
     </div>
   );
 }
