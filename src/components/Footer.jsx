@@ -15,7 +15,11 @@ export default function Footer() {
         />
       </Link>
       <Link to="/meals">
-        <img src={ mealImg } alt="imagem de um drink" data-testid="meals-bottom-btn" />
+        <img
+          src={ mealImg }
+          alt="imagem de um drink"
+          data-testid="meals-bottom-btn"
+        />
       </Link>
     </footer>
   );
