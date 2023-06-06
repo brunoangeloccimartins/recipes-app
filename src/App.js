@@ -17,14 +17,13 @@ function App() {
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ Done } />
         <Route path="/favorite-recipes" component={ Favorites } />
+        <Route path="/meals/:id" component={ Recipes } />
+        <Route path="/drinks/:id" component={ Recipes } />
+        <Route path="/meals/:id/in-progress" component={ Recipes } />
+        <Route path="/drinks/:id/in-progress" component={ Recipes } />
       </Switch>
     </main>
   );
 }
 
 export default App;
-
-// Rota "/meals/:id-da-receita": não deve ter footer
-// Rota "/drinks/:id-da-receita": não deve ter footer
-// Rota "/meals/:id-da-receita/in-progress": não deve ter footer
-// Rota "/drinks/:id-da-receita/in-progress": não deve ter footer
