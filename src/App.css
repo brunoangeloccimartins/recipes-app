@@ -1,28 +1,4 @@
-.custom-loader {
-  animation: s3 1s infinite linear;
-  background: conic-gradient(#0000 10%, #766df4);
-  border-radius: 50%;
-  height: 50px;
-  overflow: hidden;
-  position: relative;
-  width: 50px;
-}
 
-.custom-loader .mask {
-  background: radial-gradient(farthest-side, #0000 calc(100% - 8px), black 0);
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-@keyframes s3 {
-
-  to {
-    transform: rotate(1turn);
-  }
-}
 
 form {
   align-items: center;
