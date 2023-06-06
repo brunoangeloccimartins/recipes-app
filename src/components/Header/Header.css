@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,200;0,500;0,700;0,900;1,100;1,200;1,500;1,700;1,800;1,900&display=swap') ;
+
+.header-container {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  width: 100%;
+}
+
+.btn-title-container {
+  align-items: center;
+  background-color: rgb(252, 220, 54);
+  color: rgb(65, 25, 127);
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.btn-title-container h2 {
+  margin-left: -20px;
+}
+
+.btn-container {
+  margin-right: -20px;
+}
+
+.page-title {
+  color: rgb(65, 25, 127);
+  font-family: Epilogue , sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 10.5%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  text-transform: uppercase;
+  width: 70%;
+}
+
+.profile-btn {
+  background: none;
+  border: none;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-input {
+  height: 20px;
+  margin-top: 8px;
+  text-align: center;
+  width: 70%;
+}
