@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header';
 
 function Recipes() {
   return (
-    <div>  
+    <div>
       <Header />
       <Footer />
     </div>
