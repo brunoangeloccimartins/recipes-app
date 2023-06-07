@@ -1,7 +1,11 @@
 import React from 'react';
+import Header from './Header/Header';
 
 export default function Done() {
   return (
-    <div>Done</div>
+    <div>
+      <Header />
+      Done
+    </div>
   );
 }
