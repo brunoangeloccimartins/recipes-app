@@ -1,3 +1,7 @@
+button {
+  cursor: pointer;
+}
+
 .custom-loader {
   animation: s3 1s infinite linear;
   background: conic-gradient(#0000 10%, #766df4);
