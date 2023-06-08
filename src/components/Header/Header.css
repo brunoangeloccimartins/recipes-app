@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,200;0,500;0,700;0,900;1,100;1,200;1,500;1,700;1,800;1,900&display=swap') ;
 
+:root {
+
+  --padding-right-and-left: 15px;
+}
+
 .header-container {
   align-items: center;
   display: flex;
@@ -13,16 +18,24 @@
   background-color: rgb(252, 220, 54);
   color: rgb(65, 25, 127);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+
+  /* padding: 15px; */
   width: 100%;
 }
 
 .btn-title-container h2 {
-  margin-left: -20px;
+  padding-left: var(--padding-right-and-left);
 }
 
 .btn-container {
-  margin-right: -20px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: var(--padding-right-and-left);
+}
+
+.btn-container img {
+  margin-left: 10px;
 }
 
 .page-title {
