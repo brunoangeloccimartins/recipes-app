@@ -5,6 +5,7 @@ import searchIcon from '../../images/searchIcon.svg';
 import Button from '../Button';
 import Input from '../Input';
 import './Header.css';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Header() {
   const [isHidden, setHidden] = useState(true);
@@ -63,6 +64,7 @@ function Header() {
                 className="search-btn"
               />
             ) }
+          <SearchBar />
           <Button
             value={ <img
               src={ PROFILE_ICON }
