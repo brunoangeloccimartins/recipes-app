@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Recipes from './pages/Recipes/Recipes';
 import Profile from './pages/Profile/Profile';
-import Done from './components/Done';
+import DoneRecipes from './pages/DoneRecipes/DoneRecipes';
 import RecipeDetails from './components/RecipeDetails';
 import FavoriteRecipes from './pages/FavoriteRecipes/FavoriteRecipes';
 
@@ -20,7 +20,7 @@ function App() {
         <Route path="/meals/:id/in-progress" component={ Recipes } />
         <Route path="/drinks/:id/in-progress" component={ Recipes } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
-        <Route path="/done-recipes" component={ Done } />
+        <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/profile" component={ Profile } />
       </Switch>
     </main>
