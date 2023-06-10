@@ -8,6 +8,7 @@ function DoneRecipes() {
   const [recipesDone, setRecipesFav] = useState([]);
   const [copied, setCopied] = useState(false);
   const [selectedFilter, setFilter] = useState('all');
+
   const testLocalStorage = () => {
     const doneRecipes = [
       {
@@ -35,6 +36,7 @@ function DoneRecipes() {
     ];
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
   };
+
   const handleCopy = (type, id) => {
     let textToCopy;
     const countTimeOut = 3000;
@@ -54,15 +56,18 @@ function DoneRecipes() {
         console.error('Erro ao copiar o texto:', error);
       });
   };
+
   useEffect(() => {
     testLocalStorage();
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     setRecipesFav(doneRecipes);
   }, []);
+
   useEffect(() => {
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     setRecipesFav(doneRecipes);
   }, []);
+
   return (
     <div>
       <Header />
