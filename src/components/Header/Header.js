@@ -14,6 +14,7 @@ function Header() {
   let headerText;
   let PROFILE_ICON;
   let SEARCH_ICON;
+  console.log(location.pathname);
 
   switch (location.pathname) {
   case '/meals':

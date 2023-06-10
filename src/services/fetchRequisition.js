@@ -1,19 +1,23 @@
-const fetchData = async (url) => {
+const fetchDataRequisition = async (url) => {
   const response = await fetch(url);
   const data = await response.json();
   return data;
 };
 
-export const fetchMeals = (ingrediente) => fetchData(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingrediente}`);
+export const fetchMeals = (ingrediente) => fetchDataRequisition(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingrediente}`);
 
-export const fetchMealsByCategory = (category) => fetchData(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+export const fetchMealsByCategory = (category) => fetchDataRequisition(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
 
-export const fetchMealsById = (id) => fetchData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+export const fetchMealsByName = (name) => fetchDataRequisition(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`);
 
-export const fetchDrinks = (ingrediente) => fetchData(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingrediente}`);
+export const fetchMealsByFirstLetter = (firstLetter) => fetchDataRequisition(`https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`);
 
-export const fetchDrinksByCategory = (category) => fetchData(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+export const fetchDrinks = (ingrediente) => fetchDataRequisition(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingrediente}`);
 
-export const fetchDrinksById = (id) => fetchData(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+export const fetchDrinksByCategory = (category) => fetchDataRequisition(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
 
-export const fetchRecipe = (url) => fetchData(url);
+export const fetchDrinksByName = (name) => fetchDataRequisition(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
+
+export const fetchDrinksByFirstLetter = (firstLetter) => fetchDataRequisition(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${firstLetter}`);
+
+export const fetchRecipe = (url) => fetchDataRequisition(url);
