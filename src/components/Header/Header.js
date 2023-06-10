@@ -3,8 +3,8 @@ import { useState } from 'react';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import Button from '../Button';
-import Input from '../Input';
 import './Header.css';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Header() {
   const [isHidden, setHidden] = useState(true);
@@ -14,6 +14,7 @@ function Header() {
   let headerText;
   let PROFILE_ICON;
   let SEARCH_ICON;
+  console.log(location.pathname);
 
   switch (location.pathname) {
   case '/meals':
@@ -50,6 +51,12 @@ function Header() {
     <div className="header-container">
       <div className="btn-title-container">
         <h2>RecipesAPP</h2>
+        <div className="input-container">
+          { !isHidden
+              && (
+                <SearchBar />
+              )}
+        </div>
         <div className="btn-container">
           { SEARCH_ICON
             && (
@@ -81,18 +88,6 @@ function Header() {
         >
           { headerText }
         </h1>
-      </div>
-
-      <div className="input-container">
-        { !isHidden
-              && (
-                <Input
-                  test="search-input"
-                  type="text"
-                  className="search-input"
-                  placeholder="Pesquisar receita"
-                />
-              )}
       </div>
     </div>
   );
