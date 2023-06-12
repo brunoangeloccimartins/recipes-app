@@ -11,6 +11,7 @@ import { fetchRecipe,
   fetchMealsByFirstLetter,
 } from '../services/fetchRequisition';
 import Button from './Button';
+import '../pages/Recipes/Recipes.css';
 
 function RecipesMeals() {
   const [recipesMeals, setRecipesMeals] = useState({});
@@ -39,7 +40,6 @@ function RecipesMeals() {
   };
 
   const renderCondition = () => {
-    console.log(recipesMeals.meals);
     if (recipesMeals.meals !== undefined) {
       if (recipesMeals.meals === null) {
         return global.alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -50,10 +50,10 @@ function RecipesMeals() {
     }
   };
 
-  // const fetchRecipesByMeals = async () => {
-  //   const URLmeals = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  //   await fetchData(fetchRecipe(URLmeals), setRecipesMeals);
-  // };
+  const fetchRecipesByMeals = async () => {
+    const URLmeals = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    await fetchData(fetchRecipe(URLmeals), setRecipesMeals);
+  };
 
   const fetchRecipesByMealsByCategories = async () => {
     const URLmeals = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
@@ -93,55 +93,73 @@ function RecipesMeals() {
   return (
     <div>
       <div>
-        <div>
+        <div className="icons-categories">
           {recipesMealsByCategories !== undefined
           && recipesMealsByCategories.map((recipe, index) => {
             const maxCategories = 5;
+            const classNames = [
+              'btn-category-all',
+              'btn-category-beef',
+              'btn-category-breakfast',
+              'btn-category-chicken',
+              'btn-category-dessert',
+              'btn-category-goat',
+            ];
             if (index <= maxCategories) {
               return (
-                <Button
+                <div
                   key={ recipe.strCategory }
-                  value={ recipe.strCategory }
-                  test={ recipe.strCategory !== 'All'
-                    ? `${recipe.strCategory}-category-filter`
-                    : 'All-category-filter' }
-                  onClick={ () => toggleFilter(recipe.strCategory) }
-                />
+                  className="btn-categories"
+                >
+                  <Button
+                    value={
+                      <div className={ classNames[index] }>
+                        { recipe.strCategory }
+                      </div>
+                    }
+                    test={ recipe.strCategory !== 'All'
+                      ? `${recipe.strCategory}-category-filter`
+                      : 'All-category-filter' }
+                    onClick={ () => toggleFilter(recipe.strCategory) }
+                    className="btn-category"
+                  />
+                </div>
               );
             }
             return null;
           })}
         </div>
         {recipesMeals.meals
-         && recipesMeals.meals.map((recipe, index) => {
-           const maxRecipes = 11;
-           if (index <= maxRecipes) {
-             return (
-               <Link
-                 to={ `/meals/${recipe.idMeal}` }
-                 key={ recipe.idMeal }
-               >
-                 <div
-                   data-testid={ `${index}-recipe-card` }
-                 >
+          && recipesMeals.meals.map((recipe, index) => {
+            const maxRecipes = 11;
+            if (index <= maxRecipes) {
+              return (
+                <Link
+                  to={ `/meals/${recipe.idMeal}` }
+                  key={ recipe.idMeal }
+                  className="card-food"
+                >
+                  <div
+                    data-testid={ `${index}-recipe-card` }
+                  >
 
-                   <h1
-                     data-testid={ `${index}-card-name` }
-                   >
-                     {recipe.strMeal}
-                   </h1>
+                    <h1
+                      data-testid={ `${index}-card-name` }
+                    >
+                      {recipe.strMeal}
+                    </h1>
 
-                   <img
-                     src={ recipe.strMealThumb }
-                     alt={ recipe.strMeal }
-                     data-testid={ `${index}-card-img` }
-                   />
-                 </div>
-               </Link>
-             );
-           }
-           return null;
-         })}
+                    <img
+                      src={ recipe.strMealThumb }
+                      alt={ recipe.strMeal }
+                      data-testid={ `${index}-card-img` }
+                    />
+                  </div>
+                </Link>
+              );
+            }
+            return null;
+          })}
       </div>
     </div>
   );

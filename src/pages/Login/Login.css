@@ -18,7 +18,7 @@ form {
   width: 20vw;
 }
 
-form input, form button {
+.input-txt, .btn-login {
   border: none;
   border-radius: 5px;
   box-sizing: border-box;
@@ -27,18 +27,18 @@ form input, form button {
   width: 100%;
 }
 
-form button {
+.btn-login {
   background-color: rgb(255, 164, 45);
   font-size: medium;
   transition: 200ms ease-in background;
 }
 
-form button:disabled {
+.btn-login:disabled {
   background-color: rgba(255, 164, 45, 0.473);
 }
 
 
-form button:hover {
+.btn-login:hover {
   background-color: rgb(255, 23, 42);
 }
 

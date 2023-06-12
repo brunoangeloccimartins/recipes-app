@@ -91,19 +91,32 @@ function RecipesDrinks() {
   return (
     <div>
       <div>
-        <div>
+        <div className="icons-categories">
           {recipesDrinksByCategories !== undefined
           && recipesDrinksByCategories.map((recipe, index) => {
             const maxCategories = 5;
+            const classNames = [
+              'btn-category-all-drinks',
+              'btn-category-ordinary',
+              'btn-category-cocktail',
+              'btn-category-shake',
+              'btn-category-other',
+              'btn-category-cocoa',
+            ];
             if (index <= maxCategories) {
               return (
                 <Button
                   key={ recipe.strCategory }
-                  value={ recipe.strCategory }
+                  value={
+                    <div className={ classNames[index] }>
+                      { recipe.strCategory }
+                    </div>
+                  }
                   test={ recipe.strCategory !== 'All'
                     ? `${recipe.strCategory}-category-filter`
                     : 'All-category-filter' }
                   onClick={ () => toggleFilter(recipe.strCategory) }
+                  className="btn-category"
                 />
               );
             }

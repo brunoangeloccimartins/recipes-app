@@ -40,6 +40,7 @@ function Form() {
         value={ email }
         onChange={ (e) => handleChange(e, setEmail) }
         test="email-input"
+        className="input-txt"
       />
 
       <Input
@@ -50,6 +51,7 @@ function Form() {
         onChange={ (e) => handleChange(e, setPassword) }
         value={ password }
         test="password-input"
+        className="input-txt"
       />
 
       <Button
@@ -58,6 +60,7 @@ function Form() {
         test="login-submit-btn"
         disabled={ isDisabled }
         onClick={ handleSubmit }
+        className="btn-login"
       />
 
     </form>

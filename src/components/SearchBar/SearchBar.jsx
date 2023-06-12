@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Input from '../Input';
 import Button from '../Button';
 import { saveSearch } from '../../redux/actions/actions-searchBar';
+import '../../pages/Recipes/Recipes.css';
 
 export default function SearchBar() {
   const [checked, setChecked] = useState('');
@@ -18,6 +19,9 @@ export default function SearchBar() {
     if (checked === 'first-letter' && inputSearch.length !== maxLetter) {
       global.alert('Your search must have only 1 (one) character');
     }
+    if (checked === '') {
+      global.alert('Are you cego, man? Selecione um radio input!');
+    }
     const savedValues = {
       searchValue: inputSearch,
       radioValue: checked,
@@ -26,17 +30,17 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
+    <div className="search-bar">
       <Input
         type="text"
         name="search"
         placeholder="Busque um drink ou comida"
         value={ inputSearch }
         test="search-input"
-        className=""
+        className="input-txt"
         onChange={ (e) => handleChange(e, setInputSearch) }
       />
-      <div>
+      <div className="search-bar-radios">
         <label htmlFor="ingredient">
           <Input
             type="radio"
@@ -77,14 +81,13 @@ export default function SearchBar() {
           First letter
         </label>
 
-        <Button
-          className=""
-          // onClick={ onClick }
-          test="exec-search-btn"
-          value="Pesquisar"
-          onClick={ handleClick }
-        />
       </div>
+      <Button
+        test="exec-search-btn"
+        value="Pesquisar"
+        onClick={ handleClick }
+        className="btn-login"
+      />
     </div>
   );
 }
