@@ -28,6 +28,10 @@
   padding-left: var(--padding-right-and-left);
 }
 
+.btn-title-container > img {
+  height: 40px;
+}
+
 .btn-container {
   display: flex;
   justify-content: space-between;

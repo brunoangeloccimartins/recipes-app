@@ -1,12 +1,18 @@
 .footer-fixed {
+  align-items: center;
   background-color: rgb(252, 220, 54);
   bottom: 0;
-  padding: 30px;
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
   position: fixed;
-  text-align: center;
-  width: 100%;
+  width: 100vw;
 }
 
 .footer-fixed > a {
   margin: 0 15px;
+}
+
+.footer-fixed > a > img {
+  height: 40px;
 }
