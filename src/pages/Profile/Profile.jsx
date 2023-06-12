@@ -6,6 +6,7 @@ import Header from '../../components/Header/Header';
 import Button from '../../components/Button';
 
 import './Profile.css';
+import { clearLocalStorageItem } from '../../services/localStorageUtil';
 
 function Profile() {
   const [userEmail, setUserEmail] = useState('');
@@ -13,13 +14,16 @@ function Profile() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    const { email } = JSON.parse(storedUser);
-    setUserEmail(email);
+    if (storedUser !== null) {
+      const treatedUser = JSON.parse(storedUser);
+      const { email } = treatedUser;
+      setUserEmail(email);
+    }
   }, []);
 
   const handleLogout = () => {
     history.push('/');
-    localStorage.removeItem('user');
+    clearLocalStorageItem('user');
   };
 
   return (
