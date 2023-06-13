@@ -59,13 +59,17 @@ function DoneRecipes() {
 
   useEffect(() => {
     testLocalStorage();
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    setRecipesFav(doneRecipes);
+    const doneRecipes = localStorage.getItem('doneRecipes');
+    if (doneRecipes !== null) {
+      setRecipesFav(JSON.parse(doneRecipes));
+    }
   }, []);
 
   useEffect(() => {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    setRecipesFav(doneRecipes);
+    const doneRecipes = localStorage.getItem('doneRecipes');
+    if (doneRecipes !== null) {
+      setRecipesFav(JSON.parse(doneRecipes));
+    }
   }, []);
 
   return (

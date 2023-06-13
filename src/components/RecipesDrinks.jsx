@@ -21,10 +21,10 @@ function RecipesDrinks() {
   const history = useHistory();
 
   const fetchSearchs = async () => {
-    const URLmeals = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    const URLdrinks = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     switch (radioValue) {
     case '':
-      await fetchData(fetchRecipe(URLmeals), setRecipesDrinks);
+      await fetchData(fetchRecipe(URLdrinks), setRecipesDrinks);
       break;
     case 'ingredient':
       await fetchData(fetchDrinks(searchValue), setRecipesDrinks);

@@ -1,0 +1,6 @@
+const ACTION_TYPE_SAVED_RECIPES = {
+  MEALS: 'MEALS',
+  DRINKS: 'DRINKS',
+};
+
+export default ACTION_TYPE_SAVED_RECIPES;

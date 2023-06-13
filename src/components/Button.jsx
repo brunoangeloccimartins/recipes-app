@@ -11,6 +11,7 @@ class Button extends Component {
       disabled,
       className,
       id,
+      style,
     } = this.props;
     return (
       <button
@@ -20,6 +21,7 @@ class Button extends Component {
         data-testid={ test }
         disabled={ disabled }
         id={ id }
+        style={ style }
       >
         {value}
       </button>
@@ -35,6 +37,10 @@ Button.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,
   id: PropTypes.string || PropTypes.number,
+  style: PropTypes.shape({
+    position: PropTypes.string,
+    bottom: PropTypes.string,
+  }),
 }.isRequired;
 
 Button.defaultProps = {
@@ -45,6 +51,7 @@ Button.defaultProps = {
   disabled: false,
   onClick: () => {},
   id: '',
+  style: {} || '',
 };
 
 export default Button;

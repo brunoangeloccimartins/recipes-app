@@ -4,6 +4,7 @@ import Button from '../../components/Button';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import { getLocalStorageItem } from '../../services/localStorageUtil';
 
 function FavoriteRecipes() {
   const [recipesFav, setRecipesFav] = useState([]);
@@ -57,7 +58,7 @@ function FavoriteRecipes() {
   };
 
   const handleRemove = (id) => {
-    const favRecipesData = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const favRecipesData = getLocalStorageItem('favoriteRecipes');
 
     const newFavRecipes = favRecipesData.filter((recipe) => recipe.id !== id);
 
@@ -67,8 +68,10 @@ function FavoriteRecipes() {
 
   useEffect(() => {
     testLocalStorage();
-    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    setRecipesFav(favRecipes);
+    const favRecipes = localStorage.getItem('favoriteRecipes');
+    if (favRecipes !== null) {
+      setRecipesFav(JSON.parse(favRecipes));
+    }
   }, []);
 
   return (
