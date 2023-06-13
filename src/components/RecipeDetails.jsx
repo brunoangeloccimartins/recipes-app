@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-// import useFetch from '../services/hooks/useFetch';
-// import { fetchMealsById, fetchDrinksById } from '../services/fetchRequisition';
+import YouTubePlayer from './YoutubePlayer';
+import { fetchMealsById, fetchDrinksById } from '../services/fetchRequisition';
+import Button from './Button';
+import MyCarousel from './Carousel';
+import ObjectEntries from '../services/objectEntries';
 
 function RecipeDetails() {
   const history = useHistory();
-  // const { fetchData } = useFetch();
+  const { id } = useParams();
   const { location: { pathname } } = history;
   const [meal, setMeal] = useState({});
+  const [mealIngredients, setMealIngredients] = useState([]);
   const [drink, setDrink] = useState({});
-  const { id } = useParams();
+  const [drinkIngredients, setDrinkIngredients] = useState([]);
 
   const requestDetails = async () => {
     if (pathname.includes('/meals')) {
-      const mealRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
-      const mealResponse = await mealRequest.json();
-      const mealItem = Object.values(mealResponse)[0][0];
+      const mealData = await fetchMealsById(id);
+      console.log(mealData);
+      const mealItem = mealData.meals[0];
+      const mealEntries = ObjectEntries('strIngredient', mealItem);
       setMeal([mealItem]);
-      console.log(mealItem);
+      setMealIngredients(mealEntries);
     }
     if (pathname.includes('/drinks')) {
-      const drinkRequest = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
-      const drinkResponse = await drinkRequest.json();
-      setDrink(drinkResponse);
+      const drinkData = await fetchDrinksById(id);
+      const drinkItem = drinkData.drinks[0];
+      const drinkEntries = ObjectEntries('strIngredient', drinkItem);
+      setDrink([drinkItem]);
+      console.log(drinkItem);
+      setDrinkIngredients(drinkEntries);
     }
   };
 
@@ -33,9 +41,86 @@ function RecipeDetails() {
 
   return (
     <div>
-      { meal.length && meal.map((recipe, index) => (
-        <p key={ index }>{ recipe.strMeal }</p>
-      ))}
+      { pathname.includes('/meals')
+      && (
+        <div>
+          { meal.length && meal.map((recipe, index) => (
+            <div key={ index }>
+              <img
+                src={ recipe.strMealThumb }
+                alt={ recipe.strMeal }
+                data-testid="recipe-photo"
+              />
+              <p data-testid="recipe-title">{ recipe.strMeal }</p>
+              <p data-testid="recipe-category">{ recipe.strCategory }</p>
+              <div>
+                { mealIngredients.map(({ ingredients, measures }, index2) => (
+                  <ol
+                    key={ index2 }
+                  >
+                    { ingredients.map((ingredient, index3) => (
+                      <li
+                        key={ index3 }
+                        data-testid={ `${index3}-ingredient-name-and-measure` }
+                      >
+                        { `${ingredient} - ${measures[index3]}` }
+                      </li>
+                    )) }
+                  </ol>
+                ))}
+              </div>
+              <p data-testid="instructions">{ recipe.strInstructions }</p>
+              <YouTubePlayer test="video" videoUrl={ recipe.strYoutube } />
+            </div>
+          ))}
+          <MyCarousel />
+          <Button
+            test="start-recipe-btn"
+            value="Start Recipe"
+            style={ { position: 'fixed', bottom: '0' } }
+          />
+        </div>
+      )}
+      { pathname.includes('/drinks')
+      && (
+        <div>
+          { drink.length && drink.map((recipe, index) => (
+            <div key={ index }>
+              <img
+                src={ recipe.strDrinkThumb }
+                alt={ recipe.strDrink }
+                data-testid="recipe-photo"
+              />
+              <p data-testid="recipe-title">{ recipe.strDrink }</p>
+              <p data-testid="recipe-category">{ recipe.strAlcoholic }</p>
+              <div>
+                { drinkIngredients.map(({ ingredients, measures }, j) => (
+                  <ol
+                    key={ j }
+                  >
+                    { ingredients.map((ingredient, k) => (
+                      <li
+                        key={ k }
+                        data-testid={ `${k}-ingredient-name-and-measure` }
+                      >
+                        { `${ingredient} - ${measures[k] ? measures[k] : 'to taste'}` }
+                      </li>
+                    )) }
+                  </ol>
+                ))}
+              </div>
+              <p data-testid="instructions">{ recipe.strInstructions }</p>
+            </div>
+          ))}
+          <MyCarousel />
+          <Button
+            test="start-recipe-btn"
+            value="Start Recipe"
+            style={ { position: 'fixed', bottom: '0' } }
+          />
+        </div>
+
+      )}
     </div>
   );
 }
