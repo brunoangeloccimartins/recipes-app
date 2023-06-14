@@ -1,11 +1,3 @@
-export function setLocalStorageItem(key, item) {
-  const storedData = localStorage.getItem(key);
-  const treatedData = storedData !== null ? JSON.parse(storedData) : [];
-
-  const newItem = [...treatedData, item];
-  localStorage.setItem(key, JSON.stringify(newItem));
-}
-
 export function clearLocalStorageItem(key, item) {
   const storedData = localStorage.getItem(key);
   const treatedData = storedData !== null ? JSON.parse(storedData) : [];

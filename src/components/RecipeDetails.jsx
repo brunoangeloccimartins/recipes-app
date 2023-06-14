@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import YouTubePlayer from './YoutubePlayer';
+// import YouTubePlayer from './YoutubePlayer';
 import { fetchMealsById, fetchDrinksById } from '../services/fetchRequisition';
-import Button from './Button';
-import MyCarousel from './Carousel';
+// import shareIcon from '../images/shareIcon.svg';
+// import blackHeartIcon from '../images/blackHeartIcon.svg';
+// import witheHeartIcon from '../images/whiteHeartIcon.svg';
+// import Button from './Button';
+// import MyCarousel from './Carousel';
 import ObjectEntries from '../services/objectEntries';
+import DrinkDetails from './DrinkDetails';
+
+import { getSavedRecipes,
+  saveRecipes,
+  removeRecipe,
+} from '../services/favoriteRecipesLocal';
+import MealDetails from './MealDetails';
+import { getSavedProgress } from '../services/localStorageProgress';
 
 function RecipeDetails() {
   const history = useHistory();
   const { id } = useParams();
   const { location: { pathname } } = history;
   const [meal, setMeal] = useState({});
+  const [copied, setCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [mealIngredients, setMealIngredients] = useState([]);
   const [drink, setDrink] = useState({});
   const [drinkIngredients, setDrinkIngredients] = useState([]);
+  const [isDisable, setIsDisable] = useState(false);
+  const [isRecipeInProgress, setIsRecipeInProgress] = useState(false);
 
   const requestDetails = async () => {
     if (pathname.includes('/meals')) {
@@ -28,98 +43,169 @@ function RecipeDetails() {
     if (pathname.includes('/drinks')) {
       const drinkData = await fetchDrinksById(id);
       const drinkItem = drinkData.drinks[0];
+      console.log(drinkItem);
       const drinkEntries = ObjectEntries('strIngredient', drinkItem);
       setDrink([drinkItem]);
-      console.log(drinkItem);
       setDrinkIngredients(drinkEntries);
     }
   };
 
+  const handleCopy = (type, ids) => {
+    console.log(type);
+    let textToCopy;
+    const countTimeOut = 3000;
+
+    if (type === 'meal') {
+      textToCopy = `http://localhost:3000/meals/${ids}`;
+    }
+    if (type === 'drink') { textToCopy = `http://localhost:3000/drinks/${ids}`; }
+
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, countTimeOut);
+        console.log('Link copied!');
+      })
+      .catch((error) => {
+        console.error('Erro ao copiar o texto:', error);
+      });
+  };
+
+  const verifyFavorites = () => {
+    const favorited = getSavedRecipes('favoriteRecipes');
+    if (favorited.length > 0
+      && favorited.some((favorites) => favorites.id === id)) {
+      setIsFavorite(true);
+    }
+  };
+
+  const handleAddRecipe = (type, recipe) => {
+    const favorited = getSavedRecipes('favoriteRecipes');
+    if (type === 'meal') {
+      if (favorited.length > 0
+        && favorited.some((favorites) => favorites.id === recipe.idMeal)) {
+        setIsFavorite(false);
+        return removeRecipe('favoriteRecipes', recipe.idMeal);
+      }
+      setIsFavorite(true);
+      const newRecipeMeal = {
+        id: recipe.idMeal,
+        type,
+        nationality: recipe.strArea ? recipe.strArea : '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
+        name: recipe.strMeal,
+        image: recipe.strMealThumb,
+      };
+      saveRecipes('favoriteRecipes', newRecipeMeal);
+    }
+    if (type === 'drink') {
+      if (favorited.length > 0
+        && favorited.some((favorites) => favorites.id === recipe.idDrink)) {
+        setIsFavorite(false);
+        return removeRecipe('favoriteRecipes', recipe.idDrink);
+      }
+
+      setIsFavorite(true);
+      const newRecipeDrink = {
+        id: recipe.idDrink,
+        type,
+        nationality: recipe.strArea ? recipe.strArea : '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic,
+        name: recipe.strDrink,
+        image: recipe.strDrinkThumb,
+      };
+      saveRecipes('favoriteRecipes', newRecipeDrink);
+    }
+  };
+
+  const disableButton = () => {
+    const doneRecipesData = getSavedRecipes('doneRecipes');
+    if (pathname.includes('/meals')) {
+      const containIdMeal = doneRecipesData
+        .some((recipe) => recipe.id === meal.idMeal);
+      if (containIdMeal) { setIsDisable(true); }
+    }
+    if (pathname.includes('/drinks')) {
+      const containIdDrink = doneRecipesData
+        .some((recipe) => recipe.id === drink.idDrink);
+      if (containIdDrink) { setIsDisable(true); }
+    }
+  };
+
+  // function Teste() {
+  //   const testObj = {
+  //     drinks: {
+  //       72221: [true, false, true, false],
+  //     },
+  //     meals: {
+  //       52977: [true, false, true, false],
+  //     },
+  //   };
+
+  //   saveProgress('recipesInProgress', testObj);
+  // }
+
+  const verifyRecipe = () => {
+    const inProgressData = getSavedProgress('recipesInProgress');
+    if (pathname.includes('/meals') && Object.keys(Object.entries(inProgressData)[1][1])
+      .some((valueId) => valueId === id)) {
+      console.log('entrei no verify meals');
+      return setIsRecipeInProgress(true);
+    }
+    if (pathname.includes('/drinks') && Object.keys(Object.entries(inProgressData)[0][0])
+      .some((valueId) => valueId === id)) {
+      console.log('entrei no verify drinks');
+      return setIsRecipeInProgress(true);
+    }
+    console.log('entrei no verify else');
+    return setIsRecipeInProgress(false);
+  };
+
   useEffect(() => {
+    // Teste();
     requestDetails();
+    disableButton();
+    verifyFavorites();
+    const inProgressData = getSavedProgress('recipesInProgress');
+    console.log(inProgressData);
+    if (inProgressData
+      && Object.keys(inProgressData).length !== 0) {
+      console.log('entrei no useEffect do verify');
+      verifyRecipe();
+    }
   }, []);
 
   return (
     <div>
       { pathname.includes('/meals')
       && (
-        <div>
-          { meal.length && meal.map((recipe, index) => (
-            <div key={ index }>
-              <img
-                src={ recipe.strMealThumb }
-                alt={ recipe.strMeal }
-                data-testid="recipe-photo"
-              />
-              <p data-testid="recipe-title">{ recipe.strMeal }</p>
-              <p data-testid="recipe-category">{ recipe.strCategory }</p>
-              <div>
-                { mealIngredients.map(({ ingredients, measures }, index2) => (
-                  <ol
-                    key={ index2 }
-                  >
-                    { ingredients.map((ingredient, index3) => (
-                      <li
-                        key={ index3 }
-                        data-testid={ `${index3}-ingredient-name-and-measure` }
-                      >
-                        { `${ingredient} - ${measures[index3]}` }
-                      </li>
-                    )) }
-                  </ol>
-                ))}
-              </div>
-              <p data-testid="instructions">{ recipe.strInstructions }</p>
-              <YouTubePlayer test="video" videoUrl={ recipe.strYoutube } />
-            </div>
-          ))}
-          <MyCarousel />
-          <Button
-            test="start-recipe-btn"
-            value="Start Recipe"
-            style={ { position: 'fixed', bottom: '0' } }
-          />
-        </div>
+        <MealDetails
+          meal={ meal }
+          mealIngredients={ mealIngredients }
+          isFavorite={ isFavorite }
+          progress={ isRecipeInProgress }
+          isDisable={ isDisable }
+          copied={ copied }
+          handleAddRecipe={ handleAddRecipe }
+          handleCopy={ handleCopy }
+        />
       )}
       { pathname.includes('/drinks')
       && (
-        <div>
-          { drink.length && drink.map((recipe, index) => (
-            <div key={ index }>
-              <img
-                src={ recipe.strDrinkThumb }
-                alt={ recipe.strDrink }
-                data-testid="recipe-photo"
-              />
-              <p data-testid="recipe-title">{ recipe.strDrink }</p>
-              <p data-testid="recipe-category">{ recipe.strAlcoholic }</p>
-              <div>
-                { drinkIngredients.map(({ ingredients, measures }, j) => (
-                  <ol
-                    key={ j }
-                  >
-                    { ingredients.map((ingredient, k) => (
-                      <li
-                        key={ k }
-                        data-testid={ `${k}-ingredient-name-and-measure` }
-                      >
-                        { `${ingredient} - ${measures[k] ? measures[k] : 'to taste'}` }
-                      </li>
-                    )) }
-                  </ol>
-                ))}
-              </div>
-              <p data-testid="instructions">{ recipe.strInstructions }</p>
-            </div>
-          ))}
-          <MyCarousel />
-          <Button
-            test="start-recipe-btn"
-            value="Start Recipe"
-            style={ { position: 'fixed', bottom: '0' } }
-          />
-        </div>
-
+        <DrinkDetails
+          drink={ drink }
+          drinkIngredients={ drinkIngredients }
+          isFavorite={ isFavorite }
+          progress={ isRecipeInProgress }
+          isDisable={ isDisable }
+          copied={ copied }
+          handleAddRecipe={ handleAddRecipe }
+          handleCopy={ handleCopy }
+        />
       )}
     </div>
   );
