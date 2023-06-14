@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -16,7 +17,7 @@ import { getSavedRecipes,
   removeRecipe,
 } from '../services/favoriteRecipesLocal';
 import MealDetails from './MealDetails';
-import { getSavedProgress } from '../services/localStorageProgress';
+import { getSavedProgress, saveProgress } from '../services/localStorageProgress';
 
 function RecipeDetails() {
   const history = useHistory();
@@ -27,6 +28,7 @@ function RecipeDetails() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [mealIngredients, setMealIngredients] = useState([]);
   const [drink, setDrink] = useState({});
+  const [localStorageProgress, setLocalStorageProgress] = useState({});// [0][0
   const [drinkIngredients, setDrinkIngredients] = useState([]);
   const [isDisable, setIsDisable] = useState(false);
   const [isRecipeInProgress, setIsRecipeInProgress] = useState(false);
@@ -136,48 +138,48 @@ function RecipeDetails() {
     }
   };
 
-  // function Teste() {
-  //   const testObj = {
-  //     drinks: {
-  //       72221: [true, false, true, false],
-  //     },
-  //     meals: {
-  //       52977: [true, false, true, false],
-  //     },
-  //   };
+  function Teste() {
+    const inProgressRecipes = {
+      meals: {
+        52771: [],
+      },
+      drinks: {
+        178319: [],
+      },
+    };
 
-  //   saveProgress('recipesInProgress', testObj);
-  // }
+    saveProgress('inProgressRecipes', inProgressRecipes);
+  }
 
   const verifyRecipe = () => {
-    const inProgressData = getSavedProgress('recipesInProgress');
-    if (pathname.includes('/meals') && Object.keys(Object.entries(inProgressData)[1][1])
-      .some((valueId) => valueId === id)) {
-      console.log('entrei no verify meals');
+    if (pathname.includes('/meals') && Object.prototype
+      .hasOwnProperty.call(localStorageProgress.meals, id)) {
       return setIsRecipeInProgress(true);
     }
-    if (pathname.includes('/drinks') && Object.keys(Object.entries(inProgressData)[0][0])
-      .some((valueId) => valueId === id)) {
-      console.log('entrei no verify drinks');
+    if (pathname.includes('/drinks') && Object.prototype
+      .hasOwnProperty.call(localStorageProgress.drinks, id)) {
       return setIsRecipeInProgress(true);
     }
-    console.log('entrei no verify else');
     return setIsRecipeInProgress(false);
   };
 
   useEffect(() => {
-    // Teste();
+    Teste();
     requestDetails();
     disableButton();
     verifyFavorites();
-    const inProgressData = getSavedProgress('recipesInProgress');
-    console.log(inProgressData);
+    const inProgressData = getSavedProgress('inProgressRecipes');
     if (inProgressData
       && Object.keys(inProgressData).length !== 0) {
-      console.log('entrei no useEffect do verify');
-      verifyRecipe();
+      setLocalStorageProgress(inProgressData);
     }
   }, []);
+
+  useEffect(() => {
+    if (localStorageProgress && Object.keys(localStorageProgress).length !== 0) {
+      verifyRecipe();
+    }
+  }, [localStorageProgress]);
 
   return (
     <div>
