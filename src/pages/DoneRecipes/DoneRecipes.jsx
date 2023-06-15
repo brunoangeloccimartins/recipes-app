@@ -5,37 +5,9 @@ import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
 
 function DoneRecipes() {
-  const [recipesDone, setRecipesFav] = useState([]);
+  const [recipesDone, setRecipesDone] = useState([]);
   const [copied, setCopied] = useState(false);
   const [selectedFilter, setFilter] = useState('all');
-
-  const testLocalStorage = () => {
-    const doneRecipes = [
-      {
-        id: '52771',
-        type: 'meal',
-        nationality: 'Italian',
-        category: 'Vegetarian',
-        alcoholicOrNot: '',
-        name: 'Spicy Arrabiata Penne',
-        image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-        doneDate: '23/06/2020',
-        tags: ['Pasta', 'Curry'],
-      },
-      {
-        id: '178319',
-        type: 'drink',
-        nationality: '',
-        category: 'Cocktail',
-        alcoholicOrNot: 'Alcoholic',
-        name: 'Aquamarine',
-        image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-        doneDate: '23/06/2020',
-        tags: [],
-      },
-    ];
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  };
 
   const handleCopy = (type, id) => {
     let textToCopy;
@@ -58,19 +30,22 @@ function DoneRecipes() {
   };
 
   useEffect(() => {
-    testLocalStorage();
     const doneRecipes = localStorage.getItem('doneRecipes');
-    if (doneRecipes !== null) {
-      setRecipesFav(JSON.parse(doneRecipes));
+    if (doneRecipes !== null && doneRecipes !== undefined) {
+      try {
+        setRecipesDone(JSON.parse(doneRecipes));
+      } catch (error) {
+        console.error('Erro ao fazer parsing JSON:', error);
+      }
     }
   }, []);
 
-  useEffect(() => {
-    const doneRecipes = localStorage.getItem('doneRecipes');
-    if (doneRecipes !== null) {
-      setRecipesFav(JSON.parse(doneRecipes));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const doneRecipes = localStorage.getItem('doneRecipes');
+  //   if (doneRecipes !== null) {
+  //     setRecipesDone(JSON.parse(doneRecipes));
+  //   }
+  // }, []);
 
   return (
     <div>

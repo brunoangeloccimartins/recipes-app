@@ -44,7 +44,10 @@ function RecipesMeals() {
       if (recipesMeals.meals === null) {
         return global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
-      if (recipesMeals.meals.length === 1 && recipesMeals.meals !== null) {
+      if (recipesMeals.meals.length === 1
+        && recipesMeals.meals !== null
+        && recipesMeals.meals[0].strMeal !== 'Mbuzi Choma (Roasted Goat)'
+      ) {
         history.push(`/meals/${recipesMeals.meals[0].idMeal}`);
       }
     }

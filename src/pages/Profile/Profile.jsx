@@ -6,24 +6,23 @@ import Header from '../../components/Header/Header';
 import Button from '../../components/Button';
 
 import './Profile.css';
-import { clearLocalStorageItem } from '../../services/localStorageUtil';
+import { getSavedUser, removeUser } from '../../services/localStorageLogin';
 
 function Profile() {
   const [userEmail, setUserEmail] = useState('');
   const history = useHistory();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = getSavedUser('user');
     if (storedUser !== null) {
-      const treatedUser = JSON.parse(storedUser);
-      const { email } = treatedUser;
+      const { email } = storedUser;
       setUserEmail(email);
     }
   }, []);
 
   const handleLogout = () => {
     history.push('/');
-    clearLocalStorageItem('user');
+    removeUser('user');
   };
 
   return (

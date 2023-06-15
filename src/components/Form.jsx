@@ -4,6 +4,7 @@ import validator from 'validator';
 
 import Input from './Input';
 import Button from './Button';
+import { saveUser } from '../services/localStorageLogin';
 
 function Form() {
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ function Form() {
   };
 
   const handleSubmit = () => {
-    localStorage.setItem('user', JSON.stringify({ email }));
+    saveUser('user', { email });
     history.push('/meals');
   };
 
