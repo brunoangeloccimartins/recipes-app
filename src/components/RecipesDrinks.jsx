@@ -33,6 +33,7 @@ function RecipesDrinks() {
       await fetchData(fetchDrinksByName(searchValue), setRecipesDrinks);
       break;
     default:
+      console.log('entrei no default');
       await fetchData(fetchDrinksByFirstLetter(searchValue), setRecipesDrinks);
       break;
     }

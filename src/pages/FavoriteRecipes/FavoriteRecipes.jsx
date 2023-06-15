@@ -10,30 +10,6 @@ function FavoriteRecipes() {
   const [recipesFav, setRecipesFav] = useState([]);
   const [copied, setCopied] = useState(false);
   const [selectedFilter, setFilter] = useState('all');
-  const testLocalStorage = () => {
-    const favoriteRecipes = [
-      {
-        id: '52771',
-        type: 'meal',
-        nationality: 'Italian',
-        category: 'Vegetarian',
-        alcoholicOrNot: '',
-        name: 'Spicy Arrabiata Penne',
-        image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-      },
-      {
-        id: '178319',
-        type: 'drink',
-        nationality: '',
-        category: 'Cocktail',
-        alcoholicOrNot: 'Alcoholic',
-        name: 'Aquamarine',
-        image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-      },
-    ];
-
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-  };
 
   const handleCopy = (type, id) => {
     let textToCopy;
@@ -67,10 +43,14 @@ function FavoriteRecipes() {
   };
 
   useEffect(() => {
-    testLocalStorage();
+    // testLocalStorage();
     const favRecipes = localStorage.getItem('favoriteRecipes');
-    if (favRecipes !== null) {
-      setRecipesFav(JSON.parse(favRecipes));
+    if (favRecipes !== null && favRecipes !== undefined) {
+      try {
+        setRecipesFav(JSON.parse(favRecipes));
+      } catch (error) {
+        console.error('Erro ao fazer parsing JSON:', error);
+      }
     }
   }, []);
 

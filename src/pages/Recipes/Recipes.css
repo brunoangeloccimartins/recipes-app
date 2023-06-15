@@ -1,7 +1,10 @@
 /* --------------- HEADER --------------- */
 .search-bar {
   display: flex;
-  width: 52vw;
+  flex-direction: column;
+  position: relative;
+  top: 50px;
+  width: auto;
 }
 
 .search-bar-radios {
