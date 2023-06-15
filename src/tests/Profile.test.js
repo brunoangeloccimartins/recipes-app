@@ -96,4 +96,17 @@ describe('Testa a página de Perfil', () => {
     screen.getByText('Favorite Recipes');
     screen.getByText('Logout');
   });
+
+  // test('Teste do if dentro do useEffect', () => {
+  //   const mockStoredUser = { email: 'test@example.com' };
+  //   const getSavedUser = jest.fn(() => mockStoredUser);
+  //   const setUserEmail = jest.fn();
+
+  //   renderWithRouterAndRedux(
+  //     <App getSavedUser={ getSavedUser } setUserEmail={ setUserEmail } />,
+  //   );
+
+  //   expect(getSavedUser).toHaveBeenCalledWith('user');
+  //   expect(setUserEmail).toHaveBeenCalledWith('test@example.com');
+  // });
 });

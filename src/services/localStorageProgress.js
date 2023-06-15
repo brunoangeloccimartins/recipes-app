@@ -1,14 +1,18 @@
 export const getSavedProgress = (key) => {
   const recipesList = localStorage.getItem(key);
-  return recipesList ? JSON.parse(recipesList) : {};
+  const inProgressRecipe = {
+    drinks: {
+    },
+    meals: {
+    },
+  };
+  return recipesList ? JSON.parse(recipesList) : inProgressRecipe;
 };
-
 export const saveProgress = (key, obj) => {
   // const recipesList = getSavedRecipes(key);
   const newRecipesList = obj;
   localStorage.setItem(key, JSON.stringify(newRecipesList));
 };
-
 export const removeProgress = (id) => {
   if (!id) throw new Error('Você deve fornecer um ID');
   localStorage.removeItem(id);

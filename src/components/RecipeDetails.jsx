@@ -17,7 +17,7 @@ import { getSavedRecipes,
   removeRecipe,
 } from '../services/favoriteRecipesLocal';
 import MealDetails from './MealDetails';
-import { getSavedProgress, saveProgress } from '../services/localStorageProgress';
+import { getSavedProgress } from '../services/localStorageProgress';
 
 function RecipeDetails() {
   const history = useHistory();
@@ -138,18 +138,18 @@ function RecipeDetails() {
     }
   };
 
-  function Teste() {
-    const inProgressRecipes = {
-      meals: {
-        52771: [],
-      },
-      drinks: {
-        178319: [],
-      },
-    };
+  // function Teste() {
+  //   const inProgressRecipes = {
+  //     meals: {
+  //       52771: [],
+  //     },
+  //     drinks: {
+  //       178319: [],
+  //     },
+  //   };
 
-    saveProgress('inProgressRecipes', inProgressRecipes);
-  }
+  //   saveProgress('inProgressRecipes', inProgressRecipes);
+  // }
 
   const verifyRecipe = () => {
     if (pathname.includes('/meals') && Object.prototype
@@ -164,7 +164,7 @@ function RecipeDetails() {
   };
 
   useEffect(() => {
-    Teste();
+    // Teste();
     requestDetails();
     disableButton();
     verifyFavorites();
