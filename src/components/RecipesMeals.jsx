@@ -96,6 +96,13 @@ function RecipesMeals() {
   }, [searchValue]);
   return (
     <div>
+      <div className="page-title">
+        <h1
+          data-testid="page-title"
+        >
+          Meals
+        </h1>
+      </div>
       <div className="container">
         <div className="icons-categories">
           {recipesMealsByCategories !== undefined

@@ -11,39 +11,21 @@ function Header() {
   const location = useLocation();
   const history = useHistory();
 
-  let headerText;
   let PROFILE_ICON;
   let SEARCH_ICON;
-  console.log(location.pathname);
 
   switch (location.pathname) {
   case '/meals':
-    headerText = 'Meals';
-    PROFILE_ICON = profileIcon;
-    SEARCH_ICON = searchIcon;
-    break;
   case '/drinks':
-    headerText = 'Drinks';
     PROFILE_ICON = profileIcon;
     SEARCH_ICON = searchIcon;
     break;
   case '/profile':
-    headerText = 'Profile';
-    PROFILE_ICON = profileIcon;
-    SEARCH_ICON = null;
-    break;
   case '/done-recipes':
-    headerText = 'Done Recipes';
-    PROFILE_ICON = profileIcon;
-    SEARCH_ICON = null;
-    break;
   case '/favorite-recipes':
-    headerText = 'Favorite Recipes';
+  default:
     PROFILE_ICON = profileIcon;
     SEARCH_ICON = null;
-    break;
-  default:
-    headerText = 'Default Header';
     break;
   }
 
@@ -51,12 +33,6 @@ function Header() {
     <div className="header-container bg-color">
       <div className="btn-title-container">
         <h2>RecipesAPP</h2>
-        <div className="input-container">
-          { !isHidden
-              && (
-                <SearchBar />
-              )}
-        </div>
         <div className="btn-container">
           { SEARCH_ICON
             && (
@@ -82,12 +58,11 @@ function Header() {
         </div>
       </div>
 
-      <div className="page-title">
-        <h1
-          data-testid="page-title"
-        >
-          { headerText }
-        </h1>
+      <div className="input-container">
+        { !isHidden
+              && (
+                <SearchBar />
+              )}
       </div>
     </div>
   );

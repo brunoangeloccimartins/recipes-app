@@ -4,3 +4,8 @@ export const saveSearch = (payload) => ({
   type: ACTIONS_TYPE_SEARCH_BAR.SEARCH,
   payload,
 });
+
+export const pageTitle = (payload) => ({
+  type: ACTIONS_TYPE_SEARCH_BAR.TITLE,
+  payload,
+});

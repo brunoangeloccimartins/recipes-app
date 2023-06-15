@@ -57,6 +57,13 @@ function FavoriteRecipes() {
   return (
     <div>
       <Header />
+      <div className="page-title">
+        <h1
+          data-testid="page-title"
+        >
+          Favorites
+        </h1>
+      </div>
       <Button
         value="All"
         test="filter-by-all-btn"

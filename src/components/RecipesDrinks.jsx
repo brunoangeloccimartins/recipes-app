@@ -92,6 +92,13 @@ function RecipesDrinks() {
 
   return (
     <div>
+      <div className="page-title">
+        <h1
+          data-testid="page-title"
+        >
+          Drinks
+        </h1>
+      </div>
       <div className="container">
         <div className="icons-categories">
           {recipesDrinksByCategories !== undefined

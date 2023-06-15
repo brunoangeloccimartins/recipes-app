@@ -12,6 +12,7 @@ function Recipes() {
   return (
     <div>
       <Header />
+
       {pathname === '/meals' ? (
         <RecipesMeals />
       ) : (

@@ -50,6 +50,13 @@ function DoneRecipes() {
   return (
     <div>
       <Header />
+      <div className="page-title">
+        <h1
+          data-testid="page-title"
+        >
+          Done Recipes
+        </h1>
+      </div>
       <Button
         value="All"
         test="filter-by-all-btn"

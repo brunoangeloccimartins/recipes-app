@@ -86,7 +86,7 @@ export default function SearchBar() {
         test="exec-search-btn"
         value="Pesquisar"
         onClick={ handleClick }
-        className="btn-login"
+        className="btn-login btn-search"
       />
     </div>
   );

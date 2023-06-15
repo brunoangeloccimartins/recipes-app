@@ -28,6 +28,13 @@ function Profile() {
   return (
     <div className="profile">
       <Header />
+      <div className="page-title">
+        <h1
+          data-testid="page-title"
+        >
+          Profiles
+        </h1>
+      </div>
       <section>
         { userEmail
         && (
