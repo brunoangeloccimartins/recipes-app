@@ -11,6 +11,7 @@ import { fetchRecipe,
   fetchDrinksByFirstLetter,
 } from '../services/fetchRequisition';
 import Button from './Button';
+import '../App.css';
 
 function RecipesDrinks() {
   const [recipesDrinks, setRecipesDrinks] = useState({});
@@ -91,7 +92,7 @@ function RecipesDrinks() {
 
   return (
     <div>
-      <div>
+      <div className="container">
         <div className="icons-categories">
           {recipesDrinksByCategories !== undefined
           && recipesDrinksByCategories.map((recipe, index) => {
@@ -124,37 +125,37 @@ function RecipesDrinks() {
             return null;
           })}
         </div>
-        {recipesDrinks.drinks
-          && recipesDrinks.drinks.map((recipe, index) => {
-            const maxRecipes = 11;
-            if (index <= maxRecipes) {
-              return (
-                <Link
-                  to={ `/drinks/${recipe.idDrink}` }
-                  key={ recipe.idDrink }
-                >
+        <div className="container div-cards">
+          {recipesDrinks.drinks
+            && recipesDrinks.drinks.map((recipe, index) => {
+              const maxRecipes = 11;
+              if (index <= maxRecipes) {
+                return (
                   <div
                     data-testid={ `${index}-recipe-card` }
+                    key={ recipe.idDrink }
+                    className="recipe-card"
                   >
-                    <h1
-                      data-testid={ `${index}-card-name` }
+                    <Link
+                      to={ `/drinks/${recipe.idDrink}` }
                     >
-                      {recipe.strDrink}
-                    </h1>
-
-                    <img
-                      src={ recipe.strDrinkThumb }
-                      alt={ recipe.strDrink }
-                      data-testid={ `${index}-card-img` }
-                    />
-
+                      <img
+                        src={ recipe.strDrinkThumb }
+                        alt={ recipe.strDrink }
+                        data-testid={ `${index}-card-img` }
+                      />
+                      <h1
+                        data-testid={ `${index}-card-name` }
+                      >
+                        {recipe.strDrink}
+                      </h1>
+                    </Link>
                   </div>
-                </Link>
-              );
-            }
-            return null;
-          })}
-
+                );
+              }
+              return null;
+            })}
+        </div>
       </div>
     </div>
   );

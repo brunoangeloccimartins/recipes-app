@@ -12,6 +12,7 @@ import { fetchRecipe,
 } from '../services/fetchRequisition';
 import Button from './Button';
 import '../pages/Recipes/Recipes.css';
+import '../App.css';
 
 function RecipesMeals() {
   const [recipesMeals, setRecipesMeals] = useState({});
@@ -95,7 +96,7 @@ function RecipesMeals() {
   }, [searchValue]);
   return (
     <div>
-      <div>
+      <div className="container">
         <div className="icons-categories">
           {recipesMealsByCategories !== undefined
           && recipesMealsByCategories.map((recipe, index) => {
@@ -132,37 +133,37 @@ function RecipesMeals() {
             return null;
           })}
         </div>
-        {recipesMeals.meals
-          && recipesMeals.meals.map((recipe, index) => {
-            const maxRecipes = 11;
-            if (index <= maxRecipes) {
-              return (
-                <Link
-                  to={ `/meals/${recipe.idMeal}` }
-                  key={ recipe.idMeal }
-                  className="card-food"
-                >
-                  <div
-                    data-testid={ `${index}-recipe-card` }
-                  >
-
-                    <h1
-                      data-testid={ `${index}-card-name` }
-                    >
-                      {recipe.strMeal}
-                    </h1>
-
-                    <img
-                      src={ recipe.strMealThumb }
-                      alt={ recipe.strMeal }
-                      data-testid={ `${index}-card-img` }
-                    />
-                  </div>
-                </Link>
-              );
-            }
-            return null;
-          })}
+        <div className="container div-cards">
+          {recipesMeals.meals
+           && recipesMeals.meals.map((recipe, index) => {
+             const maxRecipes = 11;
+             if (index <= maxRecipes) {
+               return (
+                 <div
+                   data-testid={ `${index}-recipe-card` }
+                   className="recipe-card"
+                   key={ recipe.idMeal }
+                 >
+                   <Link
+                     to={ `/meals/${recipe.idMeal}` }
+                   >
+                     <img
+                       src={ recipe.strMealThumb }
+                       alt={ recipe.strMeal }
+                       data-testid={ `${index}-card-img` }
+                     />
+                     <h1
+                       data-testid={ `${index}-card-name` }
+                     >
+                       {recipe.strMeal}
+                     </h1>
+                   </Link>
+                 </div>
+               );
+             }
+             return null;
+           })}
+        </div>
       </div>
     </div>
   );
