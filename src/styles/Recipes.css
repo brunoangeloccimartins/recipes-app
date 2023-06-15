@@ -175,6 +175,8 @@ div img {
 
 /* --------------- BODY - RECIPE --------------- */
 .page-recipe-meals {
+
+  /* vermelho é melhor */
   background-color: #efedee;
   background-image: url('../images/backgrounds/recipe-meals-red.png');
   background-position: center;
