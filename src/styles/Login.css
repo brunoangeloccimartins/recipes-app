@@ -39,7 +39,12 @@ form {
 
 
 .btn-login:hover {
-  background-color: rgb(255, 23, 42);
+  background-color: rgb(179, 17, 31);
+}
+
+.btn-login > a {
+  color: black;
+  text-decoration: none;
 }
 
 @media screen and ( max-width : 480px ) {
@@ -55,4 +60,8 @@ form {
     padding: 20px;
     width: 55vw;
   }
+}
+
+.btn-card {
+  width: 50%;
 }

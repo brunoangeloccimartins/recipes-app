@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Button from './Button';
 import MyCarousel from './Carousel';
 import YouTubePlayer from './YoutubePlayer';
@@ -26,18 +27,16 @@ function MealDetails({ meal, mealIngredients,
           <p data-testid="recipe-category">{ recipe.strCategory }</p>
           <div>
             { mealIngredients.map(({ ingredients, measures }, index2) => (
-              <ol
-                key={ index2 }
-              >
+              <ListGroup key={ index2 }>
                 { ingredients.map((ingredient, index3) => (
-                  <li
+                  <ListGroup.Item
                     key={ index3 }
                     data-testid={ `${index3}-ingredient-name-and-measure` }
                   >
                     { `${ingredient} - ${measures[index3]}` }
-                  </li>
-                )) }
-              </ol>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
             ))}
           </div>
           <p data-testid="instructions">{ recipe.strInstructions }</p>
