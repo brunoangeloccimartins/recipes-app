@@ -2,16 +2,21 @@ import ACTIONS_TYPE_RECIPE_DETAILS from '../actions-type/actions-type-recipeDeta
 
 const INITIAL_STATE = {
   infoRecipe: '',
+  isCopied: false,
 };
 
-const rececipeDetailsReducer = (state = INITIAL_STATE, action) => {
+const recipeDetailsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ACTIONS_TYPE_RECIPE_DETAILS.SAVE_RECIPE_DETAILS:
     return {
       ...state,
       infoRecipe: action.payload,
     };
-
+  case ACTIONS_TYPE_RECIPE_DETAILS.COPY_RECIPE_LINK:
+    return {
+      ...state,
+      isCopied: action.payload,
+    };
   default:
     return {
       ...state,
@@ -19,4 +24,4 @@ const rececipeDetailsReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default rececipeDetailsReducer;
+export default recipeDetailsReducer;

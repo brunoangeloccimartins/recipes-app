@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchMealsById } from '../../services/fetchRequisition';
 import ObjectEntries from '../../services/objectEntries';
 import Button from '../../components/Button';
 import './RecipeInProgress.css';
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
+import useHandleCopy from '../../services/hooks/useHandleCopy';
 
 export default function MealsInProgress() {
   const history = useHistory();
@@ -15,6 +17,8 @@ export default function MealsInProgress() {
   const [checked, setChecked] = useState([]);
   const [meal, setMeal] = useState({});
   const [mealIngredients, setMealIngredients] = useState([]);
+  const handleCopy = useHandleCopy();
+  const { isCopied } = useSelector((rootReducer) => rootReducer.recipeDetails);
 
   useEffect(() => {
     const savedProgress = getSavedProgress('inProgressRecipes');
@@ -64,30 +68,21 @@ export default function MealsInProgress() {
     }
   };
 
-  const doneDate = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    return `${day}/${month + 1}/${year}`;
-  };
-
-  console.log(doneDate());
-
   const handleClick = (recipe) => {
     const doneRcp = localStorage.getItem('doneRecipes') !== null
       ? JSON.parse(localStorage.getItem('doneRecipes')) : [];
+    const tags = recipe.strTags !== null ? recipe.strTags.split(',') : [];
     const newDoneRcp = [
       ...doneRcp,
       { id: recipe.idMeal,
         type: 'meal',
-        nationality: recipe.strArea,
+        nationality: recipe.strArea ? recipe.strArea : '',
         category: recipe.strCategory,
         alcoholicOrNot: '',
         name: recipe.strMeal,
         image: recipe.strMealThumb,
-        doneDate: doneDate(),
-        tags: recipe.strTags,
+        doneDate: new Date(Date.now()).toISOString(),
+        tags,
       },
     ];
     localStorage.setItem('doneRecipes', JSON.stringify(newDoneRcp));
@@ -100,7 +95,7 @@ export default function MealsInProgress() {
 
   return (
     <main>
-      {meal.length && meal.map((recipe, index) => (
+      {meal.length > 0 && meal.map((recipe, index) => (
         <div key={ index }>
           <img
             src={ recipe.strMealThumb }
@@ -109,8 +104,13 @@ export default function MealsInProgress() {
           />
           <p data-testid="recipe-title">{recipe.strMeal}</p>
           <p data-testid="recipe-category">{recipe.strCategory}</p>
-          <Button value="Share" test="share-btn" />
+          <Button
+            value="Share"
+            test="share-btn"
+            onClick={ () => handleCopy('meal', id) }
+          />
           <Button value="Favorite" test="favorite-btn" />
+          { isCopied && <p>Link copied!</p>}
           <div>
             { mealIngredients.map(({ ingredients, measures }, index2) => (
               <ol key={ `${ingredients[index2]} index2` }>

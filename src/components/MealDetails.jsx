@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useSelector } from 'react-redux';
 import Button from './Button';
+import useHandleCopy from '../services/hooks/useHandleCopy';
 import MyCarousel from './Carousel';
 import YouTubePlayer from './YoutubePlayer';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -9,10 +11,13 @@ import witheHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
 function MealDetails({ meal, mealIngredients,
-  isFavorite, progress, isDisable, copied, handleAddRecipe, handleCopy }) {
+  isFavorite, progress, isDisable, handleAddRecipe }) {
   const history = useHistory();
   const { id } = useParams();
-
+  const handleCopy = useHandleCopy();
+  const { isCopied } = useSelector((rootReducer) => rootReducer
+    .recipeDetails);
+  console.log(isCopied);
   return (
     <div>
       { meal.length && meal.map((recipe, index) => (
@@ -61,7 +66,7 @@ function MealDetails({ meal, mealIngredients,
             }
             onClick={ () => handleAddRecipe('meal', recipe) }
           />
-          { copied && <p>Link copied!</p>}
+          { isCopied && <p>Link copied!</p>}
           <YouTubePlayer test="video" videoUrl={ recipe.strYoutube } />
         </div>
       ))}
@@ -78,9 +83,7 @@ function MealDetails({ meal, mealIngredients,
 }
 
 MealDetails.propTypes = {
-  copied: PropTypes.bool.isRequired,
   handleAddRecipe: PropTypes.func.isRequired,
-  handleCopy: PropTypes.func.isRequired,
   isDisable: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   meal: PropTypes.shape({

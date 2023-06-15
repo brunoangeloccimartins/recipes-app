@@ -2,29 +2,22 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-// import YouTubePlayer from './YoutubePlayer';
-import { fetchMealsById, fetchDrinksById } from '../services/fetchRequisition';
-// import shareIcon from '../images/shareIcon.svg';
-// import blackHeartIcon from '../images/blackHeartIcon.svg';
-// import witheHeartIcon from '../images/whiteHeartIcon.svg';
-// import Button from './Button';
-// import MyCarousel from './Carousel';
-import ObjectEntries from '../services/objectEntries';
-import DrinkDetails from './DrinkDetails';
+import { fetchMealsById, fetchDrinksById } from '../../services/fetchRequisition';
+import ObjectEntries from '../../services/objectEntries';
+import DrinkDetails from '../../components/DrinkDetails';
 
 import { getSavedRecipes,
   saveRecipes,
   removeRecipe,
-} from '../services/favoriteRecipesLocal';
-import MealDetails from './MealDetails';
-import { getSavedProgress } from '../services/localStorageProgress';
+} from '../../services/favoriteRecipesLocal';
+import MealDetails from '../../components/MealDetails';
+import { getSavedProgress } from '../../services/localStorageProgress';
 
 function RecipeDetails() {
   const history = useHistory();
   const { id } = useParams();
   const { location: { pathname } } = history;
   const [meal, setMeal] = useState({});
-  const [copied, setCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [mealIngredients, setMealIngredients] = useState([]);
   const [drink, setDrink] = useState({});
@@ -50,29 +43,6 @@ function RecipeDetails() {
       setDrink([drinkItem]);
       setDrinkIngredients(drinkEntries);
     }
-  };
-
-  const handleCopy = (type, ids) => {
-    console.log(type);
-    let textToCopy;
-    const countTimeOut = 3000;
-
-    if (type === 'meal') {
-      textToCopy = `http://localhost:3000/meals/${ids}`;
-    }
-    if (type === 'drink') { textToCopy = `http://localhost:3000/drinks/${ids}`; }
-
-    navigator.clipboard.writeText(textToCopy)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => {
-          setCopied(false);
-        }, countTimeOut);
-        console.log('Link copied!');
-      })
-      .catch((error) => {
-        console.error('Erro ao copiar o texto:', error);
-      });
   };
 
   const verifyFavorites = () => {
@@ -138,19 +108,6 @@ function RecipeDetails() {
     }
   };
 
-  // function Teste() {
-  //   const inProgressRecipes = {
-  //     meals: {
-  //       52771: [],
-  //     },
-  //     drinks: {
-  //       178319: [],
-  //     },
-  //   };
-
-  //   saveProgress('inProgressRecipes', inProgressRecipes);
-  // }
-
   const verifyRecipe = () => {
     if (pathname.includes('/meals') && Object.prototype
       .hasOwnProperty.call(localStorageProgress.meals, id)) {
@@ -191,9 +148,7 @@ function RecipeDetails() {
           isFavorite={ isFavorite }
           progress={ isRecipeInProgress }
           isDisable={ isDisable }
-          copied={ copied }
           handleAddRecipe={ handleAddRecipe }
-          handleCopy={ handleCopy }
         />
       )}
       { pathname.includes('/drinks')
@@ -204,9 +159,7 @@ function RecipeDetails() {
           isFavorite={ isFavorite }
           progress={ isRecipeInProgress }
           isDisable={ isDisable }
-          copied={ copied }
           handleAddRecipe={ handleAddRecipe }
-          handleCopy={ handleCopy }
         />
       )}
     </div>

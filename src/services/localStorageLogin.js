@@ -10,7 +10,7 @@ export const saveUser = (key, obj) => {
 
 export const removeUser = (key) => {
   if (!key) throw new Error('Você deve fornecer uma chave válida');
-  localStorage.removeItem(key);
+  localStorage.clear(key);
   // const recipesList = [...getSavedProgress()];
   // const localizationObject = recipesList.map((element) => element.id);
   // const indexProduct = localizationObject.indexOf(id);
