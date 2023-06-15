@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min
 import { fetchMealsById } from '../../services/fetchRequisition';
 import ObjectEntries from '../../services/objectEntries';
 import Button from '../../components/Button';
-import './RecipeInProgress.css';
+import '../../styles/RecipeInProgress.css';
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
 
 export default function MealsInProgress() {
@@ -18,7 +18,6 @@ export default function MealsInProgress() {
 
   useEffect(() => {
     const savedProgress = getSavedProgress('inProgressRecipes');
-    console.log(Object.keys(savedProgress), savedProgress);
     if (Object.keys(savedProgress.meals).length > 0 && savedProgress.meals) {
       setChecked(savedProgress.meals[id]);
     }

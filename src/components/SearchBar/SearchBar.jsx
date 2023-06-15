@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Input from '../Input';
 import Button from '../Button';
 import { saveSearch } from '../../redux/actions/actions-searchBar';
-import '../../pages/Recipes/Recipes.css';
+import '../../styles/Recipes.css';
 
 export default function SearchBar() {
   const [checked, setChecked] = useState('');

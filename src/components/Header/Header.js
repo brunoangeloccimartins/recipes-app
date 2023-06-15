@@ -3,7 +3,7 @@ import { useState } from 'react';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import Button from '../Button';
-import './Header.css';
+import '../../styles/Header.css';
 import SearchBar from '../SearchBar/SearchBar';
 
 function Header() {
@@ -48,7 +48,7 @@ function Header() {
   }
 
   return (
-    <div className="header-container">
+    <div className="header-container bg-color">
       <div className="btn-title-container">
         <h2>RecipesAPP</h2>
         <div className="input-container">

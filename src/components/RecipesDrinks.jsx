@@ -11,7 +11,7 @@ import { fetchRecipe,
   fetchDrinksByFirstLetter,
 } from '../services/fetchRequisition';
 import Button from './Button';
-import '../App.css';
+import '../styles/App.css';
 
 function RecipesDrinks() {
   const [recipesDrinks, setRecipesDrinks] = useState({});

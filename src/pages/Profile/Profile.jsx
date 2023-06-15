@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button';
 
-import './Profile.css';
+import '../../styles/Profile.css';
 import { getSavedUser, removeUser } from '../../services/localStorageLogin';
 
 function Profile() {
