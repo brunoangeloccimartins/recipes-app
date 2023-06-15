@@ -5,7 +5,7 @@ export const saveSearch = (payload) => ({
   payload,
 });
 
-export const pageTitle = (payload) => ({
-  type: ACTIONS_TYPE_SEARCH_BAR.TITLE,
+export const saveHidden = (payload) => ({
+  type: ACTIONS_TYPE_SEARCH_BAR.ISHIDDEN,
   payload,
 });

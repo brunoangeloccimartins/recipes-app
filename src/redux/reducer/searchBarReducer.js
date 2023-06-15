@@ -3,7 +3,7 @@ import ACTIONS_TYPE_SEARCH_BAR from '../actions-type/actions-type-searchBar';
 const INITAL_STATE = {
   searchValue: '',
   radioValue: '',
-  pageTitle: '',
+  isHidden: false,
 };
 
 const searchBarReducer = (state = INITAL_STATE, action) => {
@@ -14,10 +14,10 @@ const searchBarReducer = (state = INITAL_STATE, action) => {
       searchValue: action.payload.searchValue,
       radioValue: action.payload.radioValue,
     };
-  case ACTIONS_TYPE_SEARCH_BAR.TITLE:
+  case ACTIONS_TYPE_SEARCH_BAR.ISHIDDEN:
     return {
       ...state,
-      pageTitle: action.payload,
+      isHidden: action.payload,
     };
   default:
     return state;

@@ -1,13 +1,16 @@
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import Button from '../Button';
 import '../../styles/Header.css';
 import SearchBar from '../SearchBar/SearchBar';
+import { saveHidden } from '../../redux/actions/actions-searchBar';
 
 function Header() {
   const [isHidden, setHidden] = useState(true);
+  const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
 
@@ -42,7 +45,10 @@ function Header() {
                   alt="Ícone de pesquisa"
                   data-testid="search-top-btn"
                 /> }
-                onClick={ () => setHidden(!isHidden) }
+                onClick={ () => {
+                  setHidden(!isHidden);
+                  dispatch(saveHidden(!isHidden));
+                } }
                 className="search-btn"
               />
             ) }

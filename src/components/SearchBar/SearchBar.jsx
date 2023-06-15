@@ -37,7 +37,7 @@ export default function SearchBar() {
         placeholder="Busque um drink ou comida"
         value={ inputSearch }
         test="search-input"
-        className="input-txt"
+        className="input-txt input-txt-search"
         onChange={ (e) => handleChange(e, setInputSearch) }
       />
       <div className="search-bar-radios">

@@ -91,7 +91,7 @@ function RecipesDrinks() {
   };
 
   return (
-    <div>
+    <div className="page-recipe-drinks">
       <div className="page-title">
         <h1
           data-testid="page-title"
@@ -151,11 +151,11 @@ function RecipesDrinks() {
                         alt={ recipe.strDrink }
                         data-testid={ `${index}-card-img` }
                       />
-                      <h1
+                      <h2
                         data-testid={ `${index}-card-name` }
                       >
                         {recipe.strDrink}
-                      </h1>
+                      </h2>
                     </Link>
                   </div>
                 );

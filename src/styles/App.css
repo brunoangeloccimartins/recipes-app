@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
 
   --width: 99%;
@@ -11,7 +17,11 @@
 }
 
 .bg-color {
-  background-color: rgb(255, 153, 0);
+
+  /* backdrop-filter: blur(2px); */
+  backdrop-filter: blur(1px);
+  background: rgba(230, 0, 0, 0.733);
+  box-shadow: 0 5px 21px 0 rgba(31, 38, 135, 0.37);
 }
 
 button {
@@ -51,8 +61,7 @@ main {
 
 .div-cards {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-flow: column wrap;
   justify-content: space-between;
 }
 

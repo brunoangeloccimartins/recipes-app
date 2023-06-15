@@ -19,9 +19,9 @@ function RecipesMeals() {
   const [recipesMealsByCategories, setRecipesMealsByCategories] = useState([]);
   const [category, setCategory] = useState('All');
   const { fetchData } = useFetch();
-  const { searchValue, radioValue } = useSelector((rootReducer) => rootReducer.searchBar);
+  const { searchValue, radioValue, isHidden } = useSelector((rootReducer) => rootReducer
+    .searchBar);
   const history = useHistory();
-
   const fetchSearchs = async () => {
     const URLmeals = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     switch (radioValue) {
@@ -39,6 +39,8 @@ function RecipesMeals() {
       break;
     }
   };
+
+  console.log(isHidden);
 
   const renderCondition = () => {
     if (recipesMeals.meals !== undefined) {
@@ -95,7 +97,10 @@ function RecipesMeals() {
     // renderCondition();
   }, [searchValue]);
   return (
-    <div>
+    <div
+      className={ isHidden ? 'page-recipe-meals'
+        : 'page-recipe-meals padding-top' }
+    >
       <div className="page-title">
         <h1
           data-testid="page-title"
@@ -142,34 +147,38 @@ function RecipesMeals() {
         </div>
         <div className="container div-cards">
           {recipesMeals.meals
-           && recipesMeals.meals.map((recipe, index) => {
-             const maxRecipes = 11;
-             if (index <= maxRecipes) {
-               return (
-                 <div
-                   data-testid={ `${index}-recipe-card` }
-                   className="recipe-card"
-                   key={ recipe.idMeal }
-                 >
-                   <Link
-                     to={ `/meals/${recipe.idMeal}` }
-                   >
-                     <img
-                       src={ recipe.strMealThumb }
-                       alt={ recipe.strMeal }
-                       data-testid={ `${index}-card-img` }
-                     />
-                     <h1
-                       data-testid={ `${index}-card-name` }
-                     >
-                       {recipe.strMeal}
-                     </h1>
-                   </Link>
-                 </div>
-               );
-             }
-             return null;
-           })}
+            && recipesMeals.meals.map((recipe, index) => {
+              const maxRecipes = 11;
+              if (index <= maxRecipes) {
+                return (
+                  <div
+                    data-testid={ `${index}-recipe-card` }
+                    className="recipe-card"
+                    key={ recipe.idMeal }
+                  >
+                    <Link
+                      to={ `/meals/${recipe.idMeal}` }
+                    >
+                      <img
+                        src={ recipe.strMealThumb }
+                        alt={ recipe.strMeal }
+                        data-testid={ `${index}-card-img` }
+                      />
+                      <h2
+                        data-testid={ `${index}-card-name` }
+                      >
+                        {recipe.strMeal}
+                      </h2>
+                      <p>
+                        { `${recipe.strInstructions.slice(0, 100)}...` }
+                      </p>
+
+                    </Link>
+                  </div>
+                );
+              }
+              return null;
+            })}
         </div>
       </div>
     </div>
