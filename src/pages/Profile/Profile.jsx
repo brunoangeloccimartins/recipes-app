@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/';
 
-import Footer from '../../components/Footer';
+import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button';
 
@@ -14,10 +14,8 @@ function Profile() {
 
   useEffect(() => {
     const storedUser = getSavedUser('user');
-    if (storedUser !== null) {
-      const { email } = storedUser;
-      setUserEmail(email);
-    }
+    const { email } = storedUser;
+    setUserEmail(email);
   }, []);
 
   const handleLogout = () => {

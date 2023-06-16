@@ -1,33 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Button from '../../components/Button';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
+import useHandleCopy from '../../services/hooks/useHandleCopy';
 
 function DoneRecipes() {
   const [recipesDone, setRecipesDone] = useState([]);
-  const [copied, setCopied] = useState(false);
   const [selectedFilter, setFilter] = useState('all');
-
-  const handleCopy = (type, id) => {
-    let textToCopy;
-    const countTimeOut = 3000;
-    if (type === 'drink') {
-      textToCopy = `http://localhost:3000/drinks/${id}`;
-    }
-    textToCopy = `http://localhost:3000/meals/${id}`;
-    navigator.clipboard.writeText(textToCopy)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => {
-          setCopied(false);
-        }, countTimeOut);
-        console.log('Link copied!');
-      })
-      .catch((error) => {
-        console.error('Erro ao copiar o texto:', error);
-      });
-  };
+  const handleCopy = useHandleCopy();
+  const { isCopied } = useSelector((rootReducer) => rootReducer.recipeDetails);
 
   useEffect(() => {
     const doneRecipes = localStorage.getItem('doneRecipes');
@@ -40,32 +23,31 @@ function DoneRecipes() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const doneRecipes = localStorage.getItem('doneRecipes');
-  //   if (doneRecipes !== null) {
-  //     setRecipesDone(JSON.parse(doneRecipes));
-  //   }
-  // }, []);
-
   return (
     <div>
       <Header />
-      <Button
-        value="All"
-        test="filter-by-all-btn"
-        onClick={ () => setFilter('all') }
-      />
-      <Button
-        value="Meals"
-        test="filter-by-meal-btn"
-        onClick={ () => setFilter('meal') }
-      />
-      <Button
-        value="Drinks"
-        test="filter-by-drink-btn"
-        onClick={ () => setFilter('drink') }
-      />
-      { recipesDone.length
+      { !recipesDone.length
+        ? (<p>{'You haven\'t done any recipes yet'}</p>)
+        : (
+          <div>
+            { isCopied && <p>Link copied!</p>}
+            <Button
+              value="All"
+              test="filter-by-all-btn"
+              onClick={ () => setFilter('all') }
+            />
+            <Button
+              value="Meals"
+              test="filter-by-meal-btn"
+              onClick={ () => setFilter('meal') }
+            />
+            <Button
+              value="Drinks"
+              test="filter-by-drink-btn"
+              onClick={ () => setFilter('drink') }
+            />
+
+            { recipesDone.length
 && (
   <section>
     { recipesDone.filter((recipe) => {
@@ -100,7 +82,7 @@ function DoneRecipes() {
               ? `${recipe.nationality} - ${recipe.category}`
               : `${recipe.alcoholicOrNot}`}
           </p>
-          {recipe.tags.length && recipe.tags.map((tag) => (
+          {recipe.tags.length > 0 && recipe.tags.map((tag) => (
             <span
               key={ tag }
               data-testid={ `${index}-${tag}-horizontal-tag` }
@@ -120,11 +102,12 @@ function DoneRecipes() {
             }
             onClick={ () => handleCopy(recipe.type, recipe.id) }
           />
-          { copied && <p>Link copied!</p>}
         </div>
       ))}
   </section>
 )}
+          </div>
+        )}
     </div>
   );
 }

@@ -52,13 +52,13 @@ describe('Testa a página de Perfil', () => {
     expect(buttons).toHaveLength(4);
   });
   it('Testa o botão de logout', () => {
-    Storage.prototype.removeItem = jest.fn();
+    Storage.prototype.clear = jest.fn();
     const { history } = renderWithRouterAndRedux(<App />, {}, '/profile');
     const logout = screen.getByRole('button', { name: /logout/i });
     act(() => {
       userEvent.click(logout);
     });
-    expect(localStorage.removeItem).toHaveBeenCalledWith('user');
+    expect(localStorage.clear).toHaveBeenCalled();
 
     const { pathname } = history.location;
     expect(pathname).toBe('/');
