@@ -14,10 +14,8 @@ function Profile() {
 
   useEffect(() => {
     const storedUser = getSavedUser('user');
-    if (storedUser !== null) {
-      const { email } = storedUser;
-      setUserEmail(email);
-    }
+    const { email } = storedUser;
+    setUserEmail(email);
   }, []);
 
   const handleLogout = () => {

@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import clipboardCopy from 'clipboard-copy';
 import { copyRecipeLink } from '../../redux/actions/actions-recipeDetails';
 
 const useHandleCopy = () => {
@@ -13,9 +14,8 @@ const useHandleCopy = () => {
     }
     if (type === 'drink') { textToCopy = `http://localhost:3000/drinks/${ids}`; }
 
-    navigator.clipboard.writeText(textToCopy)
+    clipboardCopy(textToCopy)
       .then(() => {
-        console.log(type);
         dispatch(copyRecipeLink(true));
         setTimeout(() => {
           dispatch(copyRecipeLink(false));

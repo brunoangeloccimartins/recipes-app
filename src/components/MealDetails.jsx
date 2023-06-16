@@ -9,15 +9,17 @@ import YouTubePlayer from './YoutubePlayer';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import witheHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import useFavoriteRecipe from '../services/hooks/useFavoriteRecipe';
 
 function MealDetails({ meal, mealIngredients,
-  isFavorite, progress, isDisable, handleAddRecipe }) {
+  progress, isDisable }) {
   const history = useHistory();
   const { id } = useParams();
   const handleCopy = useHandleCopy();
-  const { isCopied } = useSelector((rootReducer) => rootReducer
+  const { handleAddRecipe } = useFavoriteRecipe();
+  const { isCopied, isFavorite } = useSelector((rootReducer) => rootReducer
     .recipeDetails);
-  console.log(isCopied);
+
   return (
     <div>
       { meal.length && meal.map((recipe, index) => (
@@ -83,9 +85,7 @@ function MealDetails({ meal, mealIngredients,
 }
 
 MealDetails.propTypes = {
-  handleAddRecipe: PropTypes.func.isRequired,
   isDisable: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
   meal: PropTypes.shape({
     length: PropTypes.func,
     map: PropTypes.func,

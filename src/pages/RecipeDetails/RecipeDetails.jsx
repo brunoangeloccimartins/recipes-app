@@ -6,25 +6,23 @@ import { fetchMealsById, fetchDrinksById } from '../../services/fetchRequisition
 import ObjectEntries from '../../services/objectEntries';
 import DrinkDetails from '../../components/DrinkDetails';
 
-import { getSavedRecipes,
-  saveRecipes,
-  removeRecipe,
-} from '../../services/favoriteRecipesLocal';
+import { getSavedRecipes } from '../../services/favoriteRecipesLocal';
 import MealDetails from '../../components/MealDetails';
 import { getSavedProgress } from '../../services/localStorageProgress';
+import useFavoriteRecipe from '../../services/hooks/useFavoriteRecipe';
 
 function RecipeDetails() {
   const history = useHistory();
   const { id } = useParams();
   const { location: { pathname } } = history;
   const [meal, setMeal] = useState({});
-  const [isFavorite, setIsFavorite] = useState(false);
   const [mealIngredients, setMealIngredients] = useState([]);
   const [drink, setDrink] = useState({});
   const [localStorageProgress, setLocalStorageProgress] = useState({});// [0][0
   const [drinkIngredients, setDrinkIngredients] = useState([]);
   const [isDisable, setIsDisable] = useState(false);
   const [isRecipeInProgress, setIsRecipeInProgress] = useState(false);
+  const { verifyFavorites } = useFavoriteRecipe();
 
   const requestDetails = async () => {
     if (pathname.includes('/meals')) {
@@ -42,55 +40,6 @@ function RecipeDetails() {
       const drinkEntries = ObjectEntries('strIngredient', drinkItem);
       setDrink([drinkItem]);
       setDrinkIngredients(drinkEntries);
-    }
-  };
-
-  const verifyFavorites = () => {
-    const favorited = getSavedRecipes('favoriteRecipes');
-    if (favorited.length > 0
-      && favorited.some((favorites) => favorites.id === id)) {
-      setIsFavorite(true);
-    }
-  };
-
-  const handleAddRecipe = (type, recipe) => {
-    const favorited = getSavedRecipes('favoriteRecipes');
-    if (type === 'meal') {
-      if (favorited.length > 0
-        && favorited.some((favorites) => favorites.id === recipe.idMeal)) {
-        setIsFavorite(false);
-        return removeRecipe('favoriteRecipes', recipe.idMeal);
-      }
-      setIsFavorite(true);
-      const newRecipeMeal = {
-        id: recipe.idMeal,
-        type,
-        nationality: recipe.strArea ? recipe.strArea : '',
-        category: recipe.strCategory,
-        alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
-        name: recipe.strMeal,
-        image: recipe.strMealThumb,
-      };
-      saveRecipes('favoriteRecipes', newRecipeMeal);
-    }
-    if (type === 'drink') {
-      if (favorited.length > 0
-        && favorited.some((favorites) => favorites.id === recipe.idDrink)) {
-        setIsFavorite(false);
-        return removeRecipe('favoriteRecipes', recipe.idDrink);
-      }
-
-      setIsFavorite(true);
-      const newRecipeDrink = {
-        id: recipe.idDrink,
-        type,
-        nationality: recipe.strArea ? recipe.strArea : '',
-        category: recipe.strCategory,
-        alcoholicOrNot: recipe.strAlcoholic,
-        name: recipe.strDrink,
-        image: recipe.strDrinkThumb,
-      };
-      saveRecipes('favoriteRecipes', newRecipeDrink);
     }
   };
 
@@ -124,7 +73,7 @@ function RecipeDetails() {
     // Teste();
     requestDetails();
     disableButton();
-    verifyFavorites();
+    verifyFavorites(id);
     const inProgressData = getSavedProgress('inProgressRecipes');
     if (inProgressData
       && Object.keys(inProgressData).length !== 0) {
@@ -145,10 +94,8 @@ function RecipeDetails() {
         <MealDetails
           meal={ meal }
           mealIngredients={ mealIngredients }
-          isFavorite={ isFavorite }
           progress={ isRecipeInProgress }
           isDisable={ isDisable }
-          handleAddRecipe={ handleAddRecipe }
         />
       )}
       { pathname.includes('/drinks')
@@ -156,10 +103,8 @@ function RecipeDetails() {
         <DrinkDetails
           drink={ drink }
           drinkIngredients={ drinkIngredients }
-          isFavorite={ isFavorite }
           progress={ isRecipeInProgress }
           isDisable={ isDisable }
-          handleAddRecipe={ handleAddRecipe }
         />
       )}
     </div>

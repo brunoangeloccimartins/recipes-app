@@ -3,6 +3,7 @@ import ACTIONS_TYPE_RECIPE_DETAILS from '../actions-type/actions-type-recipeDeta
 const INITIAL_STATE = {
   infoRecipe: '',
   isCopied: false,
+  isFavorite: false,
 };
 
 const recipeDetailsReducer = (state = INITIAL_STATE, action) => {
@@ -16,6 +17,11 @@ const recipeDetailsReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       isCopied: action.payload,
+    };
+  case ACTIONS_TYPE_RECIPE_DETAILS.SET_FAVORITE_RECIPE:
+    return {
+      ...state,
+      isFavorite: action.payload,
     };
   default:
     return {

@@ -5,9 +5,13 @@ import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min
 import { fetchDrinksById } from '../../services/fetchRequisition';
 import ObjectEntries from '../../services/objectEntries';
 import Button from '../../components/Button';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import shareIcon from '../../images/shareIcon.svg';
 import './RecipeInProgress.css';
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
 import useHandleCopy from '../../services/hooks/useHandleCopy';
+import useFavoriteRecipe from '../../services/hooks/useFavoriteRecipe';
 
 export default function DrinksInProgress() {
   const history = useHistory();
@@ -18,7 +22,9 @@ export default function DrinksInProgress() {
   const [drink, setDrink] = useState({});
   const [drinkIngredients, setDrinkIngredients] = useState([]);
   const handleCopy = useHandleCopy();
-  const { isCopied } = useSelector((rootReducer) => rootReducer.recipeDetails);
+  const { handleAddRecipe } = useFavoriteRecipe();
+  const { isCopied,
+    isFavorite } = useSelector((rootReducer) => rootReducer.recipeDetails);
 
   useEffect(() => {
     const savedProgress = getSavedProgress('inProgressRecipes');
@@ -45,6 +51,7 @@ export default function DrinksInProgress() {
       setDrinkIngredients(drinkEntries);
     }
   };
+
   const handleInputChange = (indice) => {
     const newChecked = [...checked];
     newChecked[indice] = !newChecked[indice];
@@ -105,11 +112,27 @@ export default function DrinksInProgress() {
           <p data-testid="recipe-title">{recipe.strDrink}</p>
           <p data-testid="recipe-category">{recipe.strCategory}</p>
           <Button
-            value="Share"
-            test="share-btn"
+            value={
+              <img
+                src={ shareIcon }
+                alt="Compartilhar"
+                data-testid="share-btn"
+              />
+            }
+            // test="share-btn"
             onClick={ () => handleCopy('drink', id) }
           />
-          <Button value="Favorite" test="favorite-btn" />
+          <Button
+            value={
+              <img
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                alt="Favoritar"
+                data-testid="favorite-btn"
+              />
+            }
+            // test="favorite-btn"
+            onClick={ () => handleAddRecipe('drink', recipe) }
+          />
           { isCopied && <p>Link copied!</p>}
           <div>
             {drinkIngredients.map(({ ingredients, measures }, index2) => (
