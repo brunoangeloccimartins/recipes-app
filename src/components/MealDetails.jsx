@@ -26,6 +26,7 @@ function MealDetails({ meal, mealIngredients,
           <p data-testid="recipe-title">{ recipe.strMeal }</p>
           <p data-testid="recipe-category">{ recipe.strCategory }</p>
           <div>
+            <span>Ingredients:</span>
             { mealIngredients.map(({ ingredients, measures }, index2) => (
               <ListGroup key={ index2 }>
                 { ingredients.map((ingredient, index3) => (
@@ -33,7 +34,7 @@ function MealDetails({ meal, mealIngredients,
                     key={ index3 }
                     data-testid={ `${index3}-ingredient-name-and-measure` }
                   >
-                    { `${ingredient} - ${measures[index3]}` }
+                    { `- ${ingredient} - ${measures[index3]}` }
                   </ListGroup.Item>
                 ))}
               </ListGroup>
