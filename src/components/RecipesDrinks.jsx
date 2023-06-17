@@ -12,7 +12,6 @@ import { fetchRecipe,
   fetchDrinksByFirstLetter,
 } from '../services/fetchRequisition';
 import Button from './Button';
-import RandomRecipeCard from './RandomRecipe/RandomRecipeCard';
 
 function RecipesDrinks() {
   const [recipesDrinks, setRecipesDrinks] = useState({});
@@ -101,7 +100,6 @@ function RecipesDrinks() {
 
   return (
     <div>
-      <RandomRecipeCard />
       <div>
         <div className="icons-categories">
           {recipesDrinksByCategories !== undefined

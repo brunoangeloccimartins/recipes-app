@@ -100,7 +100,7 @@ export default function MealsInProgress() {
 
   return (
     <main>
-      {meal.length > 0 && meal.map((recipe, index) => (
+      {meal.length && meal.map((recipe, index) => (
         <div key={ index }>
           <img
             src={ recipe.strMealThumb }
@@ -132,7 +132,8 @@ export default function MealsInProgress() {
             onClick={ () => handleAddRecipe('meal', recipe) }
           />
           <div>
-            { mealIngredients.map(({ ingredients, measures }, index2) => (
+            { mealIngredients.length
+            && mealIngredients.map(({ ingredients, measures }, index2) => (
               <ol key={ `${ingredients[index2]} index2` }>
                 {ingredients.map((ingredient, index3) => (
                   <li

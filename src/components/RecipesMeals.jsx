@@ -10,17 +10,19 @@ import { fetchRecipe,
   fetchMeals,
   fetchMealsByName,
   fetchMealsByFirstLetter,
+  fetchByCountry,
 } from '../services/fetchRequisition';
 import Button from './Button';
 import '../pages/Recipes/Recipes.css';
-import RandomRecipeCard from './RandomRecipe/RandomRecipeCard';
+import SelectFilter from './SelectFilter';
 
 function RecipesMeals() {
   const [recipesMeals, setRecipesMeals] = useState({});
   const [recipesMealsByCategories, setRecipesMealsByCategories] = useState([]);
   const [category, setCategory] = useState('All');
   const { fetchData } = useFetch();
-  const { searchValue, radioValue } = useSelector((rootReducer) => rootReducer.searchBar);
+  const { searchValue,
+    radioValue, selectedCountry } = useSelector((rootReducer) => rootReducer.searchBar);
   const history = useHistory();
 
   const fetchSearchs = async () => {
@@ -80,6 +82,14 @@ function RecipesMeals() {
     await fetchData(recipesMealsByCategory, setRecipesMeals);
   };
 
+  const filterByCountryCulture = async () => {
+    if (selectedCountry !== 'All') {
+      const mealsByCountry = fetchByCountry(selectedCountry);
+      return fetchData(mealsByCountry, setRecipesMeals);
+    }
+    return fetchRecipesByMeals();
+  };
+
   const toggleFilter = (categories) => {
     setCategory(categories);
     if (categories === category) {
@@ -92,6 +102,11 @@ function RecipesMeals() {
       filterByMeals(categories);
     }
   };
+  useEffect(() => {
+    if (selectedCountry !== 'Search by country') {
+      filterByCountryCulture();
+    }
+  }, [selectedCountry]);
 
   useEffect(() => {
     renderCondition();
@@ -103,12 +118,16 @@ function RecipesMeals() {
     fetchSearchs();
     // renderCondition();
   }, [searchValue]);
+
   return (
     <div>
-      <RandomRecipeCard />
-      <div>
-        <div className="icons-categories">
-          {recipesMealsByCategories !== undefined
+      <SelectFilter />
+      { selectedCountry !== 'All' && selectedCountry !== 'Search by country'
+        && (
+          <p>{ `Results for ${selectedCountry} food` }</p>
+        )}
+      <div className="icons-categories">
+        {recipesMealsByCategories !== undefined
           && recipesMealsByCategories.map((recipe, index) => {
             const maxCategories = 5;
             const classNames = [
@@ -142,8 +161,8 @@ function RecipesMeals() {
             }
             return null;
           })}
-        </div>
-        {recipesMeals.meals
+      </div>
+      {recipesMeals.meals
           && recipesMeals.meals.map((recipe, index) => {
             const maxRecipes = 11;
             if (index <= maxRecipes) {
@@ -174,7 +193,6 @@ function RecipesMeals() {
             }
             return null;
           })}
-      </div>
     </div>
   );
 }

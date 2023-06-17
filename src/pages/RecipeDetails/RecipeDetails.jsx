@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch } from 'react-redux';
 import { fetchMealsById, fetchDrinksById } from '../../services/fetchRequisition';
 import ObjectEntries from '../../services/objectEntries';
 import DrinkDetails from '../../components/DrinkDetails';
@@ -10,10 +11,12 @@ import { getSavedRecipes } from '../../services/favoriteRecipesLocal';
 import MealDetails from '../../components/MealDetails';
 import { getSavedProgress } from '../../services/localStorageProgress';
 import useFavoriteRecipe from '../../services/hooks/useFavoriteRecipe';
+import { filterByCountry } from '../../redux/actions/actions-searchBar';
 
 function RecipeDetails() {
   const history = useHistory();
   const { id } = useParams();
+  const dispatch = useDispatch();
   const { location: { pathname } } = history;
   const [meal, setMeal] = useState({});
   const [mealIngredients, setMealIngredients] = useState([]);
@@ -71,6 +74,7 @@ function RecipeDetails() {
 
   useEffect(() => {
     // Teste();
+    dispatch(filterByCountry('Search by country'));
     requestDetails();
     disableButton();
     verifyFavorites(id);

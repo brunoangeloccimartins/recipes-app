@@ -133,7 +133,8 @@ export default function DrinksInProgress() {
             onClick={ () => handleAddRecipe('drink', recipe) }
           />
           <div>
-            {drinkIngredients.map(({ ingredients, measures }, index2) => (
+            { drinkIngredients.length > 0
+            && drinkIngredients.map(({ ingredients, measures }, index2) => (
               <ol key={ index2 }>
                 {ingredients.map((ingredient, index3) => (
                   <li

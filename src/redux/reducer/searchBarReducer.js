@@ -3,6 +3,7 @@ import ACTIONS_TYPE_SEARCH_BAR from '../actions-type/actions-type-searchBar';
 const INITAL_STATE = {
   searchValue: '',
   radioValue: '',
+  selectedCountry: 'Search by country',
 };
 
 const searchBarReducer = (state = INITAL_STATE, action) => {
@@ -12,6 +13,11 @@ const searchBarReducer = (state = INITAL_STATE, action) => {
       ...state,
       searchValue: action.payload.searchValue,
       radioValue: action.payload.radioValue,
+    };
+  case ACTIONS_TYPE_SEARCH_BAR.FILTER_BY_COUNTRY:
+    return {
+      ...state,
+      selectedCountry: action.payload,
     };
   default:
     return state;

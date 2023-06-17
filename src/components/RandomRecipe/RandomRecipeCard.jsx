@@ -1,17 +1,42 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useRandomRecipe } from '../../services/hooks/useLaricaButton';
 import Button from '../Button';
+import RemoveBtn from '../../images/icons/removeBtn.png';
+import { setRandomRecipe } from '../../redux/actions/actions-recipeDetails';
 import './RandomRecipeCard.css';
 
 function RandomRecipeCard() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { randomRecipe } = useSelector((rootReducer) => rootReducer.recipeDetails);
   const getRandomRecipe = useRandomRecipe();
+
+  const redirectToDetails = () => {
+    if (randomRecipe.idMeal) {
+      history.push(`/meals/${randomRecipe.idMeal}`);
+    }
+    if (randomRecipe.idDrink) {
+      history.push(`/drinks/${randomRecipe.idDrink}`);
+    }
+  };
+
   return (
     <div className={ randomRecipe !== null ? 'preview-card' : 'hidden-card' }>
       { randomRecipe
         && (
           <div className="recipe-preview-content">
+            <Button
+              value={
+                <img
+                  src={ RemoveBtn }
+                  alt="remove button"
+                />
+              }
+              className="remove-preview-btn"
+              onClick={ () => dispatch(setRandomRecipe(null)) }
+            />
             <div className="preview-name">
               <p>
                 { randomRecipe.strMeal
@@ -25,20 +50,29 @@ function RandomRecipeCard() {
               alt="Recipe preview"
             />
             <div className="category-container">
-              <p className="preview-category">{ randomRecipe.strCategory}</p>
-              {' '}
+              <p className="preview-category">
+                <strong>{ randomRecipe.strCategory}</strong>
+              </p>
               { randomRecipe.strAlcoholic
-              && <p>{randomRecipe.strAlcoholic}</p> }
+              && (
+                <p>
+                  <i>
+                    {randomRecipe.strAlcoholic}
+                  </i>
+                </p>
+              )}
             </div>
             <div className="random-btn-container">
               <Button
                 className="random-again-btn"
-                value="Random again"
+                value="Surprise me"
                 onClick={ getRandomRecipe }
               />
+
               <Button
                 className="like-btn"
-                value="I like it! Let's go!"
+                value="Let's go!"
+                onClick={ redirectToDetails }
               />
             </div>
           </div>

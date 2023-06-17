@@ -73,7 +73,7 @@ function DoneRecipes() {
           <p
             data-testid={ `${index}-horizontal-done-date` }
           >
-            {recipe.doneDate}
+            {new Date(recipe.doneDate).toLocaleDateString()}
           </p>
           <p
             data-testid={ `${index}-horizontal-top-text` }
