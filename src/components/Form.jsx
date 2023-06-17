@@ -5,6 +5,7 @@ import validator from 'validator';
 import Input from './Input';
 import Button from './Button';
 import { saveUser } from '../services/localStorageLogin';
+import casalCozinhando from '../images/login-casal2.png';
 
 function Form() {
   const [email, setEmail] = useState('');
@@ -32,6 +33,9 @@ function Form() {
 
   return (
     <form>
+      <div className="container-img-login">
+        <img src={ casalCozinhando } alt="casal cozinhando" />
+      </div>
       <h1>Login</h1>
       <Input
         type="email"

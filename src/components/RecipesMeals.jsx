@@ -100,7 +100,7 @@ function RecipesMeals() {
   }, [searchValue]);
   return (
     <div
-      className={ isHidden ? 'page-recipe-meals'
+      className={ !isHidden ? 'page-recipe-meals'
         : 'page-recipe-meals padding-top' }
     >
       <div className="page-title">
@@ -132,7 +132,7 @@ function RecipesMeals() {
                   <Button
                     value={
                       <div className={ classNames[index] }>
-                        { recipe.strCategory }
+                        <div>{ recipe.strCategory }</div>
                       </div>
                     }
                     test={ recipe.strCategory !== 'All'
@@ -149,64 +149,64 @@ function RecipesMeals() {
         </div>
         <div className="container div-cards">
           {recipesMeals.meals
-           && recipesMeals.meals.map((recipe, index) => {
-             const maxRecipes = 11;
-             if (index <= maxRecipes) {
-               return (
-                 <div className="recipe-card" key={ recipe.idMeal }>
-                   <Card style={ { width: '18rem' } }>
-                     <Card.Img
-                       variant="top"
-                       src={ recipe.strMealThumb }
-                       alt={ recipe.strMeal }
-                       data-testid={ `${index}-card-img` }
-                     />
-                     <Card.Body>
-                       <Card.Title
-                         data-testid={ `${index}-card-name` }
-                       >
-                         {recipe.strMeal}
-                       </Card.Title>
-                       <Card.Text>
-                         { `${recipe.strInstructions.slice(0, 100)}...` }
-                       </Card.Text>
-                       <Button
-                         className="btn-login btn-card"
-                         value={
-                           <Link
-                             to={ `/meals/${recipe.idMeal}` }
-                           >
-                             View Recipe
-                           </Link>
-                         }
-                       />
-                     </Card.Body>
-                   </Card>
-                 </div>
-               //  <div
-               //    data-testid={ `${index}-recipe-card` }
-               //    className="recipe-card"
-               //    key={ recipe.idMeal }
-               //  >
-               //    <Link
-               //      to={ `/meals/${recipe.idMeal}` }
-               //    >
-               //      <img
-               //        src={ recipe.strMealThumb }
-               //        alt={ recipe.strMeal }
-               //        data-testid={ `${index}-card-img` }
-               //      />
-               //      <h1
-               //        data-testid={ `${index}-card-name` }
-               //      >
-               //        {recipe.strMeal}
-               //      </h1>
-               //    </Link>
-               //  </div>
-               );
-             }
-             return null;
-           })}
+            && recipesMeals.meals.map((recipe, index) => {
+              const maxRecipes = 11;
+              if (index <= maxRecipes) {
+                return (
+                  <div className="recipe-card" key={ recipe.idMeal }>
+                    <Card style={ { width: '18rem' } }>
+                      <Card.Img
+                        variant="top"
+                        src={ recipe.strMealThumb }
+                        alt={ recipe.strMeal }
+                        data-testid={ `${index}-card-img` }
+                      />
+                      <Card.Body>
+                        <Card.Title
+                          data-testid={ `${index}-card-name` }
+                        >
+                          {recipe.strMeal}
+                        </Card.Title>
+                        <Card.Text>
+                          { `${recipe.strInstructions.slice(0, 100)}...` }
+                        </Card.Text>
+                        <Button
+                          className="btn-login btn-card"
+                          value={
+                            <Link
+                              to={ `/meals/${recipe.idMeal}` }
+                            >
+                              View Recipe
+                            </Link>
+                          }
+                        />
+                      </Card.Body>
+                    </Card>
+                  </div>
+                //  <div
+                //    data-testid={ `${index}-recipe-card` }
+                //    className="recipe-card"
+                //    key={ recipe.idMeal }
+                //  >
+                //    <Link
+                //      to={ `/meals/${recipe.idMeal}` }
+                //    >
+                //      <img
+                //        src={ recipe.strMealThumb }
+                //        alt={ recipe.strMeal }
+                //        data-testid={ `${index}-card-img` }
+                //      />
+                //      <h1
+                //        data-testid={ `${index}-card-name` }
+                //      >
+                //        {recipe.strMeal}
+                //      </h1>
+                //    </Link>
+                //  </div>
+                );
+              }
+              return null;
+            })}
         </div>
       </div>
     </div>

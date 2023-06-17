@@ -9,7 +9,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import { saveHidden } from '../../redux/actions/actions-searchBar';
 
 function Header() {
-  const [isHidden, setHidden] = useState(true);
+  const [isHidden, setHidden] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -33,8 +33,8 @@ function Header() {
   }
 
   return (
-    <div className="header-container bg-color">
-      <div className="btn-title-container">
+    <>
+      <div className="container-title-btns bg-color">
         <h2>RecipesAPP</h2>
         <div className="btn-container">
           { SEARCH_ICON
@@ -64,13 +64,12 @@ function Header() {
         </div>
       </div>
 
-      <div className="input-container">
-        { !isHidden
-              && (
-                <SearchBar />
-              )}
-      </div>
-    </div>
+      { isHidden && (
+        <SearchBar />
+      )}
+
+    </>
+
   );
 }
 

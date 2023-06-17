@@ -30,7 +30,6 @@ button {
 
 main {
   background-color: #efedee;
-  padding-bottom: 9vw;
 }
 
 .custom-loader {
@@ -66,6 +65,9 @@ main {
 }
 
 .recipe-card {
+  align-items: center;
+  display: flex;
+  justify-content: center;
   margin: 20px 0;
 }
 

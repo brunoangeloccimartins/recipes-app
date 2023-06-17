@@ -5,40 +5,33 @@
   --padding-right-and-left: 15px;
 }
 
-.header-container {
+.container-title-btns {
   align-items: center;
   display: flex;
-  flex-flow: column nowrap;
+  height: 70px;
+  justify-content: space-around;
   position: relative;
   width: 100%;
 }
 
-.btn-title-container {
-  align-items: center;
-  color: rgb(65, 25, 127);
-  display: flex;
-  justify-content: space-evenly;
-
-  /* padding: 15px; */
-  width: 100%;
-}
-
-.btn-title-container h2 {
-  padding-left: var(--padding-right-and-left);
+.container-title-btns h2 {
+  margin-bottom: 0;
 }
 
 .btn-title-container > img {
-  height: 40px;
+  width: 30px;
 }
 
 .btn-container {
   display: flex;
   justify-content: space-between;
   padding-right: var(--padding-right-and-left);
+  width: 30%;
 }
 
-.btn-container img {
+.btn-container > button > img {
   margin-left: 10px;
+  width: 40px;
 }
 
 .page-title {
@@ -54,10 +47,6 @@
   width: 70%;
 }
 
-.padding-top {
-  padding-top: 150px;
-}
-
 .profile-btn {
   background: none;
   border: none;
@@ -66,13 +55,6 @@
 .search-btn {
   background: none;
   border: none;
-}
-
-.input-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-  width: 100%;
 }
 
 .search-input {

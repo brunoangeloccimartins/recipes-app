@@ -1,9 +1,12 @@
 /* --------------- ICONS - MEALS --------------- */
 .icons-categories {
   align-items: center;
+  background-color: rgba(239, 237, 238, 0.568);
+  border-radius: 5px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   overflow-x: hidden;
+  width: 100%;
 }
 
 .btn-categories {
@@ -16,55 +19,70 @@
 .btn-category-all {
   align-items: flex-end;
   background-image: url('../images/icons/all-icon.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-all > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
 .btn-category-beef {
   align-items: flex-end;
   background-image: url('../images/icons/beaf-icon.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-beef > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
 .btn-category-breakfast {
   align-items: flex-end;
   background-image: url('../images/icons/breakfast-icon.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-breakfast > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
 .btn-category-chicken {
   align-items: flex-end;
   background-image: url('../images/icons/chicken-icon.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-chicken > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
 .btn-category-dessert {
   align-items: flex-end;
   background-image: url('../images/icons/dessert-icon.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
@@ -73,16 +91,25 @@
   width: 50px;
 }
 
+.btn-category-dessert > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+
 .btn-category-goat {
   align-items: flex-end;
   background-image: url('../images/icons/goat-icon.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-goat > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
 .btn-category {
@@ -104,67 +131,71 @@ div img {
 .btn-category-all-drinks {
   align-items: flex-end;
   background-image: url('../images/icons/all-icon-drinks.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-all-drinks > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
 .btn-category-ordinary {
   align-items: flex-end;
   background-image: url('../images/icons/ordinary-drinks.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
-  height: 110px;
+  height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-ordinary > div {
+  font-size: 0.8rem;
+  height: 20px;
+  margin-top: 10px;
 }
 
 .btn-category-cocktail {
   align-items: flex-end;
   background-image: url('../images/icons/cocktail-icon.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-cocktail > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
 .btn-category-shake {
   align-items: flex-end;
   background-image: url('../images/icons/shake.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
   height: 80px;
   justify-content: center;
   width: 50px;
+}
+
+.btn-category-shake > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
 }
 
 .btn-category-other {
   align-items: flex-end;
   background-image: url('../images/icons/others-drinks.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  display: flex;
-  height: 110px;
-  justify-content: center;
-  width: 50px;
-}
-
-.btn-category-cocoa {
-  align-items: flex-end;
-  background-image: url('../images/icons/cocoa-icon.png');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;
@@ -173,13 +204,45 @@ div img {
   width: 50px;
 }
 
+.btn-category-other > div {
+  font-size: 0.8rem;
+  height: 20px;
+  margin-top: 10px;
+}
+
+.btn-category-cocoa {
+  align-items: flex-end;
+  background-image: url('../images/icons/cocoa-icon.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  height: 80px;
+  justify-content: center;
+  width: 50px;
+}
+
+.btn-category-cocoa > div {
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+
 /* --------------- BODY - RECIPE --------------- */
 .page-recipe-meals {
-
-  /* vermelho é melhor */
-  background-color: #d4d4d4;
+  background-color: #efedee;
   background-image: url('../images/backgrounds/recipe-meals-red.png');
   background-position: center;
   background-size: contain;
   padding-top: 15px;
+}
+
+.page-recipe-drinks {
+  background-color: #efedee;
+  background-image: url('../images/backgrounds/drinks-background2.png');
+  background-position: center;
+  background-size: contain;
+  padding-top: 15px;
+}
+
+.padding-top {
+  padding-top: 170px;
 }

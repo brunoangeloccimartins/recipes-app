@@ -17,7 +17,8 @@ function RecipesDrinks() {
   const [recipesDrinks, setRecipesDrinks] = useState({});
   const [recipesDrinksByCategories, setRecipesDrinksByCategories] = useState([]);
   const [category, setCategory] = useState('All');
-  const { searchValue, radioValue } = useSelector((rootReducer) => rootReducer.searchBar);
+  const { searchValue, radioValue, isHidden } = useSelector((rootReducer) => rootReducer
+    .searchBar);
   const { fetchData } = useFetch();
   const history = useHistory();
 
@@ -91,7 +92,10 @@ function RecipesDrinks() {
   };
 
   return (
-    <div className="page-recipe-drinks">
+    <div
+      className={ !isHidden ? 'page-recipe-drinks'
+        : 'page-recipe-drinks padding-top' }
+    >
       <div className="page-title">
         <h1
           data-testid="page-title"
@@ -118,7 +122,7 @@ function RecipesDrinks() {
                   key={ recipe.strCategory }
                   value={
                     <div className={ classNames[index] }>
-                      { recipe.strCategory }
+                      <div>{ recipe.strCategory }</div>
                     </div>
                   }
                   test={ recipe.strCategory !== 'All'

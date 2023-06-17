@@ -15,7 +15,7 @@ form {
   flex-direction: column;
   justify-content: center;
   padding-left: 7vw;
-  width: 20vw;
+  width: 85vw;
 }
 
 .input-txt, .btn-login {
@@ -58,8 +58,22 @@ form {
     border-radius: 5px;
     box-shadow: 1px 2px 15px 0 rgba(0, 0, 0, 0.925);
     padding: 20px;
-    width: 55vw;
+    width: 85vw;
   }
+}
+
+.container-img-login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.container-img-login > img {
+  width: 70%;
 }
 
 .btn-card {
