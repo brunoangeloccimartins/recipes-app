@@ -15,39 +15,40 @@ function MealDetails({ meal, mealIngredients,
   isFavorite, progress, isDisable, copied, handleAddRecipe, handleCopy }) {
   const history = useHistory();
   const { id } = useParams();
+  const iframeStyles = {
+    width: '100%',
+    height: '300px',
+    borderRadius: '5px',
+  };
 
   return (
     <div
       style={ { paddingTop: '15px', paddingBottom: '15px' } }
     >
       { meal.length && meal.map((recipe, index) => (
-        <div key={ index }>
-          <Card
-            style={ { width: '18rem', marginTop: '0', paddingTop: '15px' } }
-            className="container"
-          >
-            <Card.Img
-              variant="top"
-              src={ recipe.strMealThumb }
-              alt={ recipe.strMeal }
-            />
-            <Card.Body>
-              <Card.Title
-                data-testid={ `${index}-card-name` }
-              >
-                {recipe.strMeal}
-              </Card.Title>
-              <Card.Text>
-                { `Category: ${recipe.strCategory}` }
-              </Card.Text>
-            </Card.Body>
-          </Card>
+        <div
+          key={ index }
+        >
+          <div className="container">
+            <Card>
+              <Card.Img
+                variant="top"
+                src={ recipe.strMealThumb }
+                alt={ recipe.strMeal }
+              />
+              <Card.Body>
+                <Card.Title>
+                  {recipe.strMeal}
+                </Card.Title>
+                <Card.Text>
+                  { `Category: ${recipe.strCategory}` }
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
 
-          <div>
-            <Card
-              style={ { width: '18rem' } }
-              className="container"
-            >
+          <div className="container">
+            <Card>
               <Card.Body>
                 <Card.Title>
                   Ingredients:
@@ -70,15 +71,20 @@ function MealDetails({ meal, mealIngredients,
             </Card>
 
           </div>
-          <Card style={ { width: '18rem' } } className="container">
-            <Card.Body>
-              <Card.Text>
-                { recipe.strInstructions.split('. ').map((frase) => (
-                  <p key={ frase }>{ `${frase}.` }</p>
-                )) }
-              </Card.Text>
-            </Card.Body>
-          </Card>
+          <div className="container">
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  Step-by-step:
+                </Card.Title>
+                <Card.Text>
+                  { recipe.strInstructions.split('. ').map((frase) => (
+                    <p key={ frase }>{ `${frase}.` }</p>
+                  )) }
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
           <Button
             value={
               <img
@@ -100,11 +106,13 @@ function MealDetails({ meal, mealIngredients,
             onClick={ () => handleAddRecipe('meal', recipe) }
           />
           { copied && <p>Link copied!</p>}
-          <iframe
-            title={ `${index}-video` }
-            src={ recipe.strYoutube.replace('watch?v=', 'embed/') }
-            style={ { width: '100%', height: '300px' } }
-          />
+          <div className="container">
+            <iframe
+              title={ `${index}-video` }
+              src={ recipe.strYoutube.replace('watch?v=', 'embed/') }
+              style={ iframeStyles }
+            />
+          </div>
         </div>
       ))}
       <MyCarousel />
@@ -114,6 +122,7 @@ function MealDetails({ meal, mealIngredients,
         style={ { position: 'fixed', bottom: '0' } }
         onClick={ () => history.push(`/meals/${id}/in-progress`) }
         disabled={ isDisable }
+        className="btn-login btn-bottom"
       />
     </div>
   );

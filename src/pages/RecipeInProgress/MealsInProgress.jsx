@@ -142,7 +142,7 @@ export default function MealsInProgress() {
             value="Done Recipe"
             test="finish-recipe-btn"
             disabled={ disabled }
-            className="btn-bottom"
+            className="btn-login btn-bottom"
             onClick={ () => handleClick(recipe) }
           />
         </div>

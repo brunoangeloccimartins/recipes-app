@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Carousel from 'react-bootstrap/Carousel';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { fetchRecipe } from '../services/fetchRequisition';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function MyCarousel() {
   const [recipesMeals, setRecipesMeals] = useState([]);
@@ -32,63 +32,46 @@ function MyCarousel() {
 
   const maxCarousel = 6;
   return (
-    <Carousel
-      showThumbs={ false }
-      showArrows
-      showStatus={ false }
-      showIndicators={ false }
+    <div
+      style={ { paddingBottom: '30px' } }
     >
-      { pathname.includes('/meals')
-        ? (recipesDrinks.length && recipesDrinks.slice(0, maxCarousel)
-          .map((drink, index) => (
-            <div
-              key={ index }
-              style={ { display: 'flex', marginTop: '25px' } }
-              data-testid={ `${index}-recommendation-card` }
-            >
-              <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
-              <p
-                data-testid={ `${index}-recommendation-title` }
-              >
-                { drink.strDrink }
+      <Carousel
+        interval={ 2000 }
+        className="container"
+      >
+        { pathname.includes('/meals')
+          ? (recipesDrinks.length && recipesDrinks.slice(0, maxCarousel)
+            .map((drink, index) => (
 
-              </p>
-              <img
-                src={ recipesDrinks[index + 1].strDrinkThumb }
-                alt={ recipesDrinks[index + 1].strDrink }
-              />
-              <p data-testid={ `${index + 1}-recommendation-title` }>
-                { recipesDrinks[index + 1].strDrink }
+              <Carousel.Item key={ index }>
+                <img
+                  className="d-block w-100"
+                  src={ drink.strDrinkThumb }
+                  alt={ drink.strDrink }
+                />
+                <Carousel.Caption>
+                  <h3>{ drink.strDrink }</h3>
+                </Carousel.Caption>
+              </Carousel.Item>
 
-              </p>
-            </div>
-          )))
-        : (recipesMeals.length && recipesMeals.slice(0, maxCarousel)
-          .map((recipe, index) => (
-            <div
-              key={ index }
-              style={ { display: 'flex', marginTop: '25px' } }
-              data-testid={ `${index}-recommendation-card` }
-            >
-              <img src={ recipe.strMealThumb } alt={ recipe.strMeal } />
-              <p
-                data-testid={ `${index}-recommendation-title` }
-              >
-                { recipe.strMeal }
-              </p>
-              <img
-                src={ recipesMeals[index + 1].strMealThumb }
-                alt={ recipesMeals[index + 1].strMeal }
-              />
-              <p
-                data-testid={ `${index + 1}-recommendation-title` }
-              >
-                { recipesMeals[index + 1].strMeal }
+            )))
+          : (recipesMeals.length && recipesMeals.slice(0, maxCarousel)
+            .map((recipe, index) => (
 
-              </p>
-            </div>
-          )))}
-    </Carousel>
+              <Carousel.Item key={ index }>
+                <img
+                  className="d-block w-100"
+                  src={ recipe.strMealThumb }
+                  alt={ recipe.strMeal }
+                />
+                <Carousel.Caption>
+                  <h3>{ recipe.strMeal }</h3>
+                </Carousel.Caption>
+              </Carousel.Item>
+
+            )))}
+      </Carousel>
+    </div>
   );
 }
 

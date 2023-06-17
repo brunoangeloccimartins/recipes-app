@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Card from 'react-bootstrap/Card';
 import Button from './Button';
 import MyCarousel from './Carousel';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import witheHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function DrinkDetails({ drink, drinkIngredients,
   isFavorite, progress, isDisable, copied, handleAddRecipe, handleCopy }) {
@@ -13,34 +16,66 @@ function DrinkDetails({ drink, drinkIngredients,
   const { id } = useParams();
 
   return (
-    <div>
+    <div
+      style={ { paddingTop: '15px', paddingBottom: '15px' } }
+    >
       { drink.length && drink.map((recipe, index) => (
         <div key={ index }>
-          <img
-            src={ recipe.strDrinkThumb }
-            alt={ recipe.strDrink }
-            data-testid="recipe-photo"
-          />
-          <p data-testid="recipe-title">{ recipe.strDrink }</p>
-          <p data-testid="recipe-category">{ recipe.strAlcoholic }</p>
-          <div>
-            { drinkIngredients.map(({ ingredients, measures }, index2) => (
-              <ol
-                key={ index2 }
-              >
-                { ingredients.map((ingredient, index3) => (
-                  <li
-                    key={ index3 }
-                    data-testid={ `${index3}-ingredient-name-and-measure` }
-                  >
-                    { `${ingredient} - ${measures[index3]
-                      ? measures[index3] : 'to taste'}` }
-                  </li>
-                )) }
-              </ol>
-            ))}
+          <div className="container">
+            <Card>
+              <Card.Img
+                variant="top"
+                src={ recipe.strDrinkThumb }
+                alt={ recipe.strDrink }
+              />
+              <Card.Body>
+                <Card.Title>
+                  {recipe.strDrink}
+                </Card.Title>
+                <Card.Text>
+                  { `Category: ${recipe.strAlcoholic}` }
+                </Card.Text>
+              </Card.Body>
+            </Card>
           </div>
-          <p data-testid="instructions">{ recipe.strInstructions }</p>
+          <div className="container">
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  Ingredients:
+                </Card.Title>
+                <Card.Text>
+                  { drinkIngredients.map(({ ingredients, measures }, index2) => (
+                    <ListGroup key={ index2 } numbered>
+                      { ingredients.map((ingredient, index3) => (
+                        <ListGroup.Item
+                          key={ index3 }
+                        >
+                          { `${ingredient} - ${measures[index3]
+                            ? measures[index3]
+                            : 'to taste'}` }
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  ))}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="container">
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  Step-by-step:
+                </Card.Title>
+                <Card.Text>
+                  { recipe.strInstructions.split('. ').map((frase) => (
+                    <p key={ frase }>{ `${frase}.` }</p>
+                  )) }
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
           <Button
             value={
               <img
@@ -56,7 +91,6 @@ function DrinkDetails({ drink, drinkIngredients,
               <img
                 src={ isFavorite ? blackHeartIcon : witheHeartIcon }
                 alt="Favoritar"
-                data-testid="favorite-btn"
               />
             }
             onClick={ () => handleAddRecipe('drink', recipe) }
@@ -71,6 +105,7 @@ function DrinkDetails({ drink, drinkIngredients,
         style={ { position: 'fixed', bottom: '0' } }
         onClick={ () => history.push(`/drinks/${id}/in-progress`) }
         disabled={ isDisable }
+        className="btn-login btn-bottom"
       />
     </div>
   );
