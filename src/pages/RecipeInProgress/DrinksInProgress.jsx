@@ -1,13 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import { ListGroupItem } from 'react-bootstrap';
 import { fetchDrinksById } from '../../services/fetchRequisition';
 import ObjectEntries from '../../services/objectEntries';
 import Button from '../../components/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import witheHeartIcon from '../../images/whiteHeartIcon.svg';
+import shareIcon from '../../images/shareIcon.svg';
+
 import '../../styles/RecipeInProgress.css';
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
 
-export default function DrinksInProgress() {
+export default function DrinksInProgress({
+  isFavorite, copied, handleAddRecipe, handleCopy,
+}) {
   const history = useHistory();
   const { id } = useParams();
   const { location: { pathname } } = history;
@@ -27,7 +39,6 @@ export default function DrinksInProgress() {
     if (pathname.includes('/drinks')) {
       const drinkData = await fetchDrinksById(id);
       const drinkItem = drinkData.drinks[0];
-      drinkItem.checked = false;
       const drinkEntries = ObjectEntries('strIngredient', drinkItem);
       const checksArr = [];
       drinkEntries[0].ingredients
@@ -94,53 +105,99 @@ export default function DrinksInProgress() {
   useEffect(() => {
     requestDetails();
   }, []);
-
   return (
-    <div>
+    <div
+      style={ { paddingTop: '15px', paddingBottom: '30px' } }
+    >
       {drink.length && drink.map((recipe, index) => (
         <div key={ index }>
-          <img
-            src={ recipe.strDrinkThumb }
-            alt={ recipe.strDrink }
-            data-testid="recipe-photo"
-          />
-          <p data-testid="recipe-title">{recipe.strDrink}</p>
-          <p data-testid="recipe-category">{recipe.strCategory}</p>
-          <Button value="Share" test="share-btn" />
-          <Button value="Favorite" test="favorite-btn" />
+          <div className="container">
+            <Card>
+              <Card.Img
+                variant="top"
+                src={ recipe.strDrinkThumb }
+                alt={ recipe.strDrink }
+              />
+              <Card.Body>
+                <Card.Title>
+                  {recipe.strDrink}
+                </Card.Title>
+                <Card.Text
+                  style={ {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  } }
+                >
+                  { `Category: ${recipe.strAlcoholic}` }
+                  <div className="container-share-favorite-btns">
+                    <Button
+                      value={
+                        <img
+                          src={ shareIcon }
+                          alt="Compartilhar"
+                          data-testid="share-btn"
+                        />
+                      }
+                      onClick={ () => handleCopy('drink', recipe.idDrink) }
+                    />
+                    <Button
+                      value={
+                        <img
+                          src={ isFavorite ? blackHeartIcon : witheHeartIcon }
+                          alt="Favoritar"
+                        />
+                      }
+                      onClick={ () => handleAddRecipe('drink', recipe) }
+                    />
+                    { copied && <p>Link copied!</p>}
+                  </div>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
           <div>
             {drinkIngredients.map(({ ingredients, measures }, index2) => (
-              <ol key={ index2 }>
-                {ingredients.map((ingredient, index3) => (
-                  <li
-                    key={ index3 }
-                    data-testid={ `${index3}-ingredient-step` }
-                    className={ checked[index3] ? 'checked' : '' }
-                  >
-                    <input
-                      id={ `ingredient ${index3}` }
-                      checked={ checked[index3] }
-                      type="checkbox"
-                      value={ `${ingredient} - ${measures[index3]}` }
-                      onChange={ () => handleInputChange(index3) }
-                    />
-                    <label htmlFor={ `ingredient ${index3}` }>
-                      {ingredient}
-                      {' '}
-                      -
-                      {measures[index3]}
-                    </label>
-                  </li>
-                ))}
-              </ol>
+              <div className="container" key={ `${ingredients[index2]} index2` }>
+                <ListGroup>
+                  {ingredients.map((ingredient, index3) => (
+                    <ListGroupItem
+                      key={ index3 }
+                      data-testid={ `${index3}-ingredient-step` }
+                      className={ checked[index3] ? 'checked' : '' }
+                    >
+                      <Form.Check
+                        id={ `ingredient ${index3}` }
+                        checked={ checked[index3] }
+                        type="checkbox"
+                        label={ `${ingredient} - ${measures[index3]}` }
+                        onChange={ () => handleInputChange(index3) }
+                      />
+                    </ListGroupItem>
+                  ))}
+                </ListGroup>
+              </div>
             ))}
           </div>
-          <p data-testid="instructions">{ recipe.strInstructions }</p>
+          <div className="container">
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  Step-by-step:
+                </Card.Title>
+                <Card.Text>
+                  { recipe.strInstructions.split('. ').map((frase) => (
+                    <p key={ frase }>{ `${frase}.` }</p>
+                  )) }
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
           <Button
             value="Done Recipe"
             test="finish-recipe-btn"
             disabled={ disabled }
-            className="btn-bottom"
+            className="btn-login btn-bottom"
             onClick={ () => handleClick(recipe) }
           />
         </div>
@@ -148,3 +205,19 @@ export default function DrinksInProgress() {
     </div>
   );
 }
+
+DrinksInProgress.propTypes = {
+  copied: PropTypes.bool.isRequired,
+  handleAddRecipe: PropTypes.func.isRequired,
+  handleCopy: PropTypes.func.isRequired,
+  // isDisable: PropTypes.bool.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
+  meal: PropTypes.shape({
+    length: PropTypes.func,
+    map: PropTypes.func,
+  }).isRequired,
+  mealIngredients: PropTypes.shape({
+    map: PropTypes.func,
+  }).isRequired,
+  // progress: PropTypes.bool.isRequired,
+};

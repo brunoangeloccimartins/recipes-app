@@ -32,8 +32,36 @@ function DrinkDetails({ drink, drinkIngredients,
                 <Card.Title>
                   {recipe.strDrink}
                 </Card.Title>
-                <Card.Text>
+                <Card.Text
+                  style={ {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  } }
+                >
                   { `Category: ${recipe.strAlcoholic}` }
+                  <div className="container-share-favorite-btns">
+                    <Button
+                      value={
+                        <img
+                          src={ shareIcon }
+                          alt="Compartilhar"
+                          data-testid="share-btn"
+                        />
+                      }
+                      onClick={ () => handleCopy('drink', recipe.idDrink) }
+                    />
+                    <Button
+                      value={
+                        <img
+                          src={ isFavorite ? blackHeartIcon : witheHeartIcon }
+                          alt="Favoritar"
+                        />
+                      }
+                      onClick={ () => handleAddRecipe('drink', recipe) }
+                    />
+                    { copied && <p>Link copied!</p>}
+                  </div>
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -76,26 +104,7 @@ function DrinkDetails({ drink, drinkIngredients,
               </Card.Body>
             </Card>
           </div>
-          <Button
-            value={
-              <img
-                src={ shareIcon }
-                alt="Compartilhar"
-                data-testid="share-btn"
-              />
-            }
-            onClick={ () => handleCopy('drink', recipe.idDrink) }
-          />
-          <Button
-            value={
-              <img
-                src={ isFavorite ? blackHeartIcon : witheHeartIcon }
-                alt="Favoritar"
-              />
-            }
-            onClick={ () => handleAddRecipe('drink', recipe) }
-          />
-          { copied && <p>Link copied!</p>}
+
         </div>
       ))}
       <MyCarousel />

@@ -1,13 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import { ListGroupItem } from 'react-bootstrap';
 import { fetchMealsById } from '../../services/fetchRequisition';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ObjectEntries from '../../services/objectEntries';
 import Button from '../../components/Button';
 import '../../styles/RecipeInProgress.css';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import witheHeartIcon from '../../images/whiteHeartIcon.svg';
+import shareIcon from '../../images/shareIcon.svg';
+
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
 
-export default function MealsInProgress() {
+export default function MealsInProgress({ isFavorite }) {
   const history = useHistory();
   const { id } = useParams();
   const { location: { pathname } } = history;
@@ -98,46 +108,93 @@ export default function MealsInProgress() {
   }, []);
 
   return (
-    <main>
+    <div
+      style={ { paddingTop: '1px', paddingBottom: '30px' } }
+    >
       {meal.length && meal.map((recipe, index) => (
         <div key={ index }>
-          <img
-            src={ recipe.strMealThumb }
-            alt={ recipe.strMeal }
-            data-testid="recipe-photo"
-          />
-          <p data-testid="recipe-title">{recipe.strMeal}</p>
-          <p data-testid="recipe-category">{recipe.strCategory}</p>
-          <Button value="Share" test="share-btn" />
-          <Button value="Favorite" test="favorite-btn" />
+          <div className="container">
+            <Card>
+              <Card.Img
+                variant="top"
+                src={ recipe.strMealThumb }
+                alt={ recipe.strMeal }
+              />
+              <Card.Body>
+                <Card.Title>
+                  {recipe.strMeal}
+                </Card.Title>
+                <Card.Text
+                  style={ {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  } }
+                >
+                  { `Category: ${recipe.strCategory}` }
+                  <div className="container-share-favorite-btns">
+                    <Button
+                      value={
+                        <img
+                          src={ shareIcon }
+                          alt="Compartilhar"
+                          data-testid="share-btn"
+                        />
+                      }
+                      onClick={ () => handleCopy('meal', recipe.idMeal) }
+                    />
+                    <Button
+                      value={
+                        <img
+                          src={ isFavorite ? blackHeartIcon : witheHeartIcon }
+                          alt="Favoritar"
+                          data-testid="favorite-btn"
+                        />
+                      }
+                      onClick={ () => handleAddRecipe('meal', recipe) }
+                    />
+                  </div>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+
           <div>
             { mealIngredients.map(({ ingredients, measures }, index2) => (
-              <ol key={ `${ingredients[index2]} index2` }>
-                {ingredients.map((ingredient, index3) => (
-                  <li
-                    key={ `${ingredient} index3` }
-                    data-testid={ `${index3}-ingredient-step` }
-                    className={ checked[index3] ? 'checked' : '' }
-                  >
-                    <input
-                      id={ `ingredient ${index3}` }
-                      checked={ checked[index3] }
-                      type="checkbox"
-                      value={ `${ingredient} - ${measures[index3]}` }
-                      onChange={ () => handleInputChange(index3) }
-                    />
-                    <label htmlFor={ `ingredient ${index3}` }>
-                      {ingredient}
-                      {' '}
-                      -
-                      {measures[index3]}
-                    </label>
-                  </li>
-                ))}
-              </ol>
+              <div className="container" key={ `${ingredients[index2]} index2` }>
+                <ListGroup>
+                  {ingredients.map((ingredient, index3) => (
+                    <ListGroupItem
+                      key={ `${ingredient} index3` }
+                      className={ checked[index3] ? 'checked' : '' }
+                    >
+                      <Form.Check
+                        id={ `ingredient ${index3}` }
+                        checked={ checked[index3] }
+                        type="checkbox"
+                        label={ `${ingredient} - ${measures[index3]}` }
+                        onChange={ () => handleInputChange(index3) }
+                      />
+                    </ListGroupItem>
+                  ))}
+                </ListGroup>
+              </div>
             ))}
           </div>
-          <p data-testid="instructions">{ recipe.strInstructions }</p>
+          <div className="container">
+            <Card>
+              <Card.Body>
+                <Card.Title>
+                  Step-by-step:
+                </Card.Title>
+                <Card.Text>
+                  { recipe.strInstructions.split('. ').map((frase) => (
+                    <p key={ frase }>{ `${frase}.` }</p>
+                  )) }
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
           <Button
             value="Done Recipe"
             test="finish-recipe-btn"
@@ -147,6 +204,16 @@ export default function MealsInProgress() {
           />
         </div>
       ))}
-    </main>
+    </div>
   );
 }
+MealsInProgress.propTypes = {
+  isFavorite: PropTypes.bool,
+  meal: PropTypes.shape({
+    length: PropTypes.func,
+    map: PropTypes.func,
+  }),
+  mealIngredients: PropTypes.shape({
+    map: PropTypes.func,
+  }),
+};

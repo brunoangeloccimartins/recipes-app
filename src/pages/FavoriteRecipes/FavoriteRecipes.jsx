@@ -106,51 +106,59 @@ function FavoriteRecipes() {
                       marginTop: '0',
                     } }
                   >
-                    <Link
-                      to={ recipe.type === 'drink'
-                        ? `/drinks/${recipe.id}`
-                        : `/meals/${recipe.id}` }
-                    >
-                      <Card.Img
-                        src={ recipe.image }
-                        alt={ recipe.name }
-                      />
-                    </Link>
-                    <Card.Title>
-                      <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
-                    </Card.Title>
-                    <div className="container-btns-category">
-                      <Card.Text>
-                        { recipe.type !== 'drink'
-                          ? `${recipe.nationality} - ${recipe.category}`
-                          : `${recipe.alcoholicOrNot}`}
-                      </Card.Text>
+                    <Card.Img
+                      src={ recipe.image }
+                      alt={ recipe.name }
+                    />
+                    <Card.Body>
+                      <Card.Title>
+                        <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+                      </Card.Title>
+                      <div className="container-btns-category">
+                        <Card.Text>
+                          { recipe.type !== 'drink'
+                            ? `${recipe.nationality} - ${recipe.category}`
+                            : `${recipe.alcoholicOrNot}`}
+                        </Card.Text>
 
-                      <div className="container-share-favorite-btns">
-                        <Button
-                          value={
-                            <img
-                              src={ shareIcon }
-                              alt="Compartilhar"
-                              data-testid={ `${index}-horizontal-share-btn` }
-                            />
-                          }
-                          onClick={ () => handleCopy(recipe.type, recipe.id) }
-                        />
-                        <Button
-                          value={
-                            <img
-                              src={ blackHeartIcon }
-                              alt="Favoritar"
-                              data-testid={ `${index}-horizontal-favorite-btn` }
-                            />
-                          }
-                          onClick={ () => handleRemove(recipe.id) }
-                        />
+                        <div className="container-share-favorite-btns">
+                          <Button
+                            value={
+                              <img
+                                src={ shareIcon }
+                                alt="Compartilhar"
+                                data-testid={ `${index}-horizontal-share-btn` }
+                              />
+                            }
+                            onClick={ () => handleCopy(recipe.type, recipe.id) }
+                          />
+                          <Button
+                            value={
+                              <img
+                                src={ blackHeartIcon }
+                                alt="Favoritar"
+                                data-testid={ `${index}-horizontal-favorite-btn` }
+                              />
+                            }
+                            onClick={ () => handleRemove(recipe.id) }
+                          />
+                        </div>
+
                       </div>
-
-                    </div>
-                    { copied && <p>Link copied!</p>}
+                      { copied && <p>Link copied!</p>}
+                      <Button
+                        className="btn-login btn-card"
+                        value={
+                          <Link
+                            to={ recipe.type === 'drink'
+                              ? `/drinks/${recipe.id}`
+                              : `/meals/${recipe.id}` }
+                          >
+                            View Recipe
+                          </Link>
+                        }
+                      />
+                    </Card.Body>
                   </Card>
                 </div>
               ))}
