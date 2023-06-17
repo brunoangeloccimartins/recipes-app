@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Swal from 'sweetalert2';
 import useFetch from '../services/hooks/useFetch';
 import { fetchRecipe,
   fetchDrinksByCategory,
@@ -64,7 +65,15 @@ function RecipesDrinks() {
   const renderCondition = () => {
     if (recipesDrinks.drinks !== undefined) {
       if (recipesDrinks.drinks === null) {
-        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        return Swal.fire({
+          title: 'Sorry',
+          text: 'we haven\'t found any recipes for these filters.',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK',
+        });
       }
       if (recipesDrinks.drinks.length === 1 && recipesDrinks.drinks !== null) {
         history.push(`/drinks/${recipesDrinks.drinks[0].idDrink}`);

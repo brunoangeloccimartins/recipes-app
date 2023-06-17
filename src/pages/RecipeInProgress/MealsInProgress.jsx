@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-max-depth */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
@@ -16,8 +18,10 @@ import witheHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
+import useHandleCopy from '../../services/hooks/useHandleCopy';
+import useFavoriteRecipe from '../../services/hooks/useFavoriteRecipe';
 
-export default function MealsInProgress({ isFavorite }) {
+export default function MealsInProgress() {
   const history = useHistory();
   const { id } = useParams();
   const { location: { pathname } } = history;
@@ -25,6 +29,9 @@ export default function MealsInProgress({ isFavorite }) {
   const [checked, setChecked] = useState([]);
   const [meal, setMeal] = useState({});
   const [mealIngredients, setMealIngredients] = useState([]);
+  const handleCopy = useHandleCopy();
+  const { handleAddRecipe } = useFavoriteRecipe();
+  const { isFavorite } = useSelector((rootReducer) => rootReducer.recipeDetails);
 
   useEffect(() => {
     const savedProgress = getSavedProgress('inProgressRecipes');
@@ -73,30 +80,21 @@ export default function MealsInProgress({ isFavorite }) {
     }
   };
 
-  const doneDate = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    return `${day}/${month + 1}/${year}`;
-  };
-
-  console.log(doneDate());
-
   const handleClick = (recipe) => {
     const doneRcp = localStorage.getItem('doneRecipes') !== null
       ? JSON.parse(localStorage.getItem('doneRecipes')) : [];
+    const tags = recipe.strTags !== null ? recipe.strTags.split(',') : [];
     const newDoneRcp = [
       ...doneRcp,
       { id: recipe.idMeal,
         type: 'meal',
-        nationality: recipe.strArea,
+        nationality: recipe.strArea ? recipe.strArea : '',
         category: recipe.strCategory,
         alcoholicOrNot: '',
         name: recipe.strMeal,
         image: recipe.strMealThumb,
-        doneDate: doneDate(),
-        tags: recipe.strTags,
+        doneDate: new Date(Date.now()).toISOString(),
+        tags,
       },
     ];
     localStorage.setItem('doneRecipes', JSON.stringify(newDoneRcp));
@@ -208,7 +206,6 @@ export default function MealsInProgress({ isFavorite }) {
   );
 }
 MealsInProgress.propTypes = {
-  isFavorite: PropTypes.bool,
   meal: PropTypes.shape({
     length: PropTypes.func,
     map: PropTypes.func,

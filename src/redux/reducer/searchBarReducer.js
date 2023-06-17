@@ -4,6 +4,7 @@ const INITAL_STATE = {
   searchValue: '',
   radioValue: '',
   isHidden: false,
+  selectedCountry: 'Search by country',
 };
 
 const searchBarReducer = (state = INITAL_STATE, action) => {
@@ -18,6 +19,11 @@ const searchBarReducer = (state = INITAL_STATE, action) => {
     return {
       ...state,
       isHidden: action.payload,
+    };
+  case ACTIONS_TYPE_SEARCH_BAR.FILTER_BY_COUNTRY:
+    return {
+      ...state,
+      selectedCountry: action.payload,
     };
   default:
     return state;

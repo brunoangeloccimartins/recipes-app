@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import Input from '../Input';
 import Button from '../Button';
 import { saveSearch } from '../../redux/actions/actions-searchBar';
@@ -17,10 +18,26 @@ export default function SearchBar() {
   const handleClick = () => {
     const maxLetter = 1;
     if (checked === 'first-letter' && inputSearch.length !== maxLetter) {
-      global.alert('Your search must have only 1 (one) character');
+      Swal.fire({
+        title: 'Hey',
+        text: 'Your search must have only 1 (one) character',
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK',
+      });
     }
     if (checked === '') {
-      global.alert('Are you cego, man? Selecione um radio input!');
+      Swal.fire({
+        title: 'Hey',
+        text: 'You need to select an option!',
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK',
+      });
     }
     const savedValues = {
       searchValue: inputSearch,

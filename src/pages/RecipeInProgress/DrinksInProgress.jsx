@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-max-depth */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
@@ -16,10 +18,10 @@ import shareIcon from '../../images/shareIcon.svg';
 
 import '../../styles/RecipeInProgress.css';
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
+import useHandleCopy from '../../services/hooks/useHandleCopy';
+import useFavoriteRecipe from '../../services/hooks/useFavoriteRecipe';
 
-export default function DrinksInProgress({
-  isFavorite, copied, handleAddRecipe, handleCopy,
-}) {
+export default function DrinksInProgress({ copied }) {
   const history = useHistory();
   const { id } = useParams();
   const { location: { pathname } } = history;
@@ -27,6 +29,9 @@ export default function DrinksInProgress({
   const [checked, setChecked] = useState([]);
   const [drink, setDrink] = useState({});
   const [drinkIngredients, setDrinkIngredients] = useState([]);
+  const handleCopy = useHandleCopy();
+  const { handleAddRecipe } = useFavoriteRecipe();
+  const { isFavorite } = useSelector((rootReducer) => rootReducer.recipeDetails);
 
   useEffect(() => {
     const savedProgress = getSavedProgress('inProgressRecipes');
@@ -51,6 +56,7 @@ export default function DrinksInProgress({
       setDrinkIngredients(drinkEntries);
     }
   };
+
   const handleInputChange = (indice) => {
     const newChecked = [...checked];
     newChecked[indice] = !newChecked[indice];
@@ -74,28 +80,21 @@ export default function DrinksInProgress({
     }
   };
 
-  const doneDate = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    return `${day}/${month + 1}/${year}`;
-  };
-
   const handleClick = (recipe) => {
     const doneRcp = localStorage.getItem('doneRecipes') !== null
       ? JSON.parse(localStorage.getItem('doneRecipes')) : [];
+    const tags = recipe.strTags !== null ? recipe.strTags.split(',') : [];
     const newDoneRcp = [
       ...doneRcp,
       { id: recipe.idDrink,
         type: 'drink',
-        nationality: recipe.strArea,
+        nationality: recipe.strArea ? recipe.strArea : '',
         category: recipe.strCategory,
-        alcoholicOrNot: '',
+        alcoholicOrNot: recipe.strAlcoholic ? recipe.strAlcoholic : '',
         name: recipe.strDrink,
         image: recipe.strDrinkThumb,
-        doneDate: doneDate(),
-        tags: recipe.strTags,
+        doneDate: new Date(Date.now()).toISOString(),
+        tags,
       },
     ];
     localStorage.setItem('doneRecipes', JSON.stringify(newDoneRcp));
@@ -208,10 +207,6 @@ export default function DrinksInProgress({
 
 DrinksInProgress.propTypes = {
   copied: PropTypes.bool.isRequired,
-  handleAddRecipe: PropTypes.func.isRequired,
-  handleCopy: PropTypes.func.isRequired,
-  // isDisable: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
   meal: PropTypes.shape({
     length: PropTypes.func,
     map: PropTypes.func,

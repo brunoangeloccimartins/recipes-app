@@ -1,19 +1,27 @@
+/* eslint-disable react/jsx-max-depth */
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
+import { useSelector } from 'react-redux';
+import useHandleCopy from '../services/hooks/useHandleCopy';
 import Button from './Button';
 import MyCarousel from './Carousel';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import witheHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import useFavoriteRecipe from '../services/hooks/useFavoriteRecipe';
 
 function DrinkDetails({ drink, drinkIngredients,
-  isFavorite, progress, isDisable, copied, handleAddRecipe, handleCopy }) {
+  progress, isDisable }) {
   const history = useHistory();
   const { id } = useParams();
+  const handleCopy = useHandleCopy();
+  const { handleAddRecipe } = useFavoriteRecipe();
+  const { isFavorite } = useSelector((rootReducer) => rootReducer
+    .recipeDetails);
 
   return (
     <div
@@ -121,8 +129,6 @@ function DrinkDetails({ drink, drinkIngredients,
 }
 
 DrinkDetails.propTypes = {
-  copied: PropTypes.bool.isRequired,
-  handleCopy: PropTypes.func.isRequired,
   drink: PropTypes.shape({
     length: PropTypes.func,
     map: PropTypes.func,
@@ -130,9 +136,7 @@ DrinkDetails.propTypes = {
   drinkIngredients: PropTypes.shape({
     map: PropTypes.func,
   }).isRequired,
-  handleAddRecipe: PropTypes.func.isRequired,
   isDisable: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
   progress: PropTypes.bool.isRequired,
 };
 

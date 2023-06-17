@@ -1,0 +1,17 @@
+.footer-fixed {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 5px 0;
+  position: fixed;
+  width: 100vw;
+}
+
+.footer-fixed > a {
+  margin: 0 10px;
+}
+
+.footer-fixed > a > img {
+  width: 60px;
+}

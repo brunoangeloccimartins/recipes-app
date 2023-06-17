@@ -4,24 +4,29 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Swal from 'sweetalert2';
 import useFetch from '../services/hooks/useFetch';
 import { fetchRecipe,
   fetchMealsByCategory,
   fetchMeals,
   fetchMealsByName,
   fetchMealsByFirstLetter,
+  fetchByCountry,
 } from '../services/fetchRequisition';
 import Button from './Button';
 import '../styles/Recipes.css';
 import '../styles/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SelectFilter from './SelectFilter';
 
 function RecipesMeals() {
   const [recipesMeals, setRecipesMeals] = useState({});
   const [recipesMealsByCategories, setRecipesMealsByCategories] = useState([]);
   const [category, setCategory] = useState('All');
   const { fetchData } = useFetch();
-  const { searchValue, radioValue, isHidden } = useSelector((rootReducer) => rootReducer
+  const { searchValue, radioValue,
+    isHidden,
+    selectedCountry } = useSelector((rootReducer) => rootReducer
     .searchBar);
   const history = useHistory();
   const fetchSearchs = async () => {
@@ -45,7 +50,15 @@ function RecipesMeals() {
   const renderCondition = () => {
     if (recipesMeals.meals !== undefined) {
       if (recipesMeals.meals === null) {
-        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        return Swal.fire({
+          title: 'Sorry',
+          text: 'we haven\'t found any recipes for these filters.',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK',
+        });
       }
       if (recipesMeals.meals.length === 1
         && recipesMeals.meals !== null
@@ -73,6 +86,14 @@ function RecipesMeals() {
     await fetchData(recipesMealsByCategory, setRecipesMeals);
   };
 
+  const filterByCountryCulture = async () => {
+    if (selectedCountry !== 'All') {
+      const mealsByCountry = fetchByCountry(selectedCountry);
+      return fetchData(mealsByCountry, setRecipesMeals);
+    }
+    return fetchRecipesByMeals();
+  };
+
   const toggleFilter = (categories) => {
     setCategory(categories);
     if (categories === category) {
@@ -85,6 +106,11 @@ function RecipesMeals() {
       filterByMeals(categories);
     }
   };
+  useEffect(() => {
+    if (selectedCountry !== 'Search by country') {
+      filterByCountryCulture();
+    }
+  }, [selectedCountry]);
 
   useEffect(() => {
     renderCondition();
@@ -96,6 +122,7 @@ function RecipesMeals() {
     fetchSearchs();
     // renderCondition();
   }, [searchValue]);
+
   return (
     <section
       className={ !isHidden ? 'page-recipe-meals'
@@ -108,9 +135,13 @@ function RecipesMeals() {
           Meals
         </h1>
       </div>
-      <div>
-        <div className="icons-categories">
-          {recipesMealsByCategories !== undefined
+      <SelectFilter />
+      { selectedCountry !== 'All' && selectedCountry !== 'Search by country'
+        && (
+          <p>{ `Results for ${selectedCountry} food` }</p>
+        )}
+      <div className="icons-categories">
+        {recipesMealsByCategories !== undefined
           && recipesMealsByCategories.map((recipe, index) => {
             const maxCategories = 5;
             const classNames = [
@@ -144,9 +175,9 @@ function RecipesMeals() {
             }
             return null;
           })}
-        </div>
-        <div className="container div-cards">
-          {recipesMeals.meals
+      </div>
+      <div className="container div-cards">
+        {recipesMeals.meals
             && recipesMeals.meals.map((recipe, index) => {
               const maxRecipes = 11;
               if (index <= maxRecipes) {
@@ -179,31 +210,10 @@ function RecipesMeals() {
                       </Card.Body>
                     </Card>
                   </div>
-                //  <div
-                //    data-testid={ `${index}-recipe-card` }
-                //    className="recipe-card"
-                //    key={ recipe.idMeal }
-                //  >
-                //    <Link
-                //      to={ `/meals/${recipe.idMeal}` }
-                //    >
-                //      <img
-                //        src={ recipe.strMealThumb }
-                //        alt={ recipe.strMeal }
-                //        data-testid={ `${index}-card-img` }
-                //      />
-                //      <h1
-                //        data-testid={ `${index}-card-name` }
-                //      >
-                //        {recipe.strMeal}
-                //      </h1>
-                //    </Link>
-                //  </div>
                 );
               }
               return null;
             })}
-        </div>
       </div>
     </section>
   );
