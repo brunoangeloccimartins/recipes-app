@@ -228,6 +228,7 @@ div img {
 
 /* --------------- BODY - RECIPE --------------- */
 .page-recipe-meals {
+  background-attachment: fixed;
   background-color: #efedee;
   background-image: url('../images/backgrounds/recipe-meals-red.png');
   background-position: center;
@@ -236,6 +237,7 @@ div img {
 }
 
 .page-recipe-drinks {
+  background-attachment: fixed;
   background-color: #efedee;
   background-image: url('../images/backgrounds/drinks-background2.png');
   background-position: center;
