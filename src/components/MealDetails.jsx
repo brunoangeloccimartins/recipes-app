@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import useFavoriteRecipe from '../services/hooks/useFavoriteRecipe';
 
 function MealDetails({ meal, mealIngredients,
-  progress, isDisable }) {
+  progress, isDisable, copied }) {
   const history = useHistory();
   const { id } = useParams();
   const iframeStyles = {
@@ -145,6 +145,7 @@ function MealDetails({ meal, mealIngredients,
 
 MealDetails.propTypes = {
   isDisable: PropTypes.bool.isRequired,
+  copied: PropTypes.bool.isRequired,
   meal: PropTypes.shape({
     length: PropTypes.func,
     map: PropTypes.func,

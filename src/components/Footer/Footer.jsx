@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import mealImg from '../../images/icons/meals-footer2.png';
 import drinks from '../../images/icons/drinks-footer2.png';
 import '../../styles/Footer.css';
-import './Footer.css';
 import Button from '../Button';
 import { useRandomRecipe } from '../../services/hooks/useLaricaButton';
 
@@ -11,7 +10,7 @@ export default function Footer() {
   const getRandomRecipe = useRandomRecipe();
 
   return (
-    <footer data-testid="footer" className="footer-fixed">
+    <footer className="footer-fixed bg-color">
       <Link to="/drinks">
         <img
           src={ drinks }
