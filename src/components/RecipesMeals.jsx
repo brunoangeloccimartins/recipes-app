@@ -97,7 +97,7 @@ function RecipesMeals() {
     // renderCondition();
   }, [searchValue]);
   return (
-    <div
+    <section
       className={ !isHidden ? 'page-recipe-meals'
         : 'page-recipe-meals padding-top' }
     >
@@ -205,7 +205,7 @@ function RecipesMeals() {
             })}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
