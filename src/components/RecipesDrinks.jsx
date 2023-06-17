@@ -154,7 +154,7 @@ function RecipesDrinks() {
                       />
                       <Card.Body>
                         <Card.Title
-                          data-testid={ `${index}-card-name` }
+                          style={ { marginBottom: '30px' } }
                         >
                           {recipe.strDrink}
                         </Card.Title>

@@ -152,7 +152,7 @@ function RecipesMeals() {
               if (index <= maxRecipes) {
                 return (
                   <div className="recipe-card" key={ recipe.idMeal }>
-                    <Card style={ { width: '18rem' } }>
+                    <Card style={ { width: '18rem', marginBottom: '30px' } }>
                       <Card.Img
                         variant="top"
                         src={ recipe.strMealThumb }
@@ -161,7 +161,7 @@ function RecipesMeals() {
                       />
                       <Card.Body>
                         <Card.Title
-                          data-testid={ `${index}-card-name` }
+                          style={ { marginBottom: '30px' } }
                         >
                           {recipe.strMeal}
                         </Card.Title>

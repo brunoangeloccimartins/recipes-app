@@ -40,8 +40,36 @@ function MealDetails({ meal, mealIngredients,
                 <Card.Title>
                   {recipe.strMeal}
                 </Card.Title>
-                <Card.Text>
+                <Card.Text
+                  style={ {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  } }
+                >
                   { `Category: ${recipe.strCategory}` }
+                  <div className="container-share-favorite-btns">
+                    <Button
+                      value={
+                        <img
+                          src={ shareIcon }
+                          alt="Compartilhar"
+                          data-testid="share-btn"
+                        />
+                      }
+                      onClick={ () => handleCopy('meal', recipe.idMeal) }
+                    />
+                    <Button
+                      value={
+                        <img
+                          src={ isFavorite ? blackHeartIcon : witheHeartIcon }
+                          alt="Favoritar"
+                          data-testid="favorite-btn"
+                        />
+                      }
+                      onClick={ () => handleAddRecipe('meal', recipe) }
+                    />
+                  </div>
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -85,26 +113,6 @@ function MealDetails({ meal, mealIngredients,
               </Card.Body>
             </Card>
           </div>
-          <Button
-            value={
-              <img
-                src={ shareIcon }
-                alt="Compartilhar"
-                data-testid="share-btn"
-              />
-            }
-            onClick={ () => handleCopy('meal', recipe.idMeal) }
-          />
-          <Button
-            value={
-              <img
-                src={ isFavorite ? blackHeartIcon : witheHeartIcon }
-                alt="Favoritar"
-                data-testid="favorite-btn"
-              />
-            }
-            onClick={ () => handleAddRecipe('meal', recipe) }
-          />
           { copied && <p>Link copied!</p>}
           <div className="container">
             <iframe
