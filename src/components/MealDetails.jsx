@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';

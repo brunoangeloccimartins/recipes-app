@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Card from 'react-bootstrap/Card';

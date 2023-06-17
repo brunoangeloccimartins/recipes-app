@@ -138,19 +138,6 @@ function RecipeDetails() {
     }
   };
 
-  // function Teste() {
-  //   const inProgressRecipes = {
-  //     meals: {
-  //       52771: [],
-  //     },
-  //     drinks: {
-  //       178319: [],
-  //     },
-  //   };
-
-  //   saveProgress('inProgressRecipes', inProgressRecipes);
-  // }
-
   const verifyRecipe = () => {
     if (pathname.includes('/meals') && Object.prototype
       .hasOwnProperty.call(localStorageProgress.meals, id)) {

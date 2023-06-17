@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import Button from '../../components/Button';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
+import { getSavedRecipes } from '../../services/favoriteRecipesLocal';
 
 function DoneRecipes() {
   const [recipesDone, setRecipesDone] = useState([]);
@@ -30,8 +31,8 @@ function DoneRecipes() {
   };
 
   useEffect(() => {
-    const doneRecipes = localStorage.getItem('doneRecipes');
-    if (doneRecipes !== null && doneRecipes !== undefined) {
+    const doneRecipes = getSavedRecipes('doneRecipes');
+    if (doneRecipes !== '[]' && doneRecipes !== null) {
       try {
         setRecipesDone(JSON.parse(doneRecipes));
       } catch (error) {
@@ -75,7 +76,7 @@ function DoneRecipes() {
       { recipesDone.length
 && (
   <section>
-    { recipesDone.filter((recipe) => {
+    {recipesDone.length && recipesDone.filter((recipe) => {
       if (selectedFilter === 'all') {
         return true;
       }
