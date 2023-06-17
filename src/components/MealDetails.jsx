@@ -17,10 +17,15 @@ function MealDetails({ meal, mealIngredients,
   const { id } = useParams();
 
   return (
-    <div>
+    <div
+      style={ { paddingTop: '15px', paddingBottom: '15px' } }
+    >
       { meal.length && meal.map((recipe, index) => (
         <div key={ index }>
-          <Card style={ { width: '18rem', marginBottom: '15px' } }>
+          <Card
+            style={ { width: '18rem', marginTop: '0', paddingTop: '15px' } }
+            className="container"
+          >
             <Card.Img
               variant="top"
               src={ recipe.strMealThumb }
@@ -39,7 +44,10 @@ function MealDetails({ meal, mealIngredients,
           </Card>
 
           <div>
-            <Card style={ { width: '18rem', marginBottom: '15px' } }>
+            <Card
+              style={ { width: '18rem' } }
+              className="container"
+            >
               <Card.Body>
                 <Card.Title>
                   Ingredients:
@@ -62,7 +70,7 @@ function MealDetails({ meal, mealIngredients,
             </Card>
 
           </div>
-          <Card style={ { width: '18rem', marginBottom: '15px' } }>
+          <Card style={ { width: '18rem' } } className="container">
             <Card.Body>
               <Card.Text>
                 { recipe.strInstructions.split('. ').map((frase) => (
