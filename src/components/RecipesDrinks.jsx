@@ -154,7 +154,7 @@ function RecipesDrinks() {
                       />
                       <Card.Body>
                         <Card.Title
-                          style={ { marginBottom: '30px' } }
+                          style={ { height: '80px' } }
                         >
                           {recipe.strDrink}
                         </Card.Title>

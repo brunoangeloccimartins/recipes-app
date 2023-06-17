@@ -161,7 +161,7 @@ function RecipesMeals() {
                       />
                       <Card.Body>
                         <Card.Title
-                          style={ { marginBottom: '30px' } }
+                          style={ { height: '80px' } }
                         >
                           {recipe.strMeal}
                         </Card.Title>
