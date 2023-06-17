@@ -11,11 +11,6 @@
   --heigth: calc(var(--width) / 1.62);
 }
 
-.container {
-  margin: 25px auto;
-  width: 90vw;
-}
-
 .bg-color {
 
   /* backdrop-filter: blur(2px); */

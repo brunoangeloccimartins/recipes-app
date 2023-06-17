@@ -125,6 +125,7 @@ function RecipesMeals() {
 
   return (
     <section
+      style={ { paddingBottom: '40px' } }
       className={ !isHidden ? 'page-recipe-meals'
         : 'page-recipe-meals padding-top' }
     >
@@ -192,7 +193,7 @@ function RecipesMeals() {
                       />
                       <Card.Body>
                         <Card.Title
-                          style={ { height: '80px' } }
+                          style={ { height: '70px', overflowY: 'hidden' } }
                         >
                           {recipe.strMeal}
                         </Card.Title>
