@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import useFetch from '../services/hooks/useFetch';
@@ -12,6 +13,8 @@ import { fetchRecipe,
 } from '../services/fetchRequisition';
 import Button from './Button';
 import '../styles/App.css';
+import '../styles/Recipes.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function RecipesDrinks() {
   const [recipesDrinks, setRecipesDrinks] = useState({});
@@ -103,7 +106,7 @@ function RecipesDrinks() {
           Drinks
         </h1>
       </div>
-      <div className="container">
+      <div>
         <div className="icons-categories">
           {recipesDrinksByCategories !== undefined
           && recipesDrinksByCategories.map((recipe, index) => {
@@ -142,26 +145,55 @@ function RecipesDrinks() {
               const maxRecipes = 11;
               if (index <= maxRecipes) {
                 return (
-                  <div
-                    data-testid={ `${index}-recipe-card` }
-                    key={ recipe.idDrink }
-                    className="recipe-card"
-                  >
-                    <Link
-                      to={ `/drinks/${recipe.idDrink}` }
-                    >
-                      <img
+                  <div className="recipe-card" key={ recipe.idMeal }>
+                    <Card style={ { width: '18rem' } }>
+                      <Card.Img
+                        variant="top"
                         src={ recipe.strDrinkThumb }
                         alt={ recipe.strDrink }
-                        data-testid={ `${index}-card-img` }
                       />
-                      <h2
-                        data-testid={ `${index}-card-name` }
-                      >
-                        {recipe.strDrink}
-                      </h2>
-                    </Link>
+                      <Card.Body>
+                        <Card.Title
+                          data-testid={ `${index}-card-name` }
+                        >
+                          {recipe.strDrink}
+                        </Card.Title>
+                        <Card.Text className="txt">
+                          { `${recipe.strInstructions.slice(0, 100)}...` }
+                        </Card.Text>
+                        <Button
+                          className="btn-login btn-card"
+                          value={
+                            <Link
+                              to={ `/drinks/${recipe.idDrink}` }
+                            >
+                              View Recipe
+                            </Link>
+                          }
+                        />
+                      </Card.Body>
+                    </Card>
                   </div>
+                  // <div
+                  //   data-testid={ `${index}-recipe-card` }
+                  //   key={ recipe.idDrink }
+                  //   className="recipe-card"
+                  // >
+                  //   <Link
+                  //     to={ `/drinks/${recipe.idDrink}` }
+                  //   >
+                  //     <img
+                  //       src={ recipe.strDrinkThumb }
+                  //       alt={ recipe.strDrink }
+                  //       data-testid={ `${index}-card-img` }
+                  //     />
+                  //     <h2
+                  //       data-testid={ `${index}-card-name` }
+                  //     >
+                  //       {recipe.strDrink}
+                  //     </h2>
+                  //   </Link>
+                  // </div>
                 );
               }
               return null;

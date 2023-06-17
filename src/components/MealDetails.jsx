@@ -2,12 +2,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Card from 'react-bootstrap/Card';
 import Button from './Button';
 import MyCarousel from './Carousel';
-import YouTubePlayer from './YoutubePlayer';
+// import YouTubePlayer from './YoutubePlayer';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import witheHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function MealDetails({ meal, mealIngredients,
   isFavorite, progress, isDisable, copied, handleAddRecipe, handleCopy }) {
@@ -18,29 +20,57 @@ function MealDetails({ meal, mealIngredients,
     <div>
       { meal.length && meal.map((recipe, index) => (
         <div key={ index }>
-          <img
-            src={ recipe.strMealThumb }
-            alt={ recipe.strMeal }
-            data-testid="recipe-photo"
-          />
-          <p data-testid="recipe-title">{ recipe.strMeal }</p>
-          <p data-testid="recipe-category">{ recipe.strCategory }</p>
+          <Card style={ { width: '18rem', marginBottom: '15px' } }>
+            <Card.Img
+              variant="top"
+              src={ recipe.strMealThumb }
+              alt={ recipe.strMeal }
+            />
+            <Card.Body>
+              <Card.Title
+                data-testid={ `${index}-card-name` }
+              >
+                {recipe.strMeal}
+              </Card.Title>
+              <Card.Text>
+                { `Category: ${recipe.strCategory}` }
+              </Card.Text>
+            </Card.Body>
+          </Card>
+
           <div>
-            <span>Ingredients:</span>
-            { mealIngredients.map(({ ingredients, measures }, index2) => (
-              <ListGroup key={ index2 }>
-                { ingredients.map((ingredient, index3) => (
-                  <ListGroup.Item
-                    key={ index3 }
-                    data-testid={ `${index3}-ingredient-name-and-measure` }
-                  >
-                    { `- ${ingredient} - ${measures[index3]}` }
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-            ))}
+            <Card style={ { width: '18rem', marginBottom: '15px' } }>
+              <Card.Body>
+                <Card.Title>
+                  Ingredients:
+                </Card.Title>
+                <Card.Text>
+                  { mealIngredients.map(({ ingredients, measures }, index2) => (
+                    <ListGroup key={ index2 } numbered>
+                      { ingredients.map((ingredient, index3) => (
+                        <ListGroup.Item
+                          key={ index3 }
+                          data-testid={ `${index3}-ingredient-name-and-measure` }
+                        >
+                          { `${ingredient} - ${measures[index3]}` }
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  ))}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+
           </div>
-          <p data-testid="instructions">{ recipe.strInstructions }</p>
+          <Card style={ { width: '18rem', marginBottom: '15px' } }>
+            <Card.Body>
+              <Card.Text>
+                { recipe.strInstructions.split('. ').map((frase) => (
+                  <p key={ frase }>{ `${frase}.` }</p>
+                )) }
+              </Card.Text>
+            </Card.Body>
+          </Card>
           <Button
             value={
               <img
@@ -62,7 +92,11 @@ function MealDetails({ meal, mealIngredients,
             onClick={ () => handleAddRecipe('meal', recipe) }
           />
           { copied && <p>Link copied!</p>}
-          <YouTubePlayer test="video" videoUrl={ recipe.strYoutube } />
+          <iframe
+            title={ `${index}-video` }
+            src={ recipe.strYoutube.replace('watch?v=', 'embed/') }
+            style={ { width: '100%', height: '300px' } }
+          />
         </div>
       ))}
       <MyCarousel />

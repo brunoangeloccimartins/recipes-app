@@ -246,3 +246,8 @@ div img {
 .padding-top {
   padding-top: 170px;
 }
+
+.txt {
+  height: 140px;
+  overflow-y: hidden;
+}
