@@ -17,7 +17,7 @@ function MealDetails({ meal, mealIngredients,
   const { id } = useParams();
   const handleCopy = useHandleCopy();
   const { handleAddRecipe } = useFavoriteRecipe();
-  const { isCopied, isFavorite } = useSelector((rootReducer) => rootReducer
+  const { isFavorite } = useSelector((rootReducer) => rootReducer
     .recipeDetails);
 
   return (
@@ -68,7 +68,6 @@ function MealDetails({ meal, mealIngredients,
             }
             onClick={ () => handleAddRecipe('meal', recipe) }
           />
-          { isCopied && <p>Link copied!</p>}
           <YouTubePlayer test="video" videoUrl={ recipe.strYoutube } />
         </div>
       ))}

@@ -14,3 +14,8 @@ export const setFavoriteRecipe = (payload) => ({
   type: ACTIONS_TYPE_RECIPE_DETAILS.SET_FAVORITE_RECIPE,
   payload,
 });
+
+export const setRandomRecipe = (payload) => ({
+  type: ACTIONS_TYPE_RECIPE_DETAILS.SET_RANDOM_RECIPE,
+  payload,
+});

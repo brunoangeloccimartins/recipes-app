@@ -16,7 +16,7 @@ function DrinkDetails({ drink, drinkIngredients,
   const { id } = useParams();
   const handleCopy = useHandleCopy();
   const { handleAddRecipe } = useFavoriteRecipe();
-  const { isCopied, isFavorite } = useSelector((rootReducer) => rootReducer
+  const { isFavorite } = useSelector((rootReducer) => rootReducer
     .recipeDetails);
 
   return (
@@ -68,7 +68,6 @@ function DrinkDetails({ drink, drinkIngredients,
             }
             onClick={ () => handleAddRecipe('drink', recipe) }
           />
-          { isCopied && <p>Link copied!</p>}
         </div>
       ))}
       <MyCarousel />

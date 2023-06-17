@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Swal from 'sweetalert2';
 import useFetch from '../services/hooks/useFetch';
 import { fetchRecipe,
   fetchDrinksByCategory,
@@ -11,6 +12,7 @@ import { fetchRecipe,
   fetchDrinksByFirstLetter,
 } from '../services/fetchRequisition';
 import Button from './Button';
+import RandomRecipeCard from './RandomRecipe/RandomRecipeCard';
 
 function RecipesDrinks() {
   const [recipesDrinks, setRecipesDrinks] = useState({});
@@ -59,7 +61,15 @@ function RecipesDrinks() {
   const renderCondition = () => {
     if (recipesDrinks.drinks !== undefined) {
       if (recipesDrinks.drinks === null) {
-        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        return Swal.fire({
+          title: 'Sorry',
+          text: 'we haven\'t found any recipes for these filters.',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK',
+        });
       }
       if (recipesDrinks.drinks.length === 1 && recipesDrinks.drinks !== null) {
         history.push(`/drinks/${recipesDrinks.drinks[0].idDrink}`);
@@ -91,6 +101,7 @@ function RecipesDrinks() {
 
   return (
     <div>
+      <RandomRecipeCard />
       <div>
         <div className="icons-categories">
           {recipesDrinksByCategories !== undefined

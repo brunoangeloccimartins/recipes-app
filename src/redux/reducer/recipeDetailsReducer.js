@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   infoRecipe: '',
   isCopied: false,
   isFavorite: false,
+  randomRecipe: null,
 };
 
 const recipeDetailsReducer = (state = INITIAL_STATE, action) => {
@@ -22,6 +23,11 @@ const recipeDetailsReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       isFavorite: action.payload,
+    };
+  case ACTIONS_TYPE_RECIPE_DETAILS.SET_RANDOM_RECIPE:
+    return {
+      ...state,
+      randomRecipe: action.payload,
     };
   default:
     return {

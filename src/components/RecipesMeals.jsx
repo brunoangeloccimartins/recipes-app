@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Swal from 'sweetalert2';
 import useFetch from '../services/hooks/useFetch';
 import { fetchRecipe,
   fetchMealsByCategory,
@@ -12,6 +13,7 @@ import { fetchRecipe,
 } from '../services/fetchRequisition';
 import Button from './Button';
 import '../pages/Recipes/Recipes.css';
+import RandomRecipeCard from './RandomRecipe/RandomRecipeCard';
 
 function RecipesMeals() {
   const [recipesMeals, setRecipesMeals] = useState({});
@@ -42,7 +44,15 @@ function RecipesMeals() {
   const renderCondition = () => {
     if (recipesMeals.meals !== undefined) {
       if (recipesMeals.meals === null) {
-        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        return Swal.fire({
+          title: 'Sorry',
+          text: 'we haven\'t found any recipes for these filters.',
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK',
+        });
       }
       if (recipesMeals.meals.length === 1
         && recipesMeals.meals !== null
@@ -95,6 +105,7 @@ function RecipesMeals() {
   }, [searchValue]);
   return (
     <div>
+      <RandomRecipeCard />
       <div>
         <div className="icons-categories">
           {recipesMealsByCategories !== undefined

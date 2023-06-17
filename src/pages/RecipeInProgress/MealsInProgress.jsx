@@ -23,8 +23,7 @@ export default function MealsInProgress() {
   const [mealIngredients, setMealIngredients] = useState([]);
   const handleCopy = useHandleCopy();
   const { handleAddRecipe } = useFavoriteRecipe();
-  const { isCopied,
-    isFavorite } = useSelector((rootReducer) => rootReducer.recipeDetails);
+  const { isFavorite } = useSelector((rootReducer) => rootReducer.recipeDetails);
 
   useEffect(() => {
     const savedProgress = getSavedProgress('inProgressRecipes');
@@ -132,7 +131,6 @@ export default function MealsInProgress() {
             // test="favorite-btn"
             onClick={ () => handleAddRecipe('meal', recipe) }
           />
-          { isCopied && <p>Link copied!</p>}
           <div>
             { mealIngredients.map(({ ingredients, measures }, index2) => (
               <ol key={ `${ingredients[index2]} index2` }>
