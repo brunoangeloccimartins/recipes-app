@@ -165,9 +165,7 @@ function RecipesMeals() {
                         >
                           {recipe.strMeal}
                         </Card.Title>
-                        <Card.Text className="txt">
-                          { recipe.strInstructions }
-                        </Card.Text>
+
                         <Button
                           className="btn-login btn-card"
                           value={

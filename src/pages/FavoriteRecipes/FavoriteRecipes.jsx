@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import Card from 'react-bootstrap/Card';
 import Button from '../../components/Button';
 import Header from '../../components/Header/Header';
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import { getLocalStorageItem } from '../../services/localStorageUtil';
+import '../../styles/FavoriteRecipes.css';
 
 function FavoriteRecipes() {
   const [recipesFav, setRecipesFav] = useState([]);
@@ -43,7 +45,6 @@ function FavoriteRecipes() {
   };
 
   useEffect(() => {
-    // testLocalStorage();
     const favRecipes = localStorage.getItem('favoriteRecipes');
     if (favRecipes !== null && favRecipes !== undefined) {
       try {
@@ -55,7 +56,7 @@ function FavoriteRecipes() {
   }, []);
 
   return (
-    <div>
+    <section>
       <Header />
       <div className="page-title">
         <h1
@@ -64,24 +65,30 @@ function FavoriteRecipes() {
           Favorites
         </h1>
       </div>
-      <Button
-        value="All"
-        test="filter-by-all-btn"
-        onClick={ () => setFilter('all') }
-      />
-      <Button
-        value="Meals"
-        test="filter-by-meal-btn"
-        onClick={ () => setFilter('meal') }
-      />
-      <Button
-        value="Drinks"
-        test="filter-by-drink-btn"
-        onClick={ () => setFilter('drink') }
-      />
+      <section className="container-favorites-btns">
+
+        <Button
+          value={ <div className="container-btn-all">All</div> }
+          test="filter-by-all-btn"
+          onClick={ () => setFilter('all') }
+        />
+
+        <Button
+          value={ <div className="container-btn-meals">Meals</div> }
+          test="filter-by-meal-btn"
+          onClick={ () => setFilter('meal') }
+        />
+
+        <Button
+          value={ <div className="container-btn-drinks">Drinks</div> }
+          test="filter-by-drink-btn"
+          onClick={ () => setFilter('drink') }
+        />
+
+      </section>
       { recipesFav.length
         && (
-          <section>
+          <section className="container">
             { recipesFav.filter((recipe) => {
               if (selectedFilter === 'all') {
                 return true;
@@ -89,53 +96,67 @@ function FavoriteRecipes() {
               return recipe.type === selectedFilter;
             })
               .map((recipe, index) => (
-                <div key={ index }>
-                  <Link
-                    to={ recipe.type === 'drink'
-                      ? `/drinks/${recipe.id}`
-                      : `/meals/${recipe.id}` }
+                <div
+                  key={ index }
+                  className="container container-cards-favorites"
+                >
+                  <Card
+                    style={ {
+                      width: '18rem',
+                      marginTop: '0',
+                    } }
                   >
-                    <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
-                    <img
-                      src={ recipe.image }
-                      alt=""
-                      data-testid={ `${index}-horizontal-image` }
-                    />
-                  </Link>
-                  <p
-                    data-testid={ `${index}-horizontal-top-text` }
-                  >
-                    { recipe.type !== 'drink'
-                      ? `${recipe.nationality} - ${recipe.category}`
-                      : `${recipe.alcoholicOrNot}`}
+                    <Link
+                      to={ recipe.type === 'drink'
+                        ? `/drinks/${recipe.id}`
+                        : `/meals/${recipe.id}` }
+                    >
+                      <Card.Img
+                        src={ recipe.image }
+                        alt={ recipe.name }
+                      />
+                    </Link>
+                    <Card.Title>
+                      <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+                    </Card.Title>
+                    <div className="container-btns-category">
+                      <Card.Text>
+                        { recipe.type !== 'drink'
+                          ? `${recipe.nationality} - ${recipe.category}`
+                          : `${recipe.alcoholicOrNot}`}
+                      </Card.Text>
 
-                  </p>
-                  <Button
-                    value={
-                      <img
-                        src={ shareIcon }
-                        alt="Compartilhar"
-                        data-testid={ `${index}-horizontal-share-btn` }
-                      />
-                    }
-                    onClick={ () => handleCopy(recipe.type, recipe.id) }
-                  />
-                  <Button
-                    value={
-                      <img
-                        src={ blackHeartIcon }
-                        alt="Favoritar"
-                        data-testid={ `${index}-horizontal-favorite-btn` }
-                      />
-                    }
-                    onClick={ () => handleRemove(recipe.id) }
-                  />
-                  { copied && <p>Link copied!</p>}
+                      <div className="container-share-favorite-btns">
+                        <Button
+                          value={
+                            <img
+                              src={ shareIcon }
+                              alt="Compartilhar"
+                              data-testid={ `${index}-horizontal-share-btn` }
+                            />
+                          }
+                          onClick={ () => handleCopy(recipe.type, recipe.id) }
+                        />
+                        <Button
+                          value={
+                            <img
+                              src={ blackHeartIcon }
+                              alt="Favoritar"
+                              data-testid={ `${index}-horizontal-favorite-btn` }
+                            />
+                          }
+                          onClick={ () => handleRemove(recipe.id) }
+                        />
+                      </div>
+
+                    </div>
+                    { copied && <p>Link copied!</p>}
+                  </Card>
                 </div>
               ))}
           </section>
         )}
-    </div>
+    </section>
   );
 }
 

@@ -158,9 +158,7 @@ function RecipesDrinks() {
                         >
                           {recipe.strDrink}
                         </Card.Title>
-                        <Card.Text className="txt">
-                          { `${recipe.strInstructions.slice(0, 100)}...` }
-                        </Card.Text>
+
                         <Button
                           className="btn-login btn-card"
                           value={
