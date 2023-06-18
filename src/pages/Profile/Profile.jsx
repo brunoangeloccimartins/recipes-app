@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/';
-
+import Card from 'react-bootstrap/Card';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '../../styles/Profile.css';
 import { getSavedUser, removeUser } from '../../services/localStorageLogin';
@@ -26,33 +27,37 @@ function Profile() {
   return (
     <div className="profile">
       <Header />
-      <div className="page-title">
-        <h1
-          data-testid="page-title"
-        >
-          Profiles
-        </h1>
+      <div className="container">
+        <Card>
+          <Card.Body>
+            <Card.Title>
+              Profile
+            </Card.Title>
+            { userEmail
+                && (
+                  <Card.Text>
+                    { userEmail }
+                  </Card.Text>
+                )}
+          </Card.Body>
+        </Card>
+
       </div>
       <section>
-        { userEmail
-        && (
-          <p data-testid="profile-email">
-            { userEmail }
-          </p>)}
 
         <Button
           onClick={ () => history.push('/done-recipes') }
-          test="profile-done-btn"
+          className="btn-login"
           value="Done Recipes"
         />
         <Button
           onClick={ () => history.push('/favorite-recipes') }
-          test="profile-favorite-btn"
+          className="btn-login"
           value="Favorite Recipes"
         />
         <Button
           onClick={ handleLogout }
-          test="profile-logout-btn"
+          className="btn-login"
           value="Logout"
         />
       </section>
