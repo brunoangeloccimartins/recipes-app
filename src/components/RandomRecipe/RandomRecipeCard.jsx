@@ -30,11 +30,12 @@ function RandomRecipeCard() {
         && (
           <div className="container">
             <Card className="card-random">
-              <CloseButton
-                className="close-btn"
-                variant="rgba(0, 0, 0, 0.5)"
-                onClick={ () => dispatch(setRandomRecipe(null)) }
-              />
+              <div className="close-btn">
+                <CloseButton
+                  variant="rgba(0, 0, 0, 0.5)"
+                  onClick={ () => dispatch(setRandomRecipe(null)) }
+                />
+              </div>
               <Card.Body>
                 <Card.Img
                   src={ randomRecipe.strMealThumb

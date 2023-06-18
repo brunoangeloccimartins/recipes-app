@@ -24,9 +24,12 @@
 }
 
 .close-btn {
-  position: relative;
-  right: -240px;
-  top: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-btn > button {
+  margin: 5px 11px 0;
 }
 
 
