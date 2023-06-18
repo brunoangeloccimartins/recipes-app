@@ -9,6 +9,7 @@ import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import { getLocalStorageItem } from '../../services/localStorageUtil';
 import '../../styles/FavoriteRecipes.css';
+
 import useHandleCopy from '../../services/hooks/useHandleCopy';
 
 function FavoriteRecipes() {

@@ -14,7 +14,7 @@ import shareIcon from '../images/shareIcon.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useFavoriteRecipe from '../services/hooks/useFavoriteRecipe';
 
-function DrinkDetails({ drink, drinkIngredients,
+function DrinkDetails({ drink, drinkIngredients, copied,
   progress, isDisable }) {
   const history = useHistory();
   const { id } = useParams();
