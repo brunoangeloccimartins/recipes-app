@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-max-depth */
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
@@ -13,6 +13,7 @@ import witheHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useFavoriteRecipe from '../services/hooks/useFavoriteRecipe';
+import Loading from './Loading';
 
 function MealDetails({ meal, mealIngredients,
   progress, isDisable, copied }) {
@@ -28,11 +29,21 @@ function MealDetails({ meal, mealIngredients,
   const { isFavorite } = useSelector((rootReducer) => rootReducer
     .recipeDetails);
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (meal.length > 0) {
+      setIsLoading(false);
+    }
+  }, [meal]);
+
+  console.log(isLoading);
+
   return (
-    <div
+    isLoading ? <Loading /> : <div
       style={ { paddingTop: '15px', paddingBottom: '15px' } }
     >
-      { meal.length && meal.map((recipe, index) => (
+      { meal.length > 0 && meal.map((recipe, index) => (
         <div
           key={ index }
         >
@@ -139,7 +150,7 @@ function MealDetails({ meal, mealIngredients,
         disabled={ isDisable }
         className="btn-login btn-bottom"
       />
-    </div>
+                              </div>
   );
 }
 

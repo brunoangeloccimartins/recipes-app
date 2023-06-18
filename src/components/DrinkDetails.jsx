@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-max-depth */
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
@@ -13,6 +13,7 @@ import witheHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useFavoriteRecipe from '../services/hooks/useFavoriteRecipe';
+import Loading from './Loading';
 
 function DrinkDetails({ drink, drinkIngredients, copied,
   progress, isDisable }) {
@@ -23,8 +24,16 @@ function DrinkDetails({ drink, drinkIngredients, copied,
   const { isFavorite } = useSelector((rootReducer) => rootReducer
     .recipeDetails);
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (drink.length > 0) {
+      setIsLoading(false);
+    }
+  }, [drink]);
+
   return (
-    <div
+    isLoading ? <Loading /> : <div
       style={ { paddingTop: '15px', paddingBottom: '15px' } }
     >
       { drink.length && drink.map((recipe, index) => (
@@ -124,7 +133,7 @@ function DrinkDetails({ drink, drinkIngredients, copied,
         disabled={ isDisable }
         className="btn-login btn-bottom"
       />
-    </div>
+                              </div>
   );
 }
 
