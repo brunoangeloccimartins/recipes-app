@@ -36,7 +36,7 @@ function Profile() {
             { userEmail
                 && (
                   <Card.Text>
-                    { userEmail }
+                    { `E-mail:  ${userEmail}` }
                   </Card.Text>
                 )}
           </Card.Body>
