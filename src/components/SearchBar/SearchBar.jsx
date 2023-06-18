@@ -1,13 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import Input from '../Input';
 import Button from '../Button';
 import { saveSearch } from '../../redux/actions/actions-searchBar';
+
 import '../../styles/Recipes.css';
 
 export default function SearchBar() {
-  const [checked, setChecked] = useState('');
+  const [checked, setChecked] = useState('ingredient');
   const [inputSearch, setInputSearch] = useState('');
   const dispacth = useDispatch();
 
@@ -47,7 +49,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="search-bar">
+    <section className="search-bar">
       <Input
         type="text"
         name="search"
@@ -97,7 +99,6 @@ export default function SearchBar() {
           />
           First letter
         </label>
-
       </div>
       <Button
         test="exec-search-btn"
@@ -105,6 +106,6 @@ export default function SearchBar() {
         onClick={ handleClick }
         className="btn-login btn-search"
       />
-    </div>
+    </section>
   );
 }

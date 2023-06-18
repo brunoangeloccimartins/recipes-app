@@ -19,6 +19,7 @@ function SelectFilter() {
       <option value="All">All</option>
       { contries.map((country, index) => (
         <option
+          className="option-country"
           key={ index }
           value={ country }
         >

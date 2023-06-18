@@ -136,11 +136,7 @@ function RecipesMeals() {
           Meals
         </h1>
       </div>
-      <SelectFilter />
-      { selectedCountry !== 'All' && selectedCountry !== 'Search by country'
-        && (
-          <p>{ `Results for ${selectedCountry} food` }</p>
-        )}
+
       <div className="icons-categories">
         {recipesMealsByCategories !== undefined
           && recipesMealsByCategories.map((recipe, index) => {
@@ -176,6 +172,13 @@ function RecipesMeals() {
             }
             return null;
           })}
+      </div>
+      <div className="category-select-by-country">
+        <SelectFilter />
+        { selectedCountry !== 'All' && selectedCountry !== 'Search by country'
+        && (
+          <p>{ `Results for ${selectedCountry} food` }</p>
+        )}
       </div>
       <div className="container div-cards">
         {recipesMeals.meals

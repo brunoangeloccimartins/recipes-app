@@ -236,6 +236,33 @@ div img {
   padding-top: 15px;
 }
 
+.category-select-by-country {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.category-select-by-country > select {
+  background-color: rgba(255, 57, 57, 0.836);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: black;
+  font-size: 1rem;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 95%;
+}
+
+.category-select-by-country > select > option {
+  background-color: rgba(240, 52, 52, 0.575);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.836);
+}
+
 .page-recipe-drinks {
   background-attachment: fixed;
   background-color: #efedee;
