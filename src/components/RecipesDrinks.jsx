@@ -105,6 +105,7 @@ function RecipesDrinks() {
 
   return (
     <div
+      style={ { paddingBottom: '40px' } }
       className={ !isHidden ? 'page-recipe-drinks'
         : 'page-recipe-drinks padding-top' }
     >

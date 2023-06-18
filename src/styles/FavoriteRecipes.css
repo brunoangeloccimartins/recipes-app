@@ -17,6 +17,21 @@
   outline: none;
 }
 
+.container-share-favorite-btns-done {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container-share-favorite-btns-done > button {
+  background-color: transparent;
+  border: none;
+}
+
+.container-share-favorite-btns-done > button > img {
+  width: 30px;
+}
+
 .container-btn-all {
   align-items: flex-end;
   background-image: url('../images/icons-favorites/all-favorites.png');

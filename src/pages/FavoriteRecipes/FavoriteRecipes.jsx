@@ -9,6 +9,7 @@ import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import { getLocalStorageItem } from '../../services/localStorageUtil';
 import '../../styles/FavoriteRecipes.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import useHandleCopy from '../../services/hooks/useHandleCopy';
 
@@ -44,12 +45,10 @@ function FavoriteRecipes() {
       { !recipesFav.length
         ? (<p>{'You haven\'t favorited any recipes yet'}</p>)
         : (
-          <section>
+          <section style={ { padding: '25px 0' } }>
 
             <div className="page-title">
-              <h1
-                data-testid="page-title"
-              >
+              <h1>
                 Favorites
               </h1>
             </div>
@@ -75,81 +74,75 @@ function FavoriteRecipes() {
 
             </section>
 
-            <section className="container">
-              { recipesFav.filter((recipe) => {
-                if (selectedFilter === 'all') {
-                  return true;
-                }
-                return recipe.type === selectedFilter;
-              })
-                .map((recipe, index) => (
-                  <div
-                    key={ index }
-                    className="container container-cards-favorites"
-                  >
-                    <Card
-                      style={ {
-                        width: '18rem',
-                        marginTop: '0',
-                      } }
-                    >
-                      <Card.Img
-                        src={ recipe.image }
-                        alt={ recipe.name }
-                      />
-                      <Card.Body>
-                        <Card.Title>
-                          <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
-                        </Card.Title>
-                        <div className="container-btns-category">
-                          <Card.Text>
-                            { recipe.type !== 'drink'
-                              ? `${recipe.nationality} - ${recipe.category}`
-                              : `${recipe.alcoholicOrNot}`}
-                          </Card.Text>
+            { recipesFav.filter((recipe) => {
+              if (selectedFilter === 'all') {
+                return true;
+              }
+              return recipe.type === selectedFilter;
+            })
+              .map((recipe, index) => (
+                <div
+                  key={ index }
+                  className="container"
+                >
+                  <Card>
+                    <Card.Img
+                      src={ recipe.image }
+                      alt={ recipe.name }
+                    />
+                    <Card.Body>
+                      <Card.Title>
+                        <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+                      </Card.Title>
+                      <div className="container-btns-category">
+                        <Card.Text>
+                          { recipe.type !== 'drink'
+                            ? `${recipe.nationality} - ${recipe.category}`
+                            : `${recipe.alcoholicOrNot}`}
+                        </Card.Text>
 
-                          <div className="container-share-favorite-btns">
-                            <Button
-                              value={
-                                <img
-                                  src={ shareIcon }
-                                  alt="Compartilhar"
-                                  data-testid={ `${index}-horizontal-share-btn` }
-                                />
-                              }
-                              onClick={ () => handleCopy(recipe.type, recipe.id) }
-                            />
-                            <Button
-                              value={
-                                <img
-                                  src={ blackHeartIcon }
-                                  alt="Favoritar"
-                                  data-testid={ `${index}-horizontal-favorite-btn` }
-                                />
-                              }
-                              onClick={ () => handleRemove(recipe.id) }
-                            />
-                          </div>
-
+                        <div className="container-share-favorite-btns">
+                          <Button
+                            value={
+                              <img
+                                src={ shareIcon }
+                                alt="Compartilhar"
+                                data-testid={ `${index}-horizontal-share-btn` }
+                              />
+                            }
+                            onClick={ () => handleCopy(recipe.type, recipe.id) }
+                          />
+                          <Button
+                            value={
+                              <img
+                                src={ blackHeartIcon }
+                                alt="Favoritar"
+                                data-testid={ `${index}-horizontal-favorite-btn` }
+                              />
+                            }
+                            onClick={ () => handleRemove(recipe.id) }
+                          />
                         </div>
-                        { isCopied && <p>Link copied!</p>}
-                        <Button
-                          className="btn-login btn-card"
-                          value={
-                            <Link
-                              to={ recipe.type === 'drink'
-                                ? `/drinks/${recipe.id}`
-                                : `/meals/${recipe.id}` }
-                            >
-                              View Recipe
-                            </Link>
-                          }
-                        />
-                      </Card.Body>
-                    </Card>
-                  </div>
-                ))}
-            </section>
+
+                      </div>
+                      { isCopied && <p>Link copied!</p>}
+                      <Button
+                        className="btn-login btn-card"
+                        value={
+                          <Link
+                            to={ recipe.type === 'drink'
+                              ? `/drinks/${recipe.id}`
+                              : `/meals/${recipe.id}` }
+                          >
+                            View Recipe
+                          </Link>
+                        }
+                      />
+                    </Card.Body>
+                  </Card>
+                </div>
+              ))}
+
           </section>
         )}
 

@@ -34,17 +34,16 @@
   width: 30px;
 }
 
+.visible-yes {
+  visibility: visible;
+}
+
+.visible-no {
+  visibility: hidden;
+}
+
 .page-title {
-  color: rgb(65, 25, 127);
-  font-family: Epilogue , sans-serif;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 10.5%;
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
-  text-transform: uppercase;
-  width: 70%;
 }
 
 .profile-btn {

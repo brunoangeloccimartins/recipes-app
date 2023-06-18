@@ -1,10 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import CloseButton from 'react-bootstrap/CloseButton';
+import Card from 'react-bootstrap/Card';
 import { useRandomRecipe } from '../../services/hooks/useLaricaButton';
 import Button from '../Button';
-import RemoveBtn from '../../images/icons/removeBtn.png';
 import { setRandomRecipe } from '../../redux/actions/actions-recipeDetails';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './RandomRecipeCard.css';
 
 function RandomRecipeCard() {
@@ -26,55 +28,51 @@ function RandomRecipeCard() {
     <div className={ randomRecipe !== null ? 'preview-card' : 'hidden-card' }>
       { randomRecipe
         && (
-          <div className="recipe-preview-content">
-            <Button
-              value={
-                <img
-                  src={ RemoveBtn }
-                  alt="remove button"
+          <div className="container">
+            <Card className="card-random">
+              <CloseButton
+                className="close-btn"
+                variant="rgba(0, 0, 0, 0.5)"
+                onClick={ () => dispatch(setRandomRecipe(null)) }
+              />
+              <Card.Body>
+                <Card.Img
+                  src={ randomRecipe.strMealThumb
+                    ? randomRecipe.strMealThumb : randomRecipe.strDrinkThumb }
+                  alt="Recipe preview"
                 />
-              }
-              className="remove-preview-btn"
-              onClick={ () => dispatch(setRandomRecipe(null)) }
-            />
-            <div className="preview-name">
-              <p>
-                { randomRecipe.strMeal
-                  ? randomRecipe.strMeal
-                  : randomRecipe.strDrink}
-              </p>
-            </div>
-            <img
-              src={ randomRecipe.strMealThumb
-                ? randomRecipe.strMealThumb : randomRecipe.strDrinkThumb }
-              alt="Recipe preview"
-            />
-            <div className="category-container">
-              <p className="preview-category">
-                <strong>{ randomRecipe.strCategory}</strong>
-              </p>
-              { randomRecipe.strAlcoholic
-              && (
-                <p>
-                  <i>
-                    {randomRecipe.strAlcoholic}
-                  </i>
-                </p>
-              )}
-            </div>
-            <div className="random-btn-container">
-              <Button
-                className="random-again-btn"
-                value="Surprise me"
-                onClick={ getRandomRecipe }
-              />
+                <Card.Title>
+                  { randomRecipe.strMeal
+                    ? randomRecipe.strMeal
+                    : randomRecipe.strDrink}
+                </Card.Title>
+                <Card.Text>
+                  { randomRecipe.strCategory}
+                  <br />
+                  { randomRecipe.strAlcoholic
+                  && (
+                    <i>
+                      {randomRecipe.strAlcoholic}
+                    </i>
+                  )}
+                  <br />
+                </Card.Text>
+                <div className="btn-random">
+                  <Button
+                    className="btn-login"
+                    value="Surprise me"
+                    onClick={ getRandomRecipe }
+                  />
 
-              <Button
-                className="like-btn"
-                value="Let's go!"
-                onClick={ redirectToDetails }
-              />
-            </div>
+                  <Button
+                    className="btn-login"
+                    value="Let's go!"
+                    onClick={ redirectToDetails }
+                  />
+                </div>
+              </Card.Body>
+            </Card>
+
           </div>
         )}
     </div>

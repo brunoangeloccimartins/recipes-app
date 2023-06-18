@@ -131,7 +131,7 @@ function RecipesMeals() {
     >
       <div className="page-title">
         <h1
-          data-testid="page-title"
+          className="h1"
         >
           Meals
         </h1>

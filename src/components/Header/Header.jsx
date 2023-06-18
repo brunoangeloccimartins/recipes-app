@@ -37,21 +37,18 @@ function Header() {
       <div className="container-title-btns bg-color">
         <h2>RecipesAPP</h2>
         <div className="btn-container">
-          { SEARCH_ICON
-            && (
-              <Button
-                value={ <img
-                  src={ SEARCH_ICON }
-                  alt="Ícone de pesquisa"
-                  data-testid="search-top-btn"
-                /> }
-                onClick={ () => {
-                  setHidden(!isHidden);
-                  dispatch(saveHidden(!isHidden));
-                } }
-                className="search-btn"
-              />
-            ) }
+          <Button
+            className={ SEARCH_ICON ? 'visible-yes search-btn' : 'visible-no' }
+            value={ <img
+              src={ SEARCH_ICON }
+              alt="Ícone de pesquisa"
+              data-testid="search-top-btn"
+            /> }
+            onClick={ () => {
+              setHidden(!isHidden);
+              dispatch(saveHidden(!isHidden));
+            } }
+          />
           <Button
             value={ <img
               src={ PROFILE_ICON }

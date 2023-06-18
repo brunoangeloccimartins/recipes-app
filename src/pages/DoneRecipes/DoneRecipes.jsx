@@ -33,7 +33,7 @@ function DoneRecipes() {
       { !recipesDone.length
         ? (<p>{'You haven\'t done any recipes yet'}</p>)
         : (
-          <div>
+          <div style={ { padding: '25px 0' } }>
             <section className="container-favorites-btns">
               { isCopied && <p>Link copied!</p>}
               <Button
@@ -76,24 +76,36 @@ function DoneRecipes() {
                           <Card.Title>
                             {recipe.name}
                           </Card.Title>
-                          <Card.Text>
-                            {new Date(recipe.doneDate).toLocaleDateString()}
-                            <br />
-                            { recipe.type !== 'drink'
-                              ? `Nationality: ${recipe.nationality} - ${recipe.category}`
-                              : `${recipe.alcoholicOrNot}`}
-                            <br />
-                            {recipe.tags.length > 0 && recipe.tags.map((tag) => (
-                              <span
-                                key={ tag }
-                                data-testid={ `${index}-${tag}-horizontal-tag` }
-                              >
-                                #
-                                {tag}
-                                {' '}
-                              </span>
-                            ))}
-                          </Card.Text>
+                          <div className="container-share-favorite-btns-done">
+                            <Card.Text>
+                              {new Date(recipe.doneDate).toLocaleDateString()}
+                              <br />
+                              { recipe.type !== 'drink'
+                                ? `Nationality: ${recipe.nationality} - ${recipe.category}`
+                                : `${recipe.alcoholicOrNot}`}
+                              <br />
+                              {recipe.tags.length > 0 && recipe.tags.map((tag) => (
+                                <span
+                                  key={ tag }
+                                  data-testid={ `${index}-${tag}-horizontal-tag` }
+                                >
+                                  #
+                                  {tag}
+                                  {' '}
+                                </span>
+                              ))}
+                            </Card.Text>
+                            <Button
+                              value={
+                                <img
+                                  src={ shareIcon }
+                                  alt="Compartilhar"
+                                  data-testid={ `${index}-horizontal-share-btn` }
+                                />
+                              }
+                              onClick={ () => handleCopy(recipe.type, recipe.id) }
+                            />
+                          </div>
                           <Button
                             className="btn-login btn-card"
                             value={
@@ -108,16 +120,6 @@ function DoneRecipes() {
                           />
                         </Card.Body>
                       </Card>
-                      <Button
-                        value={
-                          <img
-                            src={ shareIcon }
-                            alt="Compartilhar"
-                            data-testid={ `${index}-horizontal-share-btn` }
-                          />
-                        }
-                        onClick={ () => handleCopy(recipe.type, recipe.id) }
-                      />
                     </div>
                   ))}
               </section>

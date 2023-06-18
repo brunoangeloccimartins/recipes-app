@@ -5,24 +5,30 @@
 }
 
 .preview-card {
-  background-color: whitesmoke;
-  border-radius: 20px;
-  box-shadow: 2px 2px 3px 2px rgb(0, 0, 0, 0.3);
-  display: flex;
-  height: 400px;
   justify-content: center;
-  margin: 130px 50px;
+  margin: 20px 30px;
   position: fixed;
-  top: 0;
-  width: 260px;
+  top: -10px;
 }
 
-.preview-card img {
-  border: 2px solid rgb(198, 198, 198);
-  border-radius: 100%;
-  height: 200px;
-  width: 200px;
+.card-random {
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
 }
+
+.card-random img {
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.h5 {
+  margin: 15px 0;
+}
+
+.close-btn {
+  position: relative;
+  right: -240px;
+  top: 5px;
+}
+
 
 .recipe-preview-content {
   align-items: center;
@@ -30,11 +36,22 @@
   flex-direction: column;
   height: 400px;
   justify-content: space-around;
+  position: absolute;
   width: 260px;
 }
 
+.recipe-preview-content > button {
+  position: relative;
+  right: -110px;
+  top: 10px;
+}
+
+.btn-random .btn-login:nth-child( 1 ) {
+  background-color: rgba(230, 0, 0, 0.733);
+}
+
 .preview-name {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   height: 80px;
   justify-content: center;
@@ -70,27 +87,6 @@
   width: 100%;
 }
 
-.random-again-btn {
-  background: linear-gradient(-45deg, #5a0001, #f13030, #5a0001, #f13030);
-  border: none;
-  border-radius: 10px;
-  box-shadow: 1px 2px 2px 2px rgb(0, 0, 0, 0.4);
-  color: white;
-  font-weight: 600;
-  width: 40%;
-}
-
-
-.like-btn {
-  background: linear-gradient(-45deg, #04a777, #06efa9, #04a777, #04a777);
-  border: none;
-  border-radius: 10px;
-  box-shadow: 1px 2px 1px 2px rgb(0, 0, 0, 0.4);
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-  width: 40%;
-}
 
 .random-again-btn:active, .like-btn:active {
   box-shadow: none;
