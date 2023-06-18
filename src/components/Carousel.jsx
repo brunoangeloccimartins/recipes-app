@@ -38,6 +38,7 @@ function MyCarousel() {
       <Carousel
         interval={ 2000 }
         className="container"
+        variant="dark"
       >
         { pathname.includes('/meals')
           ? (recipesDrinks.length && recipesDrinks.slice(0, maxCarousel)

@@ -11,22 +11,22 @@ export default function Footer() {
 
   return (
     <footer className="footer-fixed bg-color">
-      <Link to="/drinks">
+      <Link to="/meals">
         <img
-          src={ drinks }
-          alt="drink"
-          data-testid="drinks-bottom-btn"
+          src={ mealImg }
+          alt="meal"
+          data-testid="meals-bottom-btn"
         />
       </Link>
       <Button
         value="Larica"
         onClick={ getRandomRecipe }
       />
-      <Link to="/meals">
+      <Link to="/drinks">
         <img
-          src={ mealImg }
-          alt="meal"
-          data-testid="meals-bottom-btn"
+          src={ drinks }
+          alt="drink"
+          data-testid="drinks-bottom-btn"
         />
       </Link>
     </footer>
