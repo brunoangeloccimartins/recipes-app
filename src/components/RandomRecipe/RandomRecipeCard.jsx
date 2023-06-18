@@ -60,7 +60,7 @@ function RandomRecipeCard() {
                 <div className="btn-random">
                   <Button
                     className="btn-login"
-                    value="Surprise me"
+                    value="Other recipe"
                     onClick={ getRandomRecipe }
                   />
 

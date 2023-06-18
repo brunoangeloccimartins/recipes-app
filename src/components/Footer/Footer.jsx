@@ -19,7 +19,7 @@ export default function Footer() {
         />
       </Link>
       <Button
-        value="Larica"
+        value="Surprise-me"
         onClick={ getRandomRecipe }
       />
       <Link to="/drinks">
