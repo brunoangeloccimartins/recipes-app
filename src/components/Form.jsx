@@ -15,7 +15,7 @@ function Form() {
 
   const inputValidation = () => {
     const emailValidation = validator.isEmail(email);
-    const passwordValidation = validator.isLength(password, { min: 6 });
+    const passwordValidation = validator.isLength(password, { min: 5 });
     if (emailValidation && passwordValidation) {
       setIsDisabled(false);
     }
