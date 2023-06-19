@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import Swal from 'sweetalert2';
 import Input from '../Input';
 import Button from '../Button';
@@ -11,6 +12,7 @@ import '../../styles/Recipes.css';
 export default function SearchBar() {
   const [checked, setChecked] = useState('ingredient');
   const [inputSearch, setInputSearch] = useState('');
+  const { pathname } = useLocation();
   const dispacth = useDispatch();
 
   const handleChange = ({ target: { value } }, setState) => {
@@ -53,7 +55,8 @@ export default function SearchBar() {
       <Input
         type="text"
         name="search"
-        placeholder="Busque um drink ou comida"
+        placeholder={ pathname === '/meals' ? 'Search by meal'
+          : 'Search by Drink' }
         value={ inputSearch }
         test="search-input"
         className="input-txt input-txt-search"
@@ -102,7 +105,7 @@ export default function SearchBar() {
       </div>
       <Button
         test="exec-search-btn"
-        value="Pesquisar"
+        value="Search"
         onClick={ handleClick }
         className="btn-login btn-search"
       />

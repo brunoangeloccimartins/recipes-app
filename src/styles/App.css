@@ -32,29 +32,29 @@ main {
 }
 
 .custom-loader {
-  animation: s3 1s infinite linear;
-  background: conic-gradient(#0000 10%, #766df4);
+  animation: d9 1s infinite linear;
   border-radius: 50%;
-  height: 50px;
-  overflow: hidden;
-  position: relative;
-  width: 50px;
+  box-shadow: -60px 15px , -60px 15px , -60px 15px;
+  clip-path: inset(-45px);
+  color: #766df4;
+  height: 12px;
+  transform: translateY(-15px);
+  width: 12px;
 }
 
-.custom-loader .mask {
-  background: radial-gradient(farthest-side, #0000 calc(100% - 8px), black 0);
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+@keyframes d9 {
 
-@keyframes s3 {
+  16.67% { box-shadow: -60px 15px , -60px 15px , 19px 15px;}
 
-  to {
-    transform: rotate(1turn);
-  }
+  33.33% { box-shadow: -60px 15px , 0 15px , 19px 15px;}
+
+  40%, 60% { box-shadow: -19px 15px , 0 15px , 19px 15px;}
+
+  66.67% { box-shadow: -19px 15px , 0 15px , 60px 15px;}
+
+  83.33% { box-shadow: -19px 15px , 60px 15px , 60px 15px;}
+
+  100% { box-shadow: 60px 15px , 60px 15px , 60px 15px;}
 }
 
 .div-cards {
