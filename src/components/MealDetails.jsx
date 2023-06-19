@@ -40,117 +40,118 @@ function MealDetails({ meal, mealIngredients,
   console.log(isLoading);
 
   return (
-    isLoading ? <Loading /> : <div
-      style={ { paddingTop: '15px', paddingBottom: '15px' } }
-    >
-      { meal.length > 0 && meal.map((recipe, index) => (
-        <div
-          key={ index }
-        >
-          <div className="container">
-            <Card>
-              <Card.Img
-                variant="top"
-                src={ recipe.strMealThumb }
-                alt={ recipe.strMeal }
+    isLoading ? <Loading />
+      : <div
+          style={ { paddingTop: '15px', paddingBottom: '15px' } }
+      >
+        { meal.length > 0 && meal.map((recipe, index) => (
+          <div
+            key={ index }
+          >
+            <div className="container">
+              <Card>
+                <Card.Img
+                  variant="top"
+                  src={ recipe.strMealThumb }
+                  alt={ recipe.strMeal }
+                />
+                <Card.Body>
+                  <Card.Title>
+                    {recipe.strMeal}
+                  </Card.Title>
+                  <Card.Text
+                    style={ {
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    } }
+                  >
+                    { `Category: ${recipe.strCategory}` }
+                    <div className="container-share-favorite-btns">
+                      <Button
+                        value={
+                          <img
+                            src={ shareIcon }
+                            alt="Compartilhar"
+                            data-testid="share-btn"
+                          />
+                        }
+                        onClick={ () => handleCopy('meal', recipe.idMeal) }
+                      />
+                      <Button
+                        value={
+                          <img
+                            src={ isFavorite ? blackHeartIcon : witheHeartIcon }
+                            alt="Favoritar"
+                            data-testid="favorite-btn"
+                          />
+                        }
+                        onClick={ () => handleAddRecipe('meal', recipe) }
+                      />
+                    </div>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+
+            <div className="container">
+              <Card>
+                <Card.Body>
+                  <Card.Title>
+                    Ingredients:
+                  </Card.Title>
+                  <Card.Text>
+                    { mealIngredients.map(({ ingredients, measures }, index2) => (
+                      <ListGroup key={ index2 } numbered>
+                        { ingredients.map((ingredient, index3) => (
+                          <ListGroup.Item
+                            key={ index3 }
+                            data-testid={ `${index3}-ingredient-name-and-measure` }
+                          >
+                            { `${ingredient} - ${measures[index3]}` }
+                          </ListGroup.Item>
+                        ))}
+                      </ListGroup>
+                    ))}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+
+            </div>
+            <div className="container">
+              <Card>
+                <Card.Body>
+                  <Card.Title>
+                    Step-by-step:
+                  </Card.Title>
+                  <Card.Text>
+                    { recipe.strInstructions.split('. ').map((frase) => (
+                      <p key={ frase }>{ `${frase}.` }</p>
+                    )) }
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+            { copied && <p>Link copied!</p>}
+            <div className="container">
+              <iframe
+                title={ `${index}-video` }
+                src={ recipe.strYoutube.replace('watch?v=', 'embed/') }
+                style={ iframeStyles }
               />
-              <Card.Body>
-                <Card.Title>
-                  {recipe.strMeal}
-                </Card.Title>
-                <Card.Text
-                  style={ {
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  } }
-                >
-                  { `Category: ${recipe.strCategory}` }
-                  <div className="container-share-favorite-btns">
-                    <Button
-                      value={
-                        <img
-                          src={ shareIcon }
-                          alt="Compartilhar"
-                          data-testid="share-btn"
-                        />
-                      }
-                      onClick={ () => handleCopy('meal', recipe.idMeal) }
-                    />
-                    <Button
-                      value={
-                        <img
-                          src={ isFavorite ? blackHeartIcon : witheHeartIcon }
-                          alt="Favoritar"
-                          data-testid="favorite-btn"
-                        />
-                      }
-                      onClick={ () => handleAddRecipe('meal', recipe) }
-                    />
-                  </div>
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            </div>
           </div>
-
-          <div className="container">
-            <Card>
-              <Card.Body>
-                <Card.Title>
-                  Ingredients:
-                </Card.Title>
-                <Card.Text>
-                  { mealIngredients.map(({ ingredients, measures }, index2) => (
-                    <ListGroup key={ index2 } numbered>
-                      { ingredients.map((ingredient, index3) => (
-                        <ListGroup.Item
-                          key={ index3 }
-                          data-testid={ `${index3}-ingredient-name-and-measure` }
-                        >
-                          { `${ingredient} - ${measures[index3]}` }
-                        </ListGroup.Item>
-                      ))}
-                    </ListGroup>
-                  ))}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-
-          </div>
-          <div className="container">
-            <Card>
-              <Card.Body>
-                <Card.Title>
-                  Step-by-step:
-                </Card.Title>
-                <Card.Text>
-                  { recipe.strInstructions.split('. ').map((frase) => (
-                    <p key={ frase }>{ `${frase}.` }</p>
-                  )) }
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-          { copied && <p>Link copied!</p>}
-          <div className="container">
-            <iframe
-              title={ `${index}-video` }
-              src={ recipe.strYoutube.replace('watch?v=', 'embed/') }
-              style={ iframeStyles }
-            />
-          </div>
+        ))}
+        <MyCarousel />
+        <Button
+          test="start-recipe-btn"
+          value={ progress ? 'Continue Recipe' : 'Start Recipe' }
+          style={ { position: 'fixed', bottom: '0' } }
+          onClick={ () => history.push(`/meals/${id}/in-progress`) }
+          disabled={ isDisable }
+          className="btn-login btn-bottom"
+        />
         </div>
-      ))}
-      <MyCarousel />
-      <Button
-        test="start-recipe-btn"
-        value={ progress ? 'Continue Recipe' : 'Start Recipe' }
-        style={ { position: 'fixed', bottom: '0' } }
-        onClick={ () => history.push(`/meals/${id}/in-progress`) }
-        disabled={ isDisable }
-        className="btn-login btn-bottom"
-      />
-    </div>
   );
 }
 

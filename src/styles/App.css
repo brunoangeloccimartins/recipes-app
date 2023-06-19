@@ -32,7 +32,8 @@ main {
 }
 
 .custom-loader {
-  animation: d9 1s infinite linear;
+  animation: s3 1s infinite linear;
+  background: conic-gradient(#0000 10%, #f46d8a);
   border-radius: 50%;
   box-shadow: -60px 15px , -60px 15px , -60px 15px;
   clip-path: inset(-45px);
