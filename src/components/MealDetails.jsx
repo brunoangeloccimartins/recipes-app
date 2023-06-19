@@ -150,7 +150,7 @@ function MealDetails({ meal, mealIngredients,
         disabled={ isDisable }
         className="btn-login btn-bottom"
       />
-                              </div>
+    </div>
   );
 }
 

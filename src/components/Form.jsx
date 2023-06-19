@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import validator from 'validator';
-
+import { motion } from 'framer-motion';
 import Input from './Input';
 import Button from './Button';
 import { saveUser } from '../services/localStorageLogin';
-import casalCozinhando from '../images/login-casal2.png';
+import cookItSimple from '../images/backgrounds/Crop_Cook-it-Simple.svg';
 
 function Form() {
   const [email, setEmail] = useState('');
@@ -33,9 +33,21 @@ function Form() {
 
   return (
     <form>
-      <div className="container-img-login">
-        <img src={ casalCozinhando } alt="casal cozinhando" />
-      </div>
+      <motion.div
+        initial={ { scale: 0 } }
+        animate={ { rotate: 360, scale: 1 } }
+        transition={ {
+          type: 'spring',
+          stiffness: 260,
+          damping: 80,
+        } }
+      >
+        <img
+          src={ cookItSimple }
+          alt=""
+          style={ { width: '55vw', paddingLeft: '15px' } }
+        />
+      </motion.div>
       <h1>Login</h1>
       <Input
         type="email"
