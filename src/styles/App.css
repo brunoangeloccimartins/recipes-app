@@ -32,16 +32,12 @@ main {
 }
 
 .custom-loader {
-  animation: s3 1s infinite linear;
-  background: conic-gradient(#0000 10%, #f46d8a);
+  animation: d9 1s infinite linear;
   border-radius: 50%;
   box-shadow: -60px 15px , -60px 15px , -60px 15px;
   clip-path: inset(-45px);
   color: #766df4;
   height: 12px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
   transform: translateY(-15px);
   width: 12px;
 }
