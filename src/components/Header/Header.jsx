@@ -6,18 +6,19 @@ import searchIcon from '../../images/searchIcon.svg';
 import Button from '../Button';
 import '../../styles/Header.css';
 import SearchBar from '../SearchBar/SearchBar';
+import logo from '../../images/CookIt.png';
 import { saveHidden } from '../../redux/actions/actions-searchBar';
 
 function Header() {
   const [isHidden, setHidden] = useState(false);
   const dispatch = useDispatch();
-  const location = useLocation();
+  const { pathname } = useLocation();
   const history = useHistory();
 
   let PROFILE_ICON;
   let SEARCH_ICON;
 
-  switch (location.pathname) {
+  switch (pathname) {
   case '/meals':
   case '/drinks':
     PROFILE_ICON = profileIcon;
@@ -32,10 +33,24 @@ function Header() {
     break;
   }
 
+  const renderRoute = () => {
+    if (pathname.includes('favorite')
+      || pathname.includes('done')
+      || pathname.includes('profile')
+    ) {
+      return history.push('./meals');
+    }
+  };
+
   return (
     <>
       <div className="container-title-btns bg-color">
-        <h2>RecipesAPP</h2>
+        <div className="title-container">
+          <Button
+            value={ <img src={ logo } alt="Foto da logo" /> }
+            onClick={ renderRoute }
+          />
+        </div>
         <div className="btn-container">
           <Button
             className={ SEARCH_ICON ? 'visible-yes search-btn' : 'visible-no' }

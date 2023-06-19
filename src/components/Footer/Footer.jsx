@@ -5,6 +5,7 @@ import drinks from '../../images/icons/drinks-footer2.png';
 import '../../styles/Footer.css';
 import Button from '../Button';
 import { useRandomRecipe } from '../../services/hooks/useLaricaButton';
+import interrogação from '../../images/randon-button.png';
 
 export default function Footer() {
   const getRandomRecipe = useRandomRecipe();
@@ -18,10 +19,14 @@ export default function Footer() {
           data-testid="meals-bottom-btn"
         />
       </Link>
-      <Button
-        value="Surprise-me"
-        onClick={ getRandomRecipe }
-      />
+      <div className="btn-randon">
+        <Button
+          value={
+            <img src={ interrogação } alt="meal" data-testid="explore-bottom-btn" />
+          }
+          onClick={ getRandomRecipe }
+        />
+      </div>
       <Link to="/drinks">
         <img
           src={ drinks }
