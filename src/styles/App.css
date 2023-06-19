@@ -38,6 +38,9 @@ main {
   clip-path: inset(-45px);
   color: #766df4;
   height: 12px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
   transform: translateY(-15px);
   width: 12px;
 }
