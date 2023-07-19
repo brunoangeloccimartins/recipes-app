@@ -16,6 +16,7 @@ import '../../styles/RecipeInProgress.css';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import witheHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
+import disableButton from '../../services/disableButton';
 
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
 import useHandleCopy from '../../services/hooks/useHandleCopy';
@@ -36,7 +37,11 @@ export default function MealsInProgress() {
   useEffect(() => {
     const savedProgress = getSavedProgress('inProgressRecipes');
     if (Object.keys(savedProgress.meals).length > 0 && savedProgress.meals) {
-      setChecked(savedProgress.meals[id]);
+      const progress = savedProgress.meals.find((el) => el.id === id);
+      if (progress !== undefined) {
+        setChecked(progress.newChecked);
+        disableButton(progress.newChecked, setDisabled);
+      }
     }
   }, [meal]);
 
@@ -61,21 +66,33 @@ export default function MealsInProgress() {
     const newChecked = [...checked];
     newChecked[indice] = !newChecked[indice];
     setChecked(newChecked);
-    const everyTrue = newChecked.every((check) => check === true);
-    if (everyTrue) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
+    disableButton(progress.newChecked, setDisabled);
     const progressData = getSavedProgress('inProgressRecipes');
     if (Object.keys(progressData).includes('meals')) {
-      const objLocalStorage = {
-        ...progressData,
-        meals: {
-          ...progressData.meals,
-          [id]: newChecked,
-        },
-      };
+      let objLocalStorage;
+      if (progressData.meals.some((m) => m.id === id)) {
+        const newProgressData = progressData.meals.map((obj) => {
+          if (obj.id === id) {
+            return { ...obj, newChecked };
+          }
+          return obj;
+        });
+        objLocalStorage = {
+          ...progressData,
+          meals: newProgressData,
+        };
+      } else {
+        objLocalStorage = {
+          ...progressData,
+          meals: [
+            ...progressData.meals,
+            {
+              id,
+              newChecked,
+            },
+          ],
+        };
+      }
       saveProgress('inProgressRecipes', objLocalStorage);
     }
   };

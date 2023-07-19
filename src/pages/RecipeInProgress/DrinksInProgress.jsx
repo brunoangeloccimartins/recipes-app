@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import witheHeartIcon from '../../images/whiteHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
+import disableButton from '../../services/disableButton';
 
 import '../../styles/RecipeInProgress.css';
 import { getSavedProgress, saveProgress } from '../../services/localStorageProgress';
@@ -36,7 +37,11 @@ export default function DrinksInProgress({ copied }) {
   useEffect(() => {
     const savedProgress = getSavedProgress('inProgressRecipes');
     if (Object.keys(savedProgress.drinks).length > 0 && savedProgress.drinks) {
-      setChecked(savedProgress.drinks[id]);
+      const progress = savedProgress.drinks.find((el) => el.id === id);
+      if (progress !== undefined) {
+        setChecked(progress.newChecked);
+        disableButton(progress.newChecked, setDisabled);
+      }
     }
   }, [drink]);
 
@@ -61,21 +66,33 @@ export default function DrinksInProgress({ copied }) {
     const newChecked = [...checked];
     newChecked[indice] = !newChecked[indice];
     setChecked(newChecked);
-    const everyTrue = newChecked.every((check) => check === true);
-    if (everyTrue) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
+    disableButton(newChecked, setDisabled);
     const progressData = getSavedProgress('inProgressRecipes');
     if (Object.keys(progressData).includes('drinks')) {
-      const objLocalStorage = {
-        ...progressData,
-        drinks: {
-          ...progressData.drinks,
-          [id]: newChecked,
-        },
-      };
+      let objLocalStorage;
+      if (progressData.drinks.some((m) => m.id === id)) {
+        const newProgressData = progressData.drinks.map((obj) => {
+          if (obj.id === id) {
+            return { ...obj, newChecked };
+          }
+          return obj;
+        });
+        objLocalStorage = {
+          ...progressData,
+          drinks: newProgressData,
+        };
+      } else {
+        objLocalStorage = {
+          ...progressData,
+          drinks: [
+            ...progressData.drinks,
+            {
+              id,
+              newChecked,
+            },
+          ],
+        };
+      }
       saveProgress('inProgressRecipes', objLocalStorage);
     }
   };

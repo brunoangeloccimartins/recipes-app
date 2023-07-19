@@ -1,10 +1,8 @@
 export const getSavedProgress = (key) => {
   const recipesList = localStorage.getItem(key);
   const inProgressRecipe = {
-    drinks: {
-    },
-    meals: {
-    },
+    drinks: [],
+    meals: [],
   };
   return recipesList ? JSON.parse(recipesList) : inProgressRecipe;
 };
