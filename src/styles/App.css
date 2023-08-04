@@ -31,6 +31,52 @@ main {
   background-color: #efedee;
 }
 
+.message-container {
+  background-color: #f8f8f8;
+  display: none; /* Inicialmente, esconderemos a mensagem */
+  padding: 10px;
+  text-align: center;
+}
+
+.message {
+  color: #333;
+}
+
+/* Media query para mostrar a mensagem apenas em resoluções de desktop */
+
+@media screen and ( min-width : 576px ) {
+
+  main {
+    display: none;
+  }
+
+  .message-container {
+    align-items: center;
+    background-color: #f87575;
+    display: flex;
+    flex-direction: column;
+    font-size: 60px;
+    height: 100vh;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .message-container > div {
+    align-items: center;
+    background-color: #efedee;
+    border-radius: 100%;
+    display: flex;
+    height: 350px;
+    justify-content: center;
+    width: 350px;
+  }
+
+  .message-container > div > img {
+    margin-left: 30px;
+    width: 350px;
+  }
+}
+
 .custom-loader {
   animation: d9 1s infinite linear;
   border-radius: 50%;
